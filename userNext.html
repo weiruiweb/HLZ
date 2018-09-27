@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>下级</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="divport" content="width=device-width, initial-scale=1">
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script src="js/jquery-2.1.4.min.js"></script>
+</head>
+<body>
+<style>
+.w750{
+  background: #f2f2f2;
+}
+.index_tab{
+  background:#fff;  
+}
+.tab_item{
+  width:33.33%;
+}
+.this_tab{
+  border-bottom:solid 1px #ed7100;
+  color:#ed7100;
+}
+.cash{
+  background:#fff;
+  margin-top:.20rem;
+}
+.p40{
+  padding:0 8%;
+  border-bottom:solid 1px #e0e0e0;
+  width:84%;
+}
+.tlt_item{
+  width:50%;
+}
+.tlt_left{
+  text-align:left;
+}
+.tlt_right{
+  text-align:right;
+}
+.cash_cont{
+  height:.95rem;
+}
+.reward{
+  background:#fff;
+}
+.cash_show{
+  display:none
+}
+.reward .tlt_item{
+  width:33.33%;
+}
+.index_tab .active{
+  color:#ed7100;
+}
+.cash{
+  display: none;
+}
+a{color:#fff;}
+</style>
+<div class="w750">
+  <div class="index_tab flexRowBetween">
+    <div class="tab_item active">
+      一级(20)
+    </div>
+    <div  class="tab_item">
+      二级(30)
+    </div>
+     <div  class="tab_item">
+      总推广(50)
+    </div>
+</div>
+  <div class="tab_cont font32">
+    <div class="cash" style="display: block;">
+      <div class="p40">
+        <div class="cash_cont flexRowBetween">
+          <div class="tlt_item tlt_left">200元</div>
+          <div class="tlt_item tlt_right"> 2016.09.08</div>
+        </div>
+      </div>
+      <div class="p40">
+        <div class="cash_cont flexRowBetween">
+          <div class="tlt_item tlt_left">200元</div>
+          <div class="tlt_item tlt_right"> 2016.09.08</div>
+        </div>
+      </div>
+      <div class="p40">
+        <div class="cash_cont flexRowBetween">
+          <div class="tlt_item tlt_left">200元</div>
+          <div class="tlt_item tlt_right"> 2016.09.08</div>
+        </div>
+      </div>
+    </div>
+    <div class="cash">
+      <div class="p40">
+        <div class="cash_cont flexRowBetween">
+          <div class="tlt_item tlt_left">200元</div>
+          <div class="tlt_item tlt_right"> 2016.09.08</div>
+        </div>
+      </div>
+    </div>
+    <div class="cash">
+      <div class="p40">
+        <div class="cash_cont flexRowBetween">
+          <div class="tlt_item tlt_left">200元</div>
+          <div class="tlt_item tlt_right"> 2016.09.08</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(function(){
+      function tabs(tabTit,on,tabCon){
+          $(tabTit).children().click(function(){
+              $(this).addClass(on).siblings().removeClass(on);
+              var index = $(tabTit).children().index(this);
+              $(tabCon).children().eq(index).show().siblings().hide();
+        });
+    };
+      tabs(".index_tab","active",".tab_cont");
+  });
+</script>
+</body>
+</html>

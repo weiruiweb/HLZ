@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>简历基本信息</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="divport" content="width=device-width, initial-scale=1">
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+</head>
+<body style="background: #fff;">
+<style>
+.w750{
+    color:#666;
+    width:100%;
+    min-height:100%;
+}
+div{
+  font-size:.36rem;
+  color:#333;
+}
+.sumTxt{
+  height:.50rem;
+  padding-left:.30rem;
+  font-size:.38rem;
+  color:#333;
+  font-weight:bold;
+  border-left:solid 3px #ed7101;
+}
+.sum_txt{
+  height:1.1rem;
+  align-items:center;
+  width:100%;
+  display:flex;
+}
+.gig{
+  border:solid 1px #e0e0e0;
+  border-radius:.10rem;
+  position:relative;
+  padding:.30rem;
+}
+.education{
+  padding.:0rem .50rem;
+  position:relative;
+}
+.education .add{
+  position:absolute;
+  top:.20rem;
+  right:0;
+}
+.gig text{
+  color:#ed7101;
+  font-size:.40rem;
+  margin-right:.30rem;
+}
+.expericence{
+  border-left:dashed 1px #e0e0e0;
+  padding-left:.30rem;
+  padding-bottom:.30rem;
+  margin-left:.20rem;
+}
+
+.phone_note{
+  margin-top:.38rem;
+  line-height:.48rem;
+}
+.phone_infor{
+  margin-top:.30rem;
+}
+.input_before{
+  width:24%;
+  height:.98rem;
+  line-height:.98rem;
+  overflow:hidden;
+  font-size:.38rem;
+  color:#333; 
+}
+.bank_card{
+  width:100%;
+  height:.98rem;
+}
+.bank_card .resume_info{
+  width:72%;
+  padding:0 2%;
+  height:.98rem;
+  line-height:.98rem;
+  font-size:.36rem;
+}
+.pencil{
+  width:23%;
+  text-align:right;
+}
+.pencil img{
+  width:.34rem;
+  height:.34rem;
+  margin-right:.30rem;
+}
+.w710{
+  height:3.05rem;
+  align-items:center;
+  display:flex;
+  background:#fff;
+  overflow:hidden;
+}
+.input_note{
+  color:#ff0000;
+}
+.input_before text{
+  color:#ff0000;
+}
+.resume_info input{
+  width:96%;
+  padding:0 2%;
+  height:.85rem;
+  line-height:.85rem;
+  font-size:.36rem;
+  text-align:right;
+  border:none;
+  background: #fff;
+}
+.resume_info select{
+  width:98%;
+  padding-left:2%;
+  height:.85rem;
+  line-height:.85rem;
+  font-size:.36rem;
+  text-align:right;
+  border:none;
+  background: #fff;
+  appearance:none;  
+  -moz-appearance:none;  
+  -webkit-appearance:none;  
+}
+.resume_info .picker{
+  line-height:.85rem;
+  height:.85rem;
+  float:right;
+  width:42%;
+  padding:0 2%;
+}
+select::-ms-expand { display: none; } 
+.bank_card img{
+  width:.25rem;
+  height:.20rem;
+}
+.btn{
+  margin-top:.50rem;
+}
+.btn button{
+  width:2.80rem;
+  height:.80rem;
+  border-radius:.10rem;
+  background:#ccc;
+  line-height:.70rem;
+  text-align:center;
+  font-size:.38rem;
+  color:#fff;
+  border:none;
+}
+.save{
+  background:#ed7101;
+}
+a{color:#fff;}
+</style>
+<div class="w750">
+    <div class="p40">
+        <div class="sum_txt flexRowBetween">
+            <div class="sumTxt">基础信息</div>
+            <div class="pencil">
+                <img src="images/pencil.png">编辑
+            </div>
+        </div>
+        <div class="gig">
+          <div class="bank_card flexRowBetween">
+              <div class="input_note">*</div>
+              <div class="input_before">
+                  真实姓名:
+              </div>
+              <div class="resume_info">
+                  <input placeholder="请输入真实姓名" value=""></input>
+              </div>
+          </div>
+          <div class="bank_card flexRowBetween">
+              <div class="input_note">*</div>
+              <div class="input_before">
+                  性 别:
+              </div>
+              <div class="resume_info">
+                  <input placeholder="请输入性别" value=""></input>
+              </div>
+          </div>
+          <div class="bank_card flexRowBetween">
+              <div class="input_note">*</div>
+              <div class="input_before">
+                  出生日期:
+              </div>
+              <div class="resume_info">
+                  <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+                      <div class="picker flexRowBetween">
+                          <div>1992-9-8</div>
+                          <img src="images/choose_icon.png">
+                      </div>
+                  </picker>
+              </div>
+          </div>
+          <div class="bank_card flexRowBetween">
+              <div class="input_note">*</div>
+              <div class="input_before">
+                  身份证号:
+              </div>
+              <div class="resume_info">
+                  <input placeholder="请输入身份证号" value=""></input>
+              </div>
+          </div>
+        </div>
+    </div>
+    <div class="p40">
+        <div class="sum_txt flexRowBetween">
+            <div class="sumTxt">其他信息</div>
+        </div>
+        <div class="gig">
+            <div class="bank_card flexRowBetween">
+                <div class="input_note">*</div>
+                <div class="input_before">
+                    学   历:
+                </div>
+                <div class="resume_info" style="width:74%;padding-left:2%;padding-right: 0;">
+                    <select id="AreaId" name="AreaId" size="1" class="sel">
+                       <option value="1">本科</option>
+                       <option value="2">硕士</option>
+                       <option value="3">博士</option>
+                    </select>
+                </div>
+                <img src="images/choose_icon.png">
+            </div>
+            <div class="bank_card flexRowBetween">
+                <div class="input_note">*</div>
+                <div class="input_before">
+                    工作年限:
+                </div>
+                <div class="resume_info flexRowBetween" style="width:74%;padding-left:2%;padding-right: 0;">
+                    <select id="AreaId" name="AreaId" size="1" class="sel">
+                       <option value="1">1年</option>
+                       <option value="2">2年</option>
+                       <option value="3">3年</option>
+                    </select>
+                </div>
+                <img src="images/choose_icon.png">
+            </div>
+        </div>
+        <div class="btn flexRowBetween">
+            <button bindtap="setValue">取消</button>
+            <button class="save" style="background:#ed7101;"><a href="userResume.html">保存</a></button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

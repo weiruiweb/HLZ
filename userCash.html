@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>账户信息</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="divport" content="width=device-width, initial-scale=1">
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script src="js/jquery-2.1.4.min.js"></script>
+</head>
+<body>
+<style>
+.w750{
+    background: #f2f2f2;
+}
+.user_left{
+  display: block;
+}
+.user_sort{
+    height:1.35rem;
+    display:flex;
+    align-items:center;
+    width:100%;
+    background:#fff;
+}
+.user_item{
+    height:.70rem;
+    width:33.33%;
+    text-align:center;
+}
+.item_top{
+    height:50%;
+    font-size:.32rem;
+    color:#ed7101;
+}
+.item_bottom{
+    height:50%;
+    color:#ed7101;
+}
+.vertical_line{
+    width:2%;
+    height:70%;
+}
+.index_tab{
+    background:#fff;    
+}
+.tab_item{
+    width:50%;
+    font-size:0.34rem;
+}
+.this_tab{
+    border-bottom:solid 1px #ed7100;
+    color:#ed7100;
+}
+.sort{
+    height:.78rem;
+    border:solid 1px #d9d9d9;
+}
+.sort_item{
+    width:25%;
+    text-align:center;
+    font-size:.34rem;
+    color:#666;
+}
+.sort_in{
+    width:38%;
+    margin:0 auto;
+    height:.78rem;
+}
+.sort_in img{
+    width:.27rem;
+    height:.21rem;
+}
+.cash_tlt{
+    height:.75rem;
+    border-bottom:solid 1px #e0e0e0;
+    color:#ed7100;
+}
+.index_tab .active{
+  border-bottom:solid 2px #ed7100;
+}
+.cash{
+    background:#fff;
+    margin-top:.20rem;
+    padding-bottom:.30rem;
+    display: none;
+}
+.tlt_item{
+    text-align:center;
+    width:50%;
+}
+.cash_cont{
+    height:.95rem;
+}
+.reward{
+    background:#fff;
+    margin-top:.30rem;
+    padding-bottom:.30rem;
+}
+.cash_show{
+    display:none
+}
+.reward .tlt_item{
+    width:33.33%;
+}
+.cash_tlt{
+  height:1rem;
+}
+.user_sort {
+  margin-bottom: 0.2rem;
+}
+</style>
+<div class="w750">
+    <div class="banner">
+        <div class="p40">
+            <div class="banner_top" style="margin-top: 0.2rem;">
+                <a href="userMessage.html"><img src="images/tixing.png"/></a>
+            </div>
+            <div class="banner_bottom flexRowBetween">
+                <div class="user_left">
+                    <div style="font-size:.46rem;color:#fff;width:100%;height:60%;">
+                        华路卓
+                    </div>
+                    <div class="flex">
+                      <a class="flex" style="width:60%;height:40%;" href="userCashCard.html">
+                          <div class="flex" style="margin-right:.40rem;">
+                              <div class="user_card" style="margin-right:.20rem;"><img src="images/accout1.png" /></div>
+                              <div class="font32 color1">银行卡体现</div>
+                          </div>  
+                      </a>
+                      <div class="font34 color1" style="width:40%;"><a href="userCashNow.html">体现 >> </a></div>
+                    </div>
+                </div>
+                <div class="user_right">
+                    <div class="user_img">
+                        <open-data type="userAvatarUrl"></open-data>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="user_sort font34 color">
+        <div class="user_item  flexRowBetween">
+            <div style="width:98%;">
+                <div class="item_top">已提现</div>
+                <div class="item_bottom">100</div>
+            </div>
+            <div class="vertical_line">
+                <div style="width:1px;height:100%;border-left:dashed 1px #ed7101;"></div>
+            </div>
+        </div>
+        <div class="user_item flexRowBetween">
+            <div style="width:98%;">
+                <div class="item_top">余额</div>
+                <div class="item_bottom">100</div>
+            </div>
+            <div class="vertical_line">
+                <div style="width:1px;height:100%;border-left:dashed 1px #ed7101;"></div>
+            </div>
+        </div>
+        <div class="user_item">
+            <a href="userCashNext.html" class="item_bottom" style="height:.75rem;line-height:.75rem;">下级</a>
+        </div>
+    </div>
+    <div class="index_tab  flexRowBetween">
+        <div class="tab_item active">
+            体现记录
+        </div>
+        <div class="tab_item">
+            奖励记录
+        </div>
+    </div>
+    <div class="tab_cont">
+        <div class="cash" style="display: block;">
+            <div class="p40 font32">
+                <div class="cash_tlt flexRowBetween font34">
+                    <div class="tlt_item">
+                        金额
+                    </div>
+                    <div class="tlt_item">
+                        时间
+                    </div>
+                </div>
+                <div class="cash_cont flexRowBetween">
+                    <div class="tlt_item">200元</div>
+                    <div class="tlt_item"> 2016.09.08</div>
+                </div>
+                <div class="cash_cont flexRowBetween">
+                    <div class="tlt_item">200元</div>
+                    <div class="tlt_item"> 2016.09.08</div>
+                </div>
+            </div>
+        </div>
+        <div class="cash font34">
+            <div class="p40">
+                <div class="cash_tlt flexRowBetween">
+                    <div class="tlt_item">
+                        金额
+                    </div>
+                    <div class="tlt_item">
+                        原因
+                    </div>
+                    <div class="tlt_item">
+                        时间
+                    </div>
+                </div>
+                <div class="cash_cont flexRowBetween">
+                    <div class="tlt_item">200元</div>
+                    <div class="tlt_item">转发</div>
+                    <div class="tlt_item"> 2016.09.08</div>
+                </div>
+                <div class="cash_cont flexRowBetween">
+                    <div class="tlt_item">200元</div>
+                    <div class="tlt_item">入职</div>
+                    <div class="tlt_item"> 2016.09.08</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+  $(function(){
+      function tabs(tabTit,on,tabCon){
+          $(tabTit).children().click(function(){
+              $(this).addClass(on).siblings().removeClass(on);
+              var index = $(tabTit).children().index(this);
+              $(tabCon).children().eq(index).show().siblings().hide();
+        });
+    };
+      tabs(".index_tab","active",".tab_cont");
+  });
+</script>
+</body>
+</html>

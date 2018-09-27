@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>职位详情</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="divport" content="width=device-width, initial-scale=1">
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script src="js/jquery-2.1.4.min.js"></script>
+</head>
+<body>
+<style>
+div{
+    color:#666;
+}
+.w710{
+    align-items:center;
+    display:flex;
+}
+.job{
+    align-items:center;
+    display:flex;
+    height:4.00rem;
+    border-bottom:solid 1px #d9d9d9;
+}
+.job_list{
+    height:3.60rem;
+    width:100%;
+}
+.list_left{
+    width:100%;
+    height:3.60rem;
+}
+.list_right{
+    width:30%;
+    height:3.60rem;
+    text-align:right;
+}
+.job_type{
+    height:24%;
+    align-items:center;
+    display:flex;
+}
+.treatment{
+    height:30%;
+}
+.job_company{
+    height:58%;
+    width:100%;
+    display:flex;
+}
+.treatment_sort{
+    width:2rem;
+    height:0.44rem;
+    background:#f6f6f6;
+    text-align:center;
+    line-height:0.44rem;
+    margin-right:0.20rem;
+}
+.company_img{
+    width:16%;
+    height:100%;
+    align-items:center;
+    display:flex;
+}
+.company_img img{
+    width:0.7rem;
+    height:0.7rem;
+}
+.company_introuce{
+    width:84%;
+    height:100%;
+}
+.company_name{
+    font-size:0.38rem;
+    color:#333;
+    height:33.33%;
+}
+.send_datail{
+    width:60%;
+}
+.send_tiem{
+    font-size:0.3rem;
+    color:#999;
+}
+.send_need{
+    font-size:22rem;
+    color:#666;
+}
+.payment{
+    height:50%;
+    font-size:0.4rem;
+    color:#ed7100;
+}
+.hongbao{
+    height:100%;
+    display:flex;
+    align-items:center;
+    position:relative;
+}
+.hongbao_money{
+    width:100%;
+    height:100%;
+    position:absolute;
+    top:50%;
+    font-size:0.32rem;
+    text-align:center;
+    color:#fff;
+}
+.hongbao img{
+    width:0.86rem;
+    height:1rem;
+}
+.address{
+    color:#3d3d3d;
+}
+.job_address{
+    height:22%;
+}
+.sort_items{
+    margin-right:0.25rem;
+}
+.sort_items text{
+    margin-left:0.20rem;
+}
+.sort{
+    width:100%;
+    align-items:center;
+    border:none;
+    height:auto;
+}
+.reward{
+    width:100%;
+    height:auto;
+    overflow:hidden;
+}
+.reward_detail{
+    padding:0.30rem 0;
+}
+.reward_detail view{
+    font-size:0.36rem;
+    color:#666;
+    line-height:0.60rem;
+}
+.share .share1{
+    width:30%;
+    height:0.70rem;
+    line-height:0.70rem;
+    text-align:center;
+}
+.share2{
+    background:#ed7101;
+    border-radius:0.20rem;
+    color:#fff;
+}
+.share1 text{
+    background:#e33424;
+    margin:0 0.10rem;
+    padding:0 0.06rem;
+    color:#fff;
+    font-size:0.36rem;
+    border-radius:0.20rem;
+}
+.footer1 img{
+    width:0.66rem;
+    height:0.66rem;
+    margin:0 auto;
+}
+.footer{
+    position:fixed;
+    height:1.3rem;
+    line-height:1.3rem;
+    background:#ed7101;
+    width:100%;
+    bottom:0;
+    font-size:28rem;
+    color:#fff;
+    z-index: 999;
+}
+.footer1{
+    width:19%;
+    text-align:center;
+    height:100%;
+    align-items:center;
+    display:flex;
+}
+.footer2{
+    width:24%;
+    text-align:center;
+    color:#fff;
+    height:100%;
+    font-size: 0.4rem;
+}
+.footer3{
+    background:#fff;
+    color:#ed7101;
+    height:100%;
+    text-align:center;
+    border-right:solid 1px #ed7101;
+    width:100%;
+    font-size:0.4rem;
+}
+
+.mask{
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:99;
+    overflow:hidden;
+}
+.mask_cont{
+    width:100%;
+    position:absolute;
+    top:30%;
+    z-index:999;
+    overflow:hidden;
+}
+.tishi_cont{
+    width:5.65rem;
+    height:5.50rem;
+    background:#fff;
+    margin:0 auto;
+    border-radius:0.20rem;
+    z-index:999;
+    padding:0.30rem 0;
+    box-shadow:0 0 0.2rem #666;
+}
+.tishi_in{
+    height:78%;
+    padding:0  0.30rem;
+    background:#fff
+}
+.tishi_tltl{
+    text-align:center;
+    line-height:0.9rem;
+}
+.tishi_txt{
+    height:0.85rem;
+    line-height:0.85rem;
+    font-size:28rem;
+    border-bottom:solid 1px #ed7101;
+}
+.tishi_txt input{
+    width:80%;
+    height: 100%;
+    border:none;
+}
+.map img{
+    width:100%;
+    height:4rem;
+}
+.input_before{
+    width:20%;
+}
+.submit_info{
+    height:0.70rem;
+    line-height:0.70rem;
+    font-size:0.40rem;
+    margin-top:0.62rem;
+}
+.tishi_cont img{
+    width:3.82rem;
+    height:3.82rem;
+}
+.mask{
+    display: none;
+}
+</style>
+<div class="w750">
+    <div class="job">
+        <div class="w710">
+            <div class="job_list flexRowBetween">
+                <div class="list_left">
+                    <div class="flexRowBetween">
+                        <div class="job_type avoidOverflow font40 color3">UI设计师</div>
+                        <div class="font38 color">2k-4k</div>
+                    </div>
+                    <div class="job_address  flexRowBetween">
+                        <div class="address font36 color6">工作地点：高新大都荟</div>
+                        <div class="time font32 color9">06月05号</div>
+                    </div>
+                    <div class="job_company">
+                        <div class="sort">
+                            <div class="company_introuce">
+                                <div class="company_name flex">
+                                    <div class="sort_items font30 color9">人数:
+                                        <text class="color3">3-4人</text>
+                                    </div>
+                                    <div class="sort_items font30 color9">年龄:
+                                        <text class="color3">31-40</text>
+                                    </div>
+                                    <div class="sort_items font30 color9">性别:
+                                        <text class="color3">男女不限</text>
+                                    </div>
+                                </div>
+                                <div class="company_name flex">
+                                    <div class="sort_items font30 color9">学历:
+                                        <text class="color3">大专</text>
+                                    </div>
+                                    <div class="sort_items font30 color9">经验:
+                                        <text class="color3">3-4年</text>
+                                    </div>
+                                </div>
+                                <div class="treatment flex font30 color6">
+                                    <div class="treatment_sort">五险一金</div>
+                                    <div class="treatment_sort">加班补偿</div>
+                                    <div class="treatment_sort">交通方便</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hongbao">
+                            <img src="images/hongbao.png" />
+                            <div class="hongbao_money">¥300</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="w710">
+        <div class="reward">
+            <div class="sum_txt flexRowBetween">
+                <div class="sumTxt">奖励</div>
+                <div class="pencil font28" style="width:32%">
+                    悬赏人数：100人
+                </div>
+            </div>
+            <div class="reward_detail font32 line48">
+                <div>如果您成功入职满一个月，可获得奖金100元</div>
+                <div>职位转发微信朋友一次，获得2元， </div>
+                <div>微信朋友成功入职，您获200元 </div>
+            </div>
+            <div class="share flexRowBetween font34">
+                <div class="share1 share2">入职·300元</div>
+                <div class="share1 share2">转发·2元</div>
+                <div class="share1">距结束
+                    <text>300</text>小时</div>
+            </div>
+        </div>
+    </div>
+    <div class="w710">
+        <div class="reward">
+            <div class="sum_txt">
+                <div class="sumTxt">职位详情</div>
+            </div>
+            <div class="reward_detail font32 line48">
+                <div>1. 如果您成功入职满一个月，可获得奖金100元</div>
+                <div>2. 职位转发微信朋友一次，获得2元， </div>
+                <div>3. 微信朋友成功入职，您获200元 </div>
+            </div>
+        </div>
+    </div>
+    <div class="w710">
+        <div class="reward">
+            <div class="sum_txt">
+                <div class="sumTxt">公司简介</div>
+            </div>
+            <div class="reward_detail  font32 line48">
+                <div>广州华路卓企业管理咨询有限公司是一家集网络技术研究、开发;计算机技术开发、技术服务;软件开发;信息技术咨询服务为一体的综合性互</div>
+            </div>
+        </div>
+    </div>
+    <div class="map">
+        <img src="images/map.jpg">
+    </div>
+    <div style="height:1.3rem;width:100%;"></div>
+<div class="mask_cont">
+    <div class="mask" id="mask1" >
+        <div class="tishi">
+            <div class="mask_cont">
+                <div class="tishi_cont">
+                    <div class="tishi_tltl font40 color3">预约报名</div>
+                    <div class="tishi_in" style="">
+                        <div class="tishi_txt flexRowBetween">
+                            <div class="input_before">姓名:</div>
+                            <input value=""></input>
+                        </div>
+                        <div class="tishi_txt flexRowBetween">
+                            <div class="input_before">电话:</div>
+                            <input value=""></input>
+                        </div>
+                        <div class="tishi_txt flexRowBetween">
+                            <div class="input_before">时间:</div>
+                            <input value=""></input>
+                        </div>
+                        <button class="submit_info" onclick="hide()">预约</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mask" id="mask2" onclick="hide()">
+        <div class="tishi">
+            <div class="mask_cont">
+                <div class="tishi_cont" style="align-items:center;display:flex;">
+                    <img src="images/qcored.png" style="margin:0 auto;" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer flexRowBetween font34">
+    <div class="footer1">
+        <img src="images/collect.png"/>
+    </div>
+    <div class="footer1">
+        <img src="images/phone.png"/>
+    </div>
+    <div class="footer1">
+        <div class="footer3" onclick="share()">分享赚钱</div>
+    </div>
+    <div class="footer1 ">
+        <div class="footer3" onclick="sign()">立即报名</div>
+    </div>
+    <div class="footer2">投递简历</div>
+</div>
+</div>
+<script type="text/javascript">
+  function share(){
+    $("#mask1").hide();
+    $("#mask2").toggle();
+  }
+  function sign(){
+    $("#mask2").hide();
+    $("#mask1").toggle();
+  }
+  function hide(){
+    $(".mask").hide();
+  }
+</script>
+</body>
+</html>

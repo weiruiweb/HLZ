@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>领取电话卡</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="divport" content="width=device-width, initial-scale=1">
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+</head>
+<body style="background: #fff;">
+<style>
+.w750{
+    color:#666;
+    width:100%;
+    min-height:100%;
+    background: #fff;
+}
+div{
+  font-size:.36rem;
+  color:#666;
+}
+.phone_note{
+  margin-top:.38rem;
+  line-height:.48rem;
+}
+.phone_infor{
+  margin-top:.55rem;
+}
+.input_before{
+  width:29%;
+  height:.70rem;
+  line-height:.70rem;
+  overflow:hidden;
+  font-size:.38rem;
+  color:#333; 
+}
+.bank_card{
+  width:100%;
+  margin-top:.48rem;
+}
+.bank_card input{
+  width:71%;
+  padding:0 2%;
+  border:solid 1px #ed7101;
+  height:.70rem;
+  line-height:.70rem;
+  font-size:.36rem;
+  border-radius:.10rem;
+}
+.up_icon{
+  width:.28rem;
+  height:.60rem;
+  float:right;
+}
+.up_icon img{
+  width:.27rem;
+  height:.20rem;
+}
+.adreess_input{
+  width:71%;
+  padding:0 2%;
+  border:solid 1px #ed7101;
+  height:.70rem;
+  line-height:.70rem;
+  border-radius:.10rem;
+}
+.adreess_textarea{
+  width:75%;
+}
+.adreess_textarea textarea{
+  width:96%;
+  height:1.20rem;
+  border:solid 1px #ed7101;
+  border-radius:.10rem;
+  padding:2%;
+  font-size: 0.32rem;
+}
+.input_left{
+  width:1.80rem;
+}
+.confirm_bind{
+  width:100%;
+  height:1.1rem;
+  background:#ed7101;
+  line-height:1.1rem;
+  font-size:.40rem;
+  color:#fff;
+  text-align:center;
+  position:fixed;
+  bottom:0;
+}
+a{color:#fff;}
+</style>
+<div class="w750">
+  <div class="p40">
+  <div class="phone_note">限量优惠59元每月！全国流量不限量套餐，电信内购专属！全国流量不限量，包含300分钟通话，超出按0.15元每分钟。填写收件地址后，免费快递送达。</div>
+  <div class="phone_infor" >
+    <div class="">请填写收件信息</div>
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        收件人姓名:
+      </div>
+      <input placeholder="请输入收件人姓名"></input>
+    </div>
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        身份证号:
+      </div>
+      <input placeholder="请输入身份证号"></input>
+    </div>
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        联系电话:
+      </div>
+      <input placeholder="请输入联系电话"></input>
+    </div>
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        配送地址:
+      </div>
+      <div class="flexRowBetween" style="width:75%;">
+            <div class="adreess_input input_left">广东省</div>
+            <div class="adreess_input input_left">
+                <div class="picker">
+                  <div class="up_icon"><img src="images/up_icon.png"></div>
+                </div>
+            </div>
+          </div>
+    </div>
+    <div class="flexRowBetween" style="margin-top: 0.4rem;">
+      <div class="input_before">
+      </div>
+      <div class="adreess_textarea">
+          <textarea placeholder="请填写详细地址，仅限广东省内收获"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="confirm_bind"   bindtap="intoPathRedi" data-path="/pages/use/user">
+  <a href="user.html">立即提交免费送货上门</a>
+</div>
+</div>
+</body>
+</html>

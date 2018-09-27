@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>面试邀请</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="divport" content="width=device-width, initial-scale=1">
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script src="js/jquery-2.1.4.min.js"></script>
+</head>
+<body>
+<style>
+.w750{
+    color:#666;
+    width:100%;
+    min-height:100%;
+    background: #f2f2f2;
+}
+.index_tab{
+  background:#fff;
+  margin-bottom:.30rem;
+}
+.w710{
+  height:3.22rem;
+  border-bottom:solid 1px #d9d9d9;
+  align-items:center;
+  display:flex;
+  margin-bottom:.20rem;
+  background:#fff;
+}
+.job_list{
+  height:2.80rem;
+  width:100%;
+}
+.list_left{
+  width:70%;
+  height:2.80rem;
+}
+.list_right{
+  width:27%;
+  padding-right:3%;
+  height:2.80rem;
+  text-align:right;
+}
+.job_type{
+  height:22%;
+}
+
+.job_company{
+  height:34%;
+  width:100%;
+}
+.treatment{
+  height:22%;
+  width:100%;
+  display:flex;
+  align-items:center;
+}
+.treatment_sort{
+  margin-right:.20rem;
+  padding:0.03rem 0.1rem;
+}
+.treatment_sort img{
+  width:.29rem;
+  height:.29rem;
+  margin-right:0.06rem;
+}
+.company_img{
+  width:16%;
+  height:100%;
+  align-items:center;
+  display:flex;
+}
+.company_img img{
+  width:.80rem;
+  height:100%;
+}
+.company_introuce{
+  width:84%;
+  height:100%;
+}
+.send_datail{
+  width:60%;
+}
+.send_tiem{
+  font-size:.32rem;
+  color:#999;
+}
+.send_need{
+  font-size:.32rem;
+  color:#666;
+}
+.payment{
+  height:66%;
+}
+.hongbao{
+  height:34%;
+  text-align:right;
+  display:flex;
+  align-items:center;
+  width:100%;
+}
+.numner{
+  width:.60rem;
+  height:.60rem;
+  line-height:.60rem;
+  border-radius:50%;
+  background:#ed7101;
+  align-items:center;
+  text-align:center;
+  color:#fff;
+  font-size:.32rem;
+  float:right;
+  position:absolute;
+  right:0;
+}
+.handle{
+  height:3.22rem;
+  width:13%;
+  text-align:center;
+}
+.handle_top{
+  height:50%;
+  width:100%;
+  align-items:center;
+  display:flex;
+  background:#ed7101;
+}
+.handle_bottom{
+  background:#11a983;
+}
+.handle img{
+  width:.50rem;
+  height:.50rem;
+  margin:0 auto;
+}
+.index_tab .active{
+  color:#ed7101;
+  border-bottom:solid 1px #ed7101;
+}
+.job>div{
+  display: none;
+}
+a{color:#fff;}
+</style>
+<div class="w750">
+  <div class="index_tab flexRowBetween">
+    <div class="tab_item active">
+        已拒绝
+    </div>
+    <div class="tab_item">
+        待面试
+    </div>
+    <div class="tab_item">
+        已入职
+    </div>
+    <div class="tab_item">
+        已离职
+    </div>
+  </div>
+  <div class="job">
+    <div style="display: block">
+      <div class="flexRowBetween" style="height:3.22rem;overflow:hidden;width:100%;margin-bottom:.20rem;">
+          <div style="width:87%;height:3.22rem;">
+              <div class="w710">
+                  <div class="job_list flexRowBetween">
+                      <div class="list_left">
+                          <div class="job_type avoidOverflow">UI设计师</div>
+                          <div class="treatment flex font28">
+                              <div class="treatment_sort">
+                                  <img src="images/resume1.png"/>西安</div>
+                              <div class="treatment_sort">
+                                  <img src="images/resume2.png"/>女</div>
+                          </div>
+                          <div class="treatment flex font28">
+                              <div class="treatment_sort">
+                                  <img src="images/resume4.png"/>1-3年</div>
+                              <div class="treatment_sort">
+                                  <img src="images/resume5.png"/>24岁</div>
+                          </div>
+                          <div class="job_company flex font28">
+                              <div class="company_img">
+                                  <img src="images/navbar2-a.png"/>
+                              </div>
+                              <div class="company_name avoidOverflow font38">华路卓咨询有限公司</div>
+                          </div>
+                      </div>
+                      <div class="list_right">
+                          <div class="payment">2K-10K</div>
+                          <div class="hongbao font34">
+                              <div style="width:100%;text-align: right;">06月5号</div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="handle">
+              <div class="handle_top">
+                  <img src="images/interview2.png"/>
+              </div>
+              <div class="handle_top handle_bottom">
+                  <img src="images/interview1.png"/>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(function(){
+      function tabs(tabTit,on,tabCon){
+          $(tabTit).children().click(function(){
+              $(this).addClass(on).siblings().removeClass(on);
+              var index = $(tabTit).children().index(this);
+              $(tabCon).children().eq(index).show().siblings().hide();
+        });
+    };
+      tabs(".index_tab","active",".job");
+  });
+</script>
+</body>
+</html>

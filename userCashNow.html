@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>下级</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="divport" content="width=device-width, initial-scale=1">
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script src="js/jquery-2.1.4.min.js"></script>
+</head>
+<body>
+<style>
+.cashNow{
+  margin-top:.20rem;
+}
+
+.uploder_all{
+  align-items:center;
+  padding:.30rem 0;
+}
+.uploder_item{
+  width:46.5%;
+  height:4.04rem;
+  line-height:1.60rem;
+  text-align:center;
+  overflow:hidden;
+  border:solid 1px #b5b5b5;
+  background:#f2f2f2;
+}
+
+.uploader_input{
+  width:100%;
+  height:2.80rem;
+  line-height:3.6rem;
+  overflow:hidden;
+}
+.uploader_input img{
+  width:100%;
+  height:100%;
+}
+
+.upload_noe{
+  height:.82rem;
+  line-height:.82rem;
+  overflow:hidden;
+  font-size:.30rem;
+  color:#666;
+}
+.cashNow input{
+  border:none;
+  background: #fff;
+}
+a{color:#fff;}
+</style>
+<div class="w750">
+  <div class="cashNow">
+    <div class="p40">
+      <div style="height:1.2rem;line-height:1.2rem;color:#444;" class="font32">请输入体现金额</div>
+      <div class="flexRowBetween">
+        <div style="width:91%;height:1rem;border:solid 1px #ed7101;border-radius:.10rem;padding:0 2%;">
+          <input style="height:1rem;line-height:.80rem;font-size:.30rem;"></input>
+        </div>
+        <div style="font-size:.24rem;color:#666;width:5%;">元</div>
+      </div>
+    </div>
+  </div>
+  <div id="upload" style="margin-top:.80rem;">
+    <div class="p40">
+      <div class="uploder">
+          <div class="uploder_all flexRowBetween">
+           <!-- <block wx:for="{{web_imgData}}"> -->
+              <div class="uploder_item" bindtap="upLoadImg" >
+                  <div class="uploader_input">
+                    <img src="images/cash_icon1.png" style="width:.82rem;height:.82rem;">
+                  </div>
+                  <div class="upload_noe">上传身份证正面</div>
+              </div>
+            <!--</block>-->
+             <div class="uploder_item" bindtap="upLoadImg" >
+                <div class="uploader_input">
+                  <img src="images/cash_icon1.png" style="width:.82rem;height:.82rem;">
+                </div>
+                <div class="upload_noe">上传身份证反面</div>
+              </div>
+
+
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="confirm_bind">
+    <a href="userCash.html">确认体现</a>
+  </div>
+</div>
+<script type="text/javascript">
+  $(function(){
+      function tabs(tabTit,on,tabCon){
+          $(tabTit).children().click(function(){
+              $(this).addClass(on).siblings().removeClass(on);
+              var index = $(tabTit).children().index(this);
+              $(tabCon).children().eq(index).show().siblings().hide();
+        });
+    };
+      tabs(".index_tab","active",".tab_cont");
+  });
+</script>
+</body>
+</html>
