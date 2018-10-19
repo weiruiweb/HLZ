@@ -247,7 +247,8 @@ a{color:#333;}
                 };
                 const callback = (res)=>{
                     if(res.info.data.length>0){
-                        self.mainData = res.info.data[0]
+                        self.mainData = res.info.data[0];
+                        self.mainData.info.workExperience = self.mainData.info.workExperience?self.mainData.info.workExperience:[]
                     }else{
                         alert('数据错误')
                     }
@@ -255,6 +256,22 @@ a{color:#333;}
                 }
                 window.base.userGet(postData,callback);
             },  
+
+            deleteExperience(e){
+                const self = this;
+                
+                self.mainData.info.workExperience.splice(index, 1); 
+                var postData ={
+                    data:{
+                        workExperience:self.mainData.info.workExperience
+                    },
+                    token:window.base.token
+                };
+                var callback = (res)=>{
+
+                };
+                
+            }
 
            
 

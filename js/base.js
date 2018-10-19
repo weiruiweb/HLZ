@@ -1,5 +1,19 @@
 window.base={
     g_restUrl:'http://solelytech.iicp.net/hualuzhuo/public/index.php/api/v1/',
+    
+    getUserToken:function(){
+        var href =  window.location.href;
+        console.log('href',href);
+        var token = localStorage.getItem('user_token');
+        if(token){
+            return token;
+        }else{
+            localStorage.setItem('user_token','632a55c5dd84a010e6f30bc2eabf4834');
+            localStorage.setItem('user_no','res.info.user_no');
+            return localStorage.getItem('user_token');
+        }
+        
+    },
 
     getData:function(params){
         if(!params.type){
@@ -416,6 +430,14 @@ window.base={
     
     getDataSet:function(e) {   
         return e.target.dataset; 
+    },
+
+    getSelectValue:function(e) {   
+        return e.target.selectedOptions[0].text;
+    },
+
+    getHtmlValue:function(e) {   
+        return e.target.innerText;
     },
 
 

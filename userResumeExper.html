@@ -220,13 +220,13 @@ a{color:#fff;}
                 
                 mainData:[],
                 workExperience:[],
-                  submitData:{
-                    companyName:'',
-                    startDate:'',
-                    endDate:'',
-                    job:'',
-                    content:''
-                  },
+                submitData:{
+                  companyName:'',
+                  startDate:'',
+                  endDate:'',
+                  job:'',
+                  content:''
+                },
               
                 
                 
@@ -257,19 +257,18 @@ a{color:#fff;}
         methods:{
 
           userGet(){
+
             const self = this;
             const postData = {};
-            postData.token = "6f9abbd286b4791dea3cb8699b2873f0";
+            postData.token = window.base.token;
             const callback = (res)=>{
               if(res.info.data.length>0){
-                
-                self.mainData = res.info.data[0];
-               
-
-
+                self.mainData = res.info.data[0].info;
+                self.mainData.workExperience = self.mainData.workExperience?self.mainData.workExperience:[]
               }
             };
-             window.base.userGet(postData,callback);
+            window.base.userGet(postData,callback);
+
           },
 
 
@@ -280,9 +279,12 @@ a{color:#fff;}
           userInfoUpdate(){
             const self = this;
             const postData = {};
-            postData.token = "6f9abbd286b4791dea3cb8699b2873f0";
+            postData.token = window.base.token;
             postData.data = {};
-            postData.data.workExperience = window.base.cloneForm(self.submitData);
+            console.log('workExperience',self.mainData);
+            self.mainData.workExperience.push(self.submitData);
+            postData.data.workExperience = self.mainData.workExperience;
+            
             const callback = (data)=>{
               if(data.solely_code==100000){
                 alert('完善成功')
@@ -303,6 +305,7 @@ a{color:#fff;}
             const self = this;
             var phone = self.submitData.phone;
             const pass = window.base.checkComplete(self.submitData);
+            
             if(pass){    
                 self.userInfoUpdate();       
             }else{

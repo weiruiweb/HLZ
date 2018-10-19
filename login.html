@@ -126,9 +126,7 @@
                 pageArray:[],
                 allPages:0,
                 linkPage:'',
-
             }
-
         },
         
         created: function () {
@@ -147,7 +145,7 @@
                    
                 }else{
                     alert('请输入账号密码','none')
-                }
+                };
                 const callback = (res)=>{
                   if(res.solely_code==100000){
               		localStorage.setItem('token',res.token);

@@ -145,13 +145,13 @@ a{
 
                 <div class="choose" id="choose" >
                     <div class="choose_item font32" id="tab_cont" :style="num==0?'display:block':''">
-                        <div class="choose_list choose_this" :data-price="1" @click="menuClick">
+                        <div class="choose_list" :class="[stringifyOrder=='{}'?'choose_this':'']" data-order="none" @click="changeSearch">
                             不限
                         </div>
-                        <div class="choose_list choose_this" :data-price="2" @click="menuClick">
+                        <div class="choose_list" :class="[stringifyOrder=='{price:desc}'?'choose_this':'']" data-order="price:desc" @click="changeSearch">
                             由高到低
                         </div>
-                        <div class="choose_list" :data-price="3" @click="menuClick">
+                        <div class="choose_list" :class="[stringifyOrder=='{price:asc}'?'choose_this':'']" data-order="price:asc" @click="changeSearch">
                             由低到高
                         </div>
                         <button class="btn_submit">确认</button>
@@ -166,10 +166,10 @@ a{
                     </div>
                     <div class="choose_item font32" id="tab_cont" :style="num==2?'display:block':''">
                         
-                        <div class="choose_list" :data-time="1" @click="menuClick">
+                        <div class="choose_list" :data-time="1" @click="changeSearch">
                             由近到远
                         </div>
-                        <div class="choose_list" :data-time="2" @click="menuClick">
+                        <div class="choose_list" :data-time="2" @click="changeSearch">
                             由远到近
                         </div>
                         <button class="btn_submit">确认</button>
@@ -249,24 +249,27 @@ a{
                 
                 paginate: {
                     
-                    count: 0,
-                    currentPage: 1,
-                    pagesize: 6,
-                    is_page: true,
                 },
 
                 searchItem:{
                    type:1,
                    category_id:33  
                 },
+
                 pageArray:[],
                 allPages:0,
                 linkPage:'',
-                num:'100000'
+                num:'100000',
+                order:{}
             }   
 
         },
-        
+        computed: {
+            // 计算属性的 getter
+            stringifyOrder: function () {
+              return JSON.stringify(this.order).replace(/\"/g,"");
+            }
+        },
         created: function () {
 
             this.productGet();
@@ -275,9 +278,19 @@ a{
 
         methods:{
 
-            productGet(){
+            productGet(isNew){
                 const self = this;
-                const postData =  window.base.cloneForm(self.searchItem)
+                if(isNew){
+                    self.mainData = [];
+                    self.paginate = {
+                        count: 0,
+                        currentPage: 1,
+                        pagesize: 6,
+                        is_page: true,
+                    }
+                };
+                const postData =  window.base.cloneForm(self.searchItem);
+                postData.order =  window.base.cloneForm(self.order);
                 postData.getAfter = {
                     user:{
                         tableName:'userInfo',
@@ -343,27 +356,19 @@ a{
                 console.log(window.base.getDataSet(e).num)
             },
 
-            menuClick: function (e) {
+            changeSearch(e){
                 const self = this;
-                const type = e.currentTarget.dataset.type;
-               
-                self.changeSearch(type);
+                const order = e.currentTarget.dataset.order;
+                self.order = {};
+                if(order!='none'){
+                    var orderArray = order.split(':');
+                    self.order[orderArray[0]] = orderArray[1]
+                };
+                console.log('order',self.order);
+                self.productGet(true);
             },
 
-              changeSearch(type){
-                const self = this;
-            
-                self.searchItem = {};
-                if(type=='1'){
-
-                }else if(type=='2'){
-
-                }else if(type=='3'){
-                  
-                }
-               
-                self.productGet();
-              },
+              
         }
     });            
 </script>
