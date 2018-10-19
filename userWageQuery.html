@@ -109,13 +109,13 @@ a{color:#fff;}
 <div class="w750">
 <div class="user_sort font36">
   <div class="user_item">
-    <div class="query">身份证</div>
+     <input placeholder="请输入身份证号" class="font36" v-model='submitData.phone'></input>
   </div>
   <div class="user_item">
-    <div  class="query">姓名</div>
+     <input placeholder="请输入姓名" class="font36" v-model='submitData.title'></input>
   </div>
   <div class="user_item">
-    <div class="query_click">查询</div>
+    <div class="query_click" v-on:click="submit">查询</div>
   </div>
 </div>
 
@@ -130,15 +130,15 @@ a{color:#fff;}
       </div>
     </div>
     <div class="cash_cont flex font32">
-      <div class="tlt_item">总工时:24小时</div>
-      <div class="tlt_item">单价:8000</div>
-      <div class="tlt_item">补贴:2200元</div>
-      <div class="tlt_item">扣款:90元</div>
-      <div class="tlt_item">手续费:8099</div>
-      <div class="tlt_item">扣个税:00</div>
-      <div class="tlt_item">应发工资:2200元</div>
-      <div class="tlt_item">借支：90元</div>
-      <div class="tlt_item" style="color:#ed7100">待发工资：90元</div>
+      <div class="tlt_item">总工时:{{mainData.passage_array?mainData.passage_array.total:''}}</div>
+      <div class="tlt_item">单价:{{mainData.passage_array?mainData.passage_array.price:''}}</div>
+      <div class="tlt_item">补贴:{{mainData.passage_array?mainData.passage_array.allowance:''}}</div>
+      <div class="tlt_item">扣款:{{mainData.passage_array?mainData.passage_array.discount:''}}</div>
+      <div class="tlt_item">手续费:{{mainData.passage_array?mainData.passage_array.fee:''}}</div>
+      <div class="tlt_item">扣个税:{{mainData.passage_array?mainData.passage_array.tax:''}}</div>
+      <div class="tlt_item">应发工资:{{mainData.passage_array?mainData.passage_array.salary:''}}</div>
+      <div class="tlt_item">借支：{{mainData.passage_array?mainData.passage_array.total:''}}</div>
+      <div class="tlt_item" style="color:#ed7100">待发工资：{{mainData.passage_array?mainData.passage_array.aSalary:''}}</div>
     </div>
     
   </div>
@@ -154,7 +154,8 @@ a{color:#fff;}
                 
                 mainData:[],
                 submitData:{
-                  name:''
+                  title:'',
+                  phone:''
                 },
                 
                 paginate: {
@@ -178,7 +179,7 @@ a{color:#fff;}
         
         created: function () {
 
-            this.messageGet()
+            
         },
 
         methods:{
@@ -189,20 +190,32 @@ a{color:#fff;}
                 token:'aeb3fc757b6cfc99cb98338e6daca6c1',
                 paginate:window.base.cloneForm(self.paginate),
                 searchItem:{
-                    type:6,
-                    user_no:'U910872296194660'
+                    type:3,
+                    user_type:2,
+                    title:self.submitData.title,
+                    phone:self.submitData.phone
                 }
               };
               const callback = (res)=>{
                   if(res.info.data.length>0){
-                      self.mainData.push.apply(self.mainData,res.info.data);
+                      self.mainData=res.info.data[0];
                   }else{
-                      alert('没有更多了')
+                      alert('没有信息！')
                   }
                   console.log(self.mainData)
               }
               window.base.messageGet(postData,callback);
             },  
+
+             submit(){
+                const self = this;
+                const pass = window.base.checkComplete(self.submitData);
+                if(pass){
+                    self.messageGet();       
+                }else{
+                  alert('请补全信息');
+                };
+              },  
 
             intoDetail(e) {
                 var self = this;
