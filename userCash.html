@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+c<!DOCTYPE html>
 <html lang="en">
 <head>
 <title>账户信息</title>
@@ -9,7 +9,10 @@
 <meta name="divport" content="width=device-width, initial-scale=1">
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
-<script src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
 </head>
 <body>
 <style>
@@ -113,6 +116,7 @@
   margin-bottom: 0.2rem;
 }
 </style>
+<div id="app">
 <div class="w750">
     <div class="banner">
         <div class="p40">
@@ -122,22 +126,22 @@
             <div class="banner_bottom flexRowBetween">
                 <div class="user_left">
                     <div style="font-size:.46rem;color:#fff;width:100%;height:60%;">
-                        华路卓
+                       {{userData.nickname}}
                     </div>
                     <div class="flex">
                       <a class="flex" style="width:60%;height:40%;" href="userCashCard.html">
                           <div class="flex" style="margin-right:.40rem;">
                               <div class="user_card" style="margin-right:.20rem;"><img src="images/accout1.png" /></div>
-                              <div class="font32 color1">银行卡体现</div>
+                              <div class="font32 color1">绑定银行卡</div>
                           </div>  
                       </a>
-                      <div class="font34 color1" style="width:40%;"><a href="userCashNow.html">体现 >> </a></div>
+                      <div class="font34 color1" style="width:40%;"><a href="userCashNow.html">提现 >> </a></div>
                     </div>
                 </div>
                 <div class="user_right">
                     <div class="user_img">
-                        <open-data type="userAvatarUrl"></open-data>
-                    </div>
+                        <img class="user_img" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLicBxBs5icUzUlaSePibpqicPZO6FwKqibiaCJZkSPzibgOl9dc4Wr4TancmXJlU1ctJ5jf37ZMOFdicaf6Q/132" />
+                      </div>
                 </div>
             </div>
         </div>
@@ -146,7 +150,7 @@
         <div class="user_item  flexRowBetween">
             <div style="width:98%;">
                 <div class="item_top">已提现</div>
-                <div class="item_bottom">100</div>
+                <div class="item_bottom">{{computeData?computeData:''}}.00</div>
             </div>
             <div class="vertical_line">
                 <div style="width:1px;height:100%;border-left:dashed 1px #ed7101;"></div>
@@ -155,7 +159,7 @@
         <div class="user_item flexRowBetween">
             <div style="width:98%;">
                 <div class="item_top">余额</div>
-                <div class="item_bottom">100</div>
+                <div class="item_bottom">{{userData.info?userData.info.balance:''}}</div>
             </div>
             <div class="vertical_line">
                 <div style="width:1px;height:100%;border-left:dashed 1px #ed7101;"></div>
@@ -167,7 +171,7 @@
     </div>
     <div class="index_tab  flexRowBetween">
         <div class="tab_item active">
-            体现记录
+            提现记录
         </div>
         <div class="tab_item">
             奖励记录
@@ -184,14 +188,11 @@
                         时间
                     </div>
                 </div>
-                <div class="cash_cont flexRowBetween">
-                    <div class="tlt_item">200元</div>
-                    <div class="tlt_item"> 2016.09.08</div>
+                <div class="cash_cont flexRowBetween" v-for="item in mainData">
+                    <div class="tlt_item">{{item.count}}元</div>
+                    <div class="tlt_item">{{item.create_time}}<span v-if="item.status==0" class="color">(审核中)</span></div>
                 </div>
-                <div class="cash_cont flexRowBetween">
-                    <div class="tlt_item">200元</div>
-                    <div class="tlt_item"> 2016.09.08</div>
-                </div>
+                
             </div>
         </div>
         <div class="cash font34">
@@ -221,6 +222,121 @@
         </div>
     </div>
 </div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                userData:[],
+                mainData:[],
+                computeData:[],
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                  type:2,
+                  count:['<','0'],
+                  status:['in',[0,1]]
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+            
+            this.userGet();
+            this.getMainData();
+            this.getComputeData();
+        },
+
+        methods:{
+
+            userGet(){
+                const self = this;
+                const postData = {
+                    token:"3b5a3f60c49d78638ac036a6ff872259",
+                    thirdapp_id:2
+                };
+                const callback = (res)=>{
+                    if(res.info.data.length>0){
+                        self.userData = res.info.data[0]
+                    }else{
+                        alert('数据错误')
+                    }
+                    console.log(self.mainData)
+                }
+                window.base.userGet(postData,callback);
+            },  
+
+            getMainData(){
+                const self = this;
+                const postData = {};
+                postData.paginate = window.base.cloneForm(self.paginate);
+                postData.token = "3b5a3f60c49d78638ac036a6ff872259";
+                postData.searchItem = window.base.cloneForm(self.searchItem)
+                postData.order = {
+                  create_time:'desc',
+                };
+                const callback = (res)=>{
+                  if(res.info.data.length>0){
+                    self.mainData.push.apply(self.mainData,res.info.data);
+                  }else{
+                  
+                    alert('没有更多了');
+                  };
+                };
+                window.base.flowLogGet(postData,callback);
+            },
+
+            getComputeData(){
+              const self = this;
+              const postData = {};
+              postData.data = {
+                FlowLog:{
+                  compute:{
+                    count:'sum',
+                  },
+                  
+                  searchItem:{
+                    user_no:self.userData.user_no,
+                    type:2,
+                    count:['<',0],
+                    status:['in',[0,1]]
+                  }
+                }
+              };
+              const callback = (res)=>{
+                
+                  self.computeData = -res.info.FlowLog.countsum;
+              
+                console.log(self.computeData)
+              };
+              window.base.flowLogCompute(postData,callback);
+            },
+
+
+             intoDetail(e) {
+                var self = this;
+                var art_id = window.base.getDataSet(e).id;
+                window.location.href = "./indexDetail.html?id=" + art_id;
+            },   
+
+           
+        }
+    });            
+</script>
 <script type="text/javascript">
   $(function(){
       function tabs(tabTit,on,tabCon){

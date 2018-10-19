@@ -9,7 +9,10 @@
 <meta name="divport" content="width=device-width, initial-scale=1">
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
-<script src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
 </head>
 <body>
 <style>
@@ -75,6 +78,7 @@ div{
     height:100%;
 }
 .company_name{
+    width: 100%;
     font-size:0.38rem;
     color:#333;
     height:33.33%;
@@ -272,155 +276,248 @@ div{
     display: none;
 }
 </style>
-<div class="w750">
-    <div class="job">
-        <div class="w710">
-            <div class="job_list flexRowBetween">
-                <div class="list_left">
-                    <div class="flexRowBetween">
-                        <div class="job_type avoidOverflow font40 color3">UI设计师</div>
-                        <div class="font38 color">2k-4k</div>
-                    </div>
-                    <div class="job_address  flexRowBetween">
-                        <div class="address font36 color6">工作地点：高新大都荟</div>
-                        <div class="time font32 color9">06月05号</div>
-                    </div>
-                    <div class="job_company">
-                        <div class="sort">
-                            <div class="company_introuce">
-                                <div class="company_name flex">
-                                    <div class="sort_items font30 color9">人数:
-                                        <text class="color3">3-4人</text>
+<div id ="app">
+    <div class="w750">
+        <div class="job">
+            <div class="w710">
+                <div class="job_list flexRowBetween">
+                    <div class="list_left">
+                        <div class="flexRowBetween">
+                            <div class="job_type avoidOverflow font40 color3">{{mainData.title}}</div>
+                            <div class="font38 color">{{mainData.price}}</div>
+                        </div>
+                        <div class="job_address  flexRowBetween">
+                            <div class="address font36 color6">工作地点：高新大都荟</div>
+                            <div class="time font32 color9">{{mainData.create_time}}</div>
+                        </div>
+
+                        <div class="job_company">
+                            <div class="sort">
+                                <div class="company_introuce">
+                                    <div class="company_name flex">
+                                        <div class="sort_items font30 color9">人数:{{mainData.stock}}人
+                                        </div>
+                                        <div class="sort_items font30 color9">年龄:
+                                            {{mainData.age}}
+                                        </div>
+                                        <div class="sort_items font30 color9">性别:
+                                            {{mainData.gender}}
+                                        </div>
                                     </div>
-                                    <div class="sort_items font30 color9">年龄:
-                                        <text class="color3">31-40</text>
+                                    <div class="company_name flex">
+                                        <div class="sort_items font30 color9">学历:
+                                            {{mainData.education}}
+                                        </div>
+                                        <div class="sort_items font30 color9">经验:
+                                            {{mainData.experience}}
+                                        </div>
                                     </div>
-                                    <div class="sort_items font30 color9">性别:
-                                        <text class="color3">男女不限</text>
+                                    <div class="treatment flex font30 color6">
+                                        <div class="treatment_sort">五险一金</div>
+                                        <div class="treatment_sort">加班补偿</div>
+                                        <div class="treatment_sort">交通方便</div>
                                     </div>
-                                </div>
-                                <div class="company_name flex">
-                                    <div class="sort_items font30 color9">学历:
-                                        <text class="color3">大专</text>
-                                    </div>
-                                    <div class="sort_items font30 color9">经验:
-                                        <text class="color3">3-4年</text>
-                                    </div>
-                                </div>
-                                <div class="treatment flex font30 color6">
-                                    <div class="treatment_sort">五险一金</div>
-                                    <div class="treatment_sort">加班补偿</div>
-                                    <div class="treatment_sort">交通方便</div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="hongbao">
-                            <img src="images/hongbao.png" />
-                            <div class="hongbao_money">¥300</div>
+
+                            <div class="hongbao">
+                                <img src="images/hongbao.png" />
+                                <div class="hongbao_money">¥300</div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="w710">
-        <div class="reward">
-            <div class="sum_txt flexRowBetween">
-                <div class="sumTxt">奖励</div>
-                <div class="pencil font28" style="width:32%">
-                    悬赏人数：100人
+        <div class="w710">
+            <div class="reward">
+                <div class="sum_txt flexRowBetween">
+                    <div class="sumTxt">奖励</div>
+                    <div class="pencil font28" style="width:32%">
+                        悬赏人数：100人
+                    </div>
+                </div>
+                <div class="reward_detail font32 line48">
+                    <div>如果您成功入职满一个月，可获得奖金100元</div>
+                    <div>职位转发微信朋友一次，获得2元， </div>
+                    <div>微信朋友成功入职，您获200元 </div>
+                </div>
+                <div class="share flexRowBetween font34">
+                    <div class="share1 share2">入职·300元</div>
+                    <div class="share1 share2">转发·2元</div>
+                    <div class="share1">距结束
+                        <text>300</text>小时</div>
                 </div>
             </div>
-            <div class="reward_detail font32 line48">
-                <div>如果您成功入职满一个月，可获得奖金100元</div>
-                <div>职位转发微信朋友一次，获得2元， </div>
-                <div>微信朋友成功入职，您获200元 </div>
-            </div>
-            <div class="share flexRowBetween font34">
-                <div class="share1 share2">入职·300元</div>
-                <div class="share1 share2">转发·2元</div>
-                <div class="share1">距结束
-                    <text>300</text>小时</div>
+        </div>
+        <div class="w710">
+            <div class="reward">
+                <div class="sum_txt">
+                    <div class="sumTxt">职位详情</div>
+                </div>
+                <div class="reward_detail font32 line48">
+                    <div>1. 如果您成功入职满一个月，可获得奖金100元</div>
+                    <div>2. 职位转发微信朋友一次，获得2元， </div>
+                    <div>3. 微信朋友成功入职，您获200元 </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="w710">
-        <div class="reward">
-            <div class="sum_txt">
-                <div class="sumTxt">职位详情</div>
-            </div>
-            <div class="reward_detail font32 line48">
-                <div>1. 如果您成功入职满一个月，可获得奖金100元</div>
-                <div>2. 职位转发微信朋友一次，获得2元， </div>
-                <div>3. 微信朋友成功入职，您获200元 </div>
+        <div class="w710">
+            <div class="reward">
+                <div class="sum_txt">
+                    <div class="sumTxt">公司简介</div>
+                </div>
+                <div class="reward_detail  font32 line48">
+                    <div>广州华路卓企业管理咨询有限公司是一家集网络技术研究、开发;计算机技术开发、技术服务;软件开发;信息技术咨询服务为一体的综合性互</div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="w710">
-        <div class="reward">
-            <div class="sum_txt">
-                <div class="sumTxt">公司简介</div>
-            </div>
-            <div class="reward_detail  font32 line48">
-                <div>广州华路卓企业管理咨询有限公司是一家集网络技术研究、开发;计算机技术开发、技术服务;软件开发;信息技术咨询服务为一体的综合性互</div>
-            </div>
+        <div class="map">
+            <img src="images/map.jpg">
         </div>
-    </div>
-    <div class="map">
-        <img src="images/map.jpg">
-    </div>
-    <div style="height:1.3rem;width:100%;"></div>
-<div class="mask_cont">
-    <div class="mask" id="mask1" >
-        <div class="tishi">
-            <div class="mask_cont">
-                <div class="tishi_cont">
-                    <div class="tishi_tltl font40 color3">预约报名</div>
-                    <div class="tishi_in" style="">
-                        <div class="tishi_txt flexRowBetween">
-                            <div class="input_before">姓名:</div>
-                            <input value=""></input>
+        <div style="height:1.3rem;width:100%;"></div>
+        <div class="mask_cont">
+            <div class="mask" id="mask1" >
+                <div class="tishi">
+                    <div class="mask_cont">
+                        <div class="tishi_cont">
+                            <div class="tishi_tltl font40 color3">预约报名</div>
+                            <div class="tishi_in" style="">
+                                <div class="tishi_txt flexRowBetween">
+                                    <div class="input_before">姓名:</div>
+                                    <input value=""></input>
+                                </div>
+                                <div class="tishi_txt flexRowBetween">
+                                    <div class="input_before">电话:</div>
+                                    <input value=""></input>
+                                </div>
+                                <div class="tishi_txt flexRowBetween">
+                                    <div class="input_before">时间:</div>
+                                    <input value=""></input>
+                                </div>
+                                <button class="submit_info" onclick="hide()">预约</button>
+                            </div>
                         </div>
-                        <div class="tishi_txt flexRowBetween">
-                            <div class="input_before">电话:</div>
-                            <input value=""></input>
+                    </div>
+                </div>
+            </div>
+            <div class="mask" id="mask2" onclick="hide()">
+                <div class="tishi">
+                    <div class="mask_cont">
+                        <div class="tishi_cont" style="align-items:center;display:flex;">
+                            <img src="images/qcored.png" style="margin:0 auto;" />
                         </div>
-                        <div class="tishi_txt flexRowBetween">
-                            <div class="input_before">时间:</div>
-                            <input value=""></input>
-                        </div>
-                        <button class="submit_info" onclick="hide()">预约</button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="mask" id="mask2" onclick="hide()">
-        <div class="tishi">
-            <div class="mask_cont">
-                <div class="tishi_cont" style="align-items:center;display:flex;">
-                    <img src="images/qcored.png" style="margin:0 auto;" />
-                </div>
+        <div class="footer flexRowBetween font34">
+            <div class="footer1">
+                <img src="images/collect.png"/>
             </div>
+            <div class="footer1">
+                <img src="images/phone.png"/>
+            </div>
+            <div class="footer1">
+                <div class="footer3" onclick="share()">分享赚钱</div>
+            </div>
+           
+            <div class="footer2"  v-on:click="addOrder">投递简历</div>
         </div>
     </div>
 </div>
-<div class="footer flexRowBetween font34">
-    <div class="footer1">
-        <img src="images/collect.png"/>
-    </div>
-    <div class="footer1">
-        <img src="images/phone.png"/>
-    </div>
-    <div class="footer1">
-        <div class="footer3" onclick="share()">分享赚钱</div>
-    </div>
-    <div class="footer1 ">
-        <div class="footer3" onclick="sign()">立即报名</div>
-    </div>
-    <div class="footer2">投递简历</div>
-</div>
-</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+                submitData:{
+                   login_name:'',
+                   password:''
+                },
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+
+            this.productGet()
+        },
+
+        methods:{
+
+            productGet(){
+                const self = this;
+                const postData = {
+                    searchItem:{
+                       id:window.base.GetRequest().id,
+                    }
+                };
+                const callback = (res)=>{
+                    if(res.info.data.length>0){
+                        self.mainData = res.info.data[0]
+                    }else{
+                        alert('数据错误')
+                    }
+                    console.log(self.mainData)
+                }
+                window.base.productGet(postData,callback);
+            },  
+
+              addOrder(){
+                const self = this;
+                const postData = {
+                  token:'b4aaf06bc623592630345c0993176164',
+                  product:[
+                    {id:window.base.GetRequest().id,count:1}
+                  ],
+                  pay:{balance:0},
+                  type:1,
+                  
+                };
+                const callback = (res)=>{
+                  if(res&&res.solely_code==100000){
+                    setTimeout(function(){
+                        self.buttonClicked=false
+                    },1000);       
+                  }else{
+                    alert('网络故障')
+                    self.buttonClicked = false
+                  } 
+                };
+                window.base.addOrder(postData,callback);    
+              },
+
+             intoDetail(e) {
+                var self = this;
+                var art_id = window.base.getDataSet(e).id;
+                window.location.href = "./indexDetail.html?id=" + art_id;
+            },   
+
+           
+        }
+    });            
+</script>
 <script type="text/javascript">
   function share(){
     $("#mask1").hide();

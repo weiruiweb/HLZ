@@ -9,6 +9,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+<script src="js/jquery1.8.3.js"></script>
 </head>
 <body>
 <style>
@@ -65,34 +69,100 @@
 	height:100%;
 }
 </style>
-<div class="w750">
-	<div class="w100">
-		<div class="login">
-		    <image src="images/login.png"></image>
-		</div>
-		<div id="login">
-		    <div class="login_input flexRowBetween">
-		        <div class="input_img" style="display: inline;">
-		            <image src="images/login_phone.png"></image>
-		        </div>
-		        <div class="input_in">
-		            <input placeholder="请输入手机号"></input>
-		        </div>
-		    </div>
-		    <div class="login_input flexRowBetween">
-		        <div class="input_img" style="display: inline;">
-		            <image src="images/login_pass.png"></image>
-		        </div>
-		        <div class="input_in" style="width:52%;">
-		            <input placeholder="请输入验证码" style="width:90%"></input>
-		        </div>
-		        <div class="submit_info code_in" style="width:28.5%;height:0.6rem;line-height: 0.6rem;">获取验证码</div>
-		    </div>
-		</div>
-		<div class="submit_info" style="width:93%;margin-top:1.6rem;height:0.8rem;line-height: 0.8rem;">
-		    登录
+<div id="app">
+	<div class="w750">
+		<div class="w100">
+			<div class="login">
+			    <image src="images/login.png"></image>
+			</div>
+			<div id="login">
+			    <div class="login_input flexRowBetween">
+			        <div class="input_img" style="display: inline;">
+			            <image src="images/login_phone.png"></image>
+			        </div>
+			        <div class="input_in">
+			            <input placeholder="请输入手机号" v-model='submitData.login_name'></input>
+			        </div>
+			    </div>
+			    <div class="login_input flexRowBetween">
+			        <div class="input_img" style="display: inline;">
+			            <image src="images/login_pass.png"></image>
+			        </div>
+			        <div class="input_in" style="width:52%;">
+			            <input placeholder="请输入验证码" style="width:90%" v-model='submitData.password'></input>
+			        </div>
+			        <div class="submit_info code_in" style="width:28.5%;height:0.6rem;line-height: 0.6rem;">获取验证码</div>
+			    </div>
+			</div>
+			<div class="submit_info" style="width:93%;margin-top:1.6rem;height:0.8rem;line-height: 0.8rem;" v-on:click="submit">
+			    登录
+			</div>
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+
+                submitData:{
+                   login_name:'',
+                   password:''
+                },
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+
+        },
+
+        methods:{
+
+            submit(){
+                const self = this;
+                const postData = {
+                	login_name:self.submitData.login_name,
+                	password:self.submitData.password
+                }
+                if(window.base.checkComplete(self.submitData)){
+                   
+                }else{
+                    alert('请输入账号密码','none')
+                }
+                const callback = (res)=>{
+                  if(res.solely_code==100000){
+              		localStorage.setItem('token',res.token);
+              		localStorage.setItem('user_no',res.info.user_no);
+                    window.location.href='./userMerchentIn.html'
+                  }else{
+                    alert('网络故障')
+                  }
+                }
+                window.base.login(postData,callback);
+            },  
+        }
+    });
+            
+</script>
 </body>
+
 </html>

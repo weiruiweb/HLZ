@@ -9,6 +9,10 @@
 <meta name="divport" content="width=device-width, initial-scale=1">
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
 </head>
 <body>
 <style>
@@ -28,43 +32,104 @@
 
 a{color:#fff;}
 </style>
-<div class="w750">
-  <div class="sum flex">
-  <div class="sum_in">
-    <div style="width:100%;text-align:center;">
-      <div class="font38">我的余额</div>
-      <div class="color" style="margin-top:.40rem;font-size:0.44rem;">10000.00元</div>
+<div id="app">
+  <div class="w750">
+    <div class="sum flex">
+    <div class="sum_in">
+      <div style="width:100%;text-align:center;">
+        <div class="font38">我的余额</div>
+        <div class="color" style="margin-top:.40rem;font-size:0.44rem;">{{mainData.info?mainData.info.balance:''}}元</div>
+      </div>
     </div>
   </div>
+  <div id="sum" class="font38">
+    <a class="sum_list flexRowBetween" href="userPropertyIn.html">
+        <div class="sum_left flex">
+            <div style="color:#ed7101;margin-right:.30rem;">●</div>
+            <div>总充值</div>
+        </div>
+        <div class="sum_center">
+            11111元
+        </div>
+        <div class="sum_right">
+          <img src="images/next_page.jpg"/>
+        </div>
+    </a>
+  </div>
+  <div id="sum" class="font38">
+    <a class="sum_list flexRowBetween" href="userPropertyOut.html">
+        <div class="sum_left flex">
+            <div style="color:#ed7101;margin-right:.30rem;">●</div>
+            <div>已支出</div>
+        </div>
+        <div class="sum_center">
+            11111元
+        </div>
+        <div class="sum_right">
+          <img src="images/next_page.jpg"/>
+        </div>
+    </a>
+  </div>
+  </div>
 </div>
-<div id="sum" class="font38">
-  <a class="sum_list flexRowBetween" href="userPropertyIn.html">
-      <div class="sum_left flex">
-          <div style="color:#ed7101;margin-right:.30rem;">●</div>
-          <div>总充值</div>
-      </div>
-      <div class="sum_center">
-          11111元
-      </div>
-      <div class="sum_right">
-        <img src="images/next_page.jpg"/>
-      </div>
-  </a>
-</div>
-<div id="sum" class="font38">
-  <a class="sum_list flexRowBetween" href="userPropertyOut.html">
-      <div class="sum_left flex">
-          <div style="color:#ed7101;margin-right:.30rem;">●</div>
-          <div>已支出</div>
-      </div>
-      <div class="sum_center">
-          11111元
-      </div>
-      <div class="sum_right">
-        <img src="images/next_page.jpg"/>
-      </div>
-  </a>
-</div>
-</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+             
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+
+            this.userGet()
+        },
+
+        methods:{
+
+            userGet(){
+                const self = this;
+                const postData = {
+                    token:"6f9abbd286b4791dea3cb8699b2873f0",
+                    thirdapp_id:2
+                };
+                const callback = (res)=>{
+                    if(res.info.data.length>0){
+                        self.mainData = res.info.data[0]
+                    }else{
+                        alert('数据错误')
+                    }
+                    console.log(self.mainData)
+                }
+                window.base.userGet(postData,callback);
+            },  
+
+           
+
+           
+        }
+    });            
+</script>
 </body>
 </html>

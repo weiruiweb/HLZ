@@ -9,6 +9,10 @@
 <meta name="divport" content="width=device-width, initial-scale=1">
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
 </head>
 <body style="background: #fff;">
 <style>
@@ -29,14 +33,79 @@
 }
 a{color:#fff;}
 </style>
-<div class="w750">
- <div class="banner">
-    <img src="images/banner1.jpg">
-  </div>
-  <div class="p40" style="margin-top:.70rem;">
-    <div style="height:.50rem;line-height:.50rem;border-left:solid 2px #ed7100;color:#444;padding-left:.40rem;" class="font40">华路卓企业咨询管理有限公司</div>
-    <div  class="font36" style="padding-left:.42rem;margin-top:.30rem;line-height:.50rem;">华路卓企业咨询管理有限公司华路卓企业咨询管理有限公司华路卓企业咨询管理有限公司华路卓企业咨询管理有限公司华路卓企业咨询管理有限公司</div>
+<div id="app">
+  <div class="w750">
+   <div class="banner">
+      <img src="images/banner1.jpg">
+    </div>
+    <div class="p40" style="margin-top:.70rem;">
+      <div style="height:.50rem;line-height:.50rem;border-left:solid 2px #ed7100;color:#444;padding-left:.40rem;" class="font40">{{mainData.title}}</div>
+      <div  class="font36" style="padding-left:.42rem;margin-top:.30rem;line-height:.50rem;"><p class="p1" v-html="mainData.content"></p></div>
+    </div>
   </div>
 </div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+                submitData:{
+                   login_name:'',
+                   password:''
+                },
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+
+            this.articleGet()
+        },
+
+        methods:{
+
+            articleGet(){
+                const self = this;
+                const postData = {
+                    searchItem:{
+                       id:window.base.GetRequest().id,
+                    }
+                };
+                const callback = (res)=>{
+                    if(res.info.data.length>0){
+                        self.mainData = res.info.data[0]
+                    }else{
+                        alert('数据错误')
+                    }
+                    console.log(self.mainData)
+                }
+                window.base.articleGet(postData,callback);
+            },  
+
+              
+
+           
+        }
+    });            
+</script>
 </body>
 </html>

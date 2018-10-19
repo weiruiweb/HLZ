@@ -9,6 +9,10 @@
 <meta name="divport" content="width=device-width, initial-scale=1">
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
 </head>
 <body>
 <style>
@@ -34,10 +38,10 @@
   line-height:2.8rem;
   overflow:hidden;
 }
-.uploader_input img{
+/*.uploader_input img{
   width:100%;
   height:100%;
-}
+}*/
 .upload_noe{
   height:.92rem;
   line-height:.92rem;
@@ -46,115 +50,252 @@
   color:#666;
 }
 </style>
-<div class="w750">
-  <div class="p40">
-  <div class="sum_txt">
-    <div class="sumTxt">基础信息</div>
-  </div>
-  <div class="phone_infor" >
-    <div class="bank_card flexRowBetween">
-      <div class="input_before">
-        公司名称:
-      </div>
-      <input value="华路卓"></input>
-      <div class="pencil">
-        <img src="images/pencil.png">
-      </div>
+<div id="app">
+  <div class="w750">
+    <div class="p40">
+    <div class="sum_txt">
+      <div class="sumTxt">基础信息</div>
     </div>
-    <div class="bank_card flexRowBetween">
-      <div class="input_before">
-        联系人:
-      </div>
-      <input value="华路卓"></input>
-      <div class="pencil">
-        <img src="images/pencil.png">
-      </div>
-    </div>
-    <div class="bank_card flexRowBetween">
-      <div class="input_before">
-        手机号:
-      </div>
-      <input value="1223233223"></input>
-      <div class="pencil">
-        <img src="images/pencil.png">
-      </div>
-    </div>
-   </div>
-   <div class="phone_infor" >
-    <div class="bank_card flexRowBetween">
-      <div class="input_before">
-        座机号:
-      </div>
-      <input value="019-3233223"></input>
-      <div class="pencil">
-        <img src="images/pencil.png">
-      </div>
-    </div>
-    <div class="bank_card flexRowBetween">
-      <div class="input_before">
-        邮箱号:
-      </div>
-      <input value="@3uiu415222525"></input>
-      <div class="pencil">
-        <img src="images/pencil.png">
-      </div>
-    </div>
-   </div>
-   <div class="phone_infor" >
-    <div class="bank_card flexRowBetween">
-      <div class="input_before">
-        企业规模:
-      </div>
-      <input value="019-3233223"></input>
-      <div class="pencil">
-        <img src="images/pencil.png">
-      </div>
-    </div>
-    <div class="bank_card flexRowBetween">
-      <div class="input_before">
-        地址:
-      </div>
-      <input value="@3uiu415222525"></input>
-      <div class="pencil">
-        <img src="images/pencil.png">
-      </div>
-    </div>
-   </div>
-    <div class="sum_txt" style="border:none;">
-      <div class="sumTxt">公司简介</div>
-    </div>
-    <div class="intro  flexRowBetween">
-      <div class="intro_edit">
-        <img src="images/pencil1.png">
-      </div>
-      <textarea>华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司</textarea>
-    </div>
-    <div class="sum_txt" style="border:none;">
-      <div class="sumTxt">营业执照</div>
-    </div>
-    <div id="upload">
-      
-        <div class="uploder">
-            <div class="uploder_all flexRowBetween">
-             <!-- <block wx:for="{{web_imgData}}"> -->
-                <div class="uploder_item" bindtap="upLoadImg" >
-                    <div class="uploader_input">
-                      <img src="images/cash_icon1.png" style="width:.82rem;height:.82rem;">
-                    </div>
-                    <div class="upload_noe">上传身份证正面</div>
-                </div>
-              <!--</block>-->
-            </div>
+    <div class="phone_infor" >
+      <div class="bank_card flexRowBetween">
+        <div class="input_before">
+          公司名称:
         </div>
-  </div>
+        <input  v-model='submitData.name'></input>
+        <div class="pencil">
+          <img src="images/pencil.png">
+        </div>
+      </div>
+      <div class="bank_card flexRowBetween">
+        <div class="input_before">
+          联系人:
+        </div>
+        <input v-model='submitData.people'></input>
+        <div class="pencil">
+          <img src="images/pencil.png">
+        </div>
+      </div>
+      <div class="bank_card flexRowBetween">
+        <div class="input_before">
+          手机号:
+        </div>
+        <input v-model='submitData.phone'></input>
+        <div class="pencil">
+          <img src="images/pencil.png">
+        </div>
+      </div>
+     </div>
+     <div class="phone_infor" >
+      <div class="bank_card flexRowBetween">
+        <div class="input_before">
+          座机号:
+        </div>
+        <input v-model='submitData.phone'></input>
+        <div class="pencil">
+          <img src="images/pencil.png">
+        </div>
+      </div>
+      <div class="bank_card flexRowBetween">
+        <div class="input_before">
+          邮箱号:
+        </div>
+        <input v-model='submitData.email'></input>
+        <div class="pencil">
+          <img src="images/pencil.png">
+        </div>
+      </div>
+     </div>
+     <div class="phone_infor" >
+      <div class="bank_card flexRowBetween">
+        <div class="input_before">
+          企业规模:
+        </div>
+        <input v-model='submitData.level'></input>
+        <div class="pencil">
+          <img src="images/pencil.png">
+        </div>
+      </div>
+      <div class="bank_card flexRowBetween">
+        <div class="input_before">
+          地址:
+        </div>
+        <input v-model='submitData.address'></input>
+        <div class="pencil">
+          <img src="images/pencil.png">
+        </div>
+      </div>
+     </div>
+      <div class="sum_txt" style="border:none;">
+        <div class="sumTxt">公司简介</div>
+      </div>
+      <div class="intro  flexRowBetween">
+        <div class="intro_edit">
+          <img src="images/pencil1.png">
+        </div>
+        <textarea v-model='submitData.startDate'> </textarea>
+      </div>
+      <div class="sum_txt" style="border:none;">
+        <div class="sumTxt">营业执照</div>
+      </div>
+      <div id="upload">
+        
+          <div class="uploder">
+              <div class="uploder_all flexRowBetween">
+               <div class="uploader_input" v-for="item in submitData.mainImg">
+              <img :src="item.url">
+            </div>
+                  <div class="uploder_item" @change="upload"  :style="submitData.mainImg.length>=1&&submitData.mainImg?'display:none':''" >
+                    <input  type="file" style="opacity: 0;position: absolute;z-index: 1;height:2rem;width: 29%" accept="image/*" 
+                       multiple v-if="isIos"></input>
+                    <input  type="file" style="opacity: 0;position: absolute;z-index: 1;height:2rem;width: 29%" accept="image/*" 
+                      capture="" multiple v-else></input>
+                      <div class="uploader_input">
+                        <img src="images/cash_icon1.png" style="width:.82rem;height:.82rem;">
+                      </div>
+                      <div class="upload_noe">点击添加照片</div>
+                  </div>
+                <!--</block>-->
+              </div>
+          </div>
+    </div>
 
+  </div>
+  <div style="height:1.00rem;width:100%;">
+   
+  </div>
+  <div class="confirm_bind">
+    <div v-on:click="submit">确认修改</a>
+  </div>
+  </div>
 </div>
-<div style="height:1.00rem;width:100%;">
- 
-</div>
-<div class="confirm_bind">
-  <a href="merchantInfor.html">确认修改</a>
-</div>
-</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+                submitData:{
+                  phone:'',
+                  name:'',
+                  people:'',
+                  email:'',
+                  address:'',
+                  level:'',
+                  mainImg:[]
+                },
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+                isIos:false
+            }
+
+        },
+        
+        created: function () {
+
+            this.userGet()
+        },
+
+        methods:{
+
+          userGet(){
+            const self = this;
+            const postData = {};
+            postData.token = "a90968939279ceeb2b396d9086f00ab0";
+            const callback = (res)=>{
+              if(res.info.data.length>0){
+                self.mainData = res.info.data[0];
+                self.submitData.phone = self.mainData.info.phone;
+                self.submitData.name = self.mainData.info.name; 
+                self.submitData.people = self.mainData.info.people; 
+                self.submitData.email = self.mainData.info.email;
+                self.submitData.address = self.mainData.info.address;
+                self.submitData.level = self.mainData.info.level;
+                self.submitData.mainImg = self.mainData.info.mainImg;
+                self.submitData.name = self.mainData.info.name;
+              }
+            };
+             window.base.userGet(postData,callback);
+          },
+
+          upload(e){
+            var self = this;
+            var file = e.target.files[0];
+            console.log(file)
+            var param = new FormData();
+            param.append('file',file,file.name);
+            param.append('thirdapp_id',2);
+            console.log(param.get('file'))
+            
+            var callback = function (res) {
+              if(res.solely_code==100000&&res.info&&res.info.url){ 
+                self.submitData.mainImg.push({url:res.info.url})
+              }
+            };
+            
+            var res = window.base.upLoadImg(param,callback);
+            
+          },
+
+
+
+
+
+
+          userInfoUpdate(){
+            const self = this;
+            const postData = {};
+            postData.token = "a90968939279ceeb2b396d9086f00ab0";
+            postData.data = {};
+            postData.data = window.base.cloneForm(self.submitData);
+            const callback = (data)=>{
+              if(data.solely_code==100000){
+                alert('完善成功')
+                setTimeout(function(){
+                  window.location.href = "./user.html";
+                },300); 
+              }else{
+                alert('网络故障')
+              };
+            };
+             window.base.userInfoUpdate(postData,callback);
+          },
+          
+
+          
+
+          submit(){
+            const self = this;
+            var phone = self.submitData.phone;
+            const pass = window.base.checkComplete(self.submitData);
+            if(pass){
+              if(phone.trim().length != 11 || !/^1[3|4|5|6|7|8|9]\d{9}$/.test(phone)){
+                alert('手机格式不正确')
+              }else{    
+                self.userInfoUpdate();       
+              }
+            }else{
+              alert('请补全信息');
+            };
+          },  
+
+           
+        }
+    });            
+</script>
 </body>
 </html>

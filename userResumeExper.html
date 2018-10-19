@@ -9,6 +9,10 @@
 <meta name="divport" content="width=device-width, initial-scale=1">
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
 </head>
 <body style="background: #fff">
 <style>
@@ -151,59 +155,164 @@ div{
 }
 a{color:#fff;}
 </style>
-<div class="w750">
-    <div class="p40">
-        <div class="sum_txt flexRowBetween">
-            <div class="sumTxt">工作经验</div>
-        </div>
-        <div class="p40 gig">
-            <div class="bank_card flexRowBetween">
-                <div class="input_note">*</div>
-                <div class="input_before">
-                    公司名称:
-                </div>
-                <div class="resume_info">
-                    <input placeholder="请输入公司名称" value=""></input>
-                </div>
-            </div>
-            <div class="bank_card flexRowBetween">
-                <div class="input_note">*</div>
-                <div class="input_before">
-                    开始时间:
-                </div>
-                <div class="resume_info">
-                    <input placeholder="开始时间" value=""></input>
-                </div>
-            </div>
-            <div class="bank_card flexRowBetween">
-                <div class="input_note">*</div>
-                <div class="input_before">
-                    结束时间:
-                </div>
-                <div class="resume_info">
-                    <input placeholder="结束时间" value=""></input>
-                </div>
-            </div>
-            <div class="bank_card flexRowBetween">
-                <div class="input_note">*</div>
-                <div class="input_before">
-                    职位名称:
-                </div>
-                <div class="resume_info">
-                    <input placeholder="职位名称" value=""></input>
-                </div>
-            </div>
-            <div style="height:1.1rem;line-height:1.1rem;color:#666;font-size:.38rem;">工作描述:</div>
-            <div class="job_des">
-                <textarea placeholder="请输入工作描述,不少于20个字" style="color:#666;">
-                </textarea>
-            </div>
-        </div>
-        <div class="btn flexRowBetween">
-          <button bindtap="setValue">取消</button>
-          <button class="save" style="background:#ed7101;"><a href="userResume.html">保存</a></button>
-        </div>
-    </div>
+<div id='app'>
+  <div class="w750">
+      <div class="p40">
+          <div class="sum_txt flexRowBetween">
+              <div class="sumTxt">工作经验</div>
+          </div>
+          <div class="p40 gig">
+              <div class="bank_card flexRowBetween">
+                  <div class="input_note">*</div>
+                  <div class="input_before">
+                      公司名称:
+                  </div>
+                  <div class="resume_info">
+                      <input placeholder="请输入公司名称" v-model='submitData.companyName'></input>
+                  </div>
+              </div>
+              <div class="bank_card flexRowBetween">
+                  <div class="input_note">*</div>
+                  <div class="input_before">
+                      开始时间:
+                  </div>
+                  <div class="resume_info">
+                      <input placeholder="开始时间" v-model='submitData.startDate'></input>
+                  </div>
+              </div>
+              <div class="bank_card flexRowBetween">
+                  <div class="input_note">*</div>
+                  <div class="input_before">
+                      结束时间:
+                  </div>
+                  <div class="resume_info">
+                      <input placeholder="结束时间" v-model='submitData.endDate'></input>
+                  </div>
+              </div>
+              <div class="bank_card flexRowBetween">
+                  <div class="input_note">*</div>
+                  <div class="input_before">
+                      职位名称:
+                  </div>
+                  <div class="resume_info">
+                      <input placeholder="职位名称" v-model='submitData.job'></input>
+                  </div>
+              </div>
+              <div style="height:1.1rem;line-height:1.1rem;color:#666;font-size:.38rem;">工作描述:</div>
+              <div class="job_des">
+                  <textarea placeholder="请输入工作描述,不少于20个字" style="color:#666;" v-model='submitData.content'>
+                  </textarea>
+              </div>
+          </div>
+          <div class="btn flexRowBetween">
+            <button bindtap="setValue">取消</button>
+            <button class="save" style="background:#ed7101;" v-on:click="submit">保存</button>
+          </div>
+      </div>
+  </div>
 </div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+                workExperience:[],
+                  submitData:{
+                    companyName:'',
+                    startDate:'',
+                    endDate:'',
+                    job:'',
+                    content:''
+                  },
+              
+                
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+
+            this.userGet()
+        },
+
+        methods:{
+
+          userGet(){
+            const self = this;
+            const postData = {};
+            postData.token = "6f9abbd286b4791dea3cb8699b2873f0";
+            const callback = (res)=>{
+              if(res.info.data.length>0){
+                
+                self.mainData = res.info.data[0];
+               
+
+
+              }
+            };
+             window.base.userGet(postData,callback);
+          },
+
+
+
+
+
+
+          userInfoUpdate(){
+            const self = this;
+            const postData = {};
+            postData.token = "6f9abbd286b4791dea3cb8699b2873f0";
+            postData.data = {};
+            postData.data.workExperience = window.base.cloneForm(self.submitData);
+            const callback = (data)=>{
+              if(data.solely_code==100000){
+                alert('完善成功')
+                setTimeout(function(){
+                  window.location.href = "./userResume.html";
+                },300); 
+              }else{
+                alert('网络故障')
+              };
+            };
+             window.base.userInfoUpdate(postData,callback);
+          },
+          
+
+          
+
+          submit(){
+            const self = this;
+            var phone = self.submitData.phone;
+            const pass = window.base.checkComplete(self.submitData);
+            if(pass){    
+                self.userInfoUpdate();       
+            }else{
+              alert('请补全信息');
+            };
+          },  
+
+           
+        }
+    });            
+</script>
 </body>
 </html>

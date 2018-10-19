@@ -9,6 +9,10 @@
 <meta name="divport" content="width=device-width, initial-scale=1">
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+<script src="js/jquery1.8.3.js"></script>
 </head>
 <body>
 <style>
@@ -37,6 +41,7 @@
   flex-wrap:wrap;
 }
 </style>
+<div id="app">
 <div class="w750">
  <div class="p40">
   <div class="sum_txt flexRowBetween">
@@ -47,50 +52,63 @@
       <div class="input_before">
         标题:
       </div>
-      <input value="华路卓" ></input>
+      <input value="华路卓" v-model='submitData.title'></input>
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
         薪酬:
       </div>
-      <input value="华路卓" ></input>
+      <input value="华路卓" v-model='submitData.price'></input>
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
         职位:
       </div>
-      <input value="1223233223" ></input>
+      <input value="1223233223" v-model='submitData.description'></input>
     </div>
    </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
         人数:
       </div>
-      <input value="019-3233223"></input>
+      <input value="019-3233223" v-model='submitData.stock'></input>
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
         学历:
       </div>
-      <input value="@3uiu415222525"></input>
+      <input value="@3uiu415222525" v-model='submitData.education'></input>
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
         经验:
       </div>
-      <input value="@3uiu415222525"></input>
+       ‍‍<select id="pid" onchange="gradeChange" style="width:5rem;height:0.8rem;font-size:35px" > 
+          
+              <option grade="1" value="2" >111</a> 
+          </div>
+          
+      </select> 
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
         年龄:
       </div>
-      <input value="24岁"></input>
+      <input value="24岁" v-model='submitData.age'></input>
     </div>
+   
     <div class="bank_card flexRowBetween">
       <div class="input_before">
         性别:
       </div>
-      <input value="男"></input>
+      ‍‍<select id="pid" v-on:change="gradeChange" style="width:5rem;height:0.8rem;font-size:35px"> 
+
+          <option grade="1" value="2" >男女不限</a> 
+
+          <option grade="2" value="1" >男</a> 
+
+          <option grade="3" value="0" >女</a> 
+      </select> 
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
@@ -104,6 +122,7 @@
       </div>
       <input value="24岁"></input>
     </div>
+</div>
 </div>
 <div style="height:1.2rem;line-height:1.2rem;background:#f2f2f2;width:100%;position:relative;font-size:.38rem;text-align:center;margin-top:0.3rem;">
    福利待遇可多选
@@ -152,9 +171,125 @@
 <div style="height:1.00rem;width:100%;margin-bottom: 1rem;">
  
 </div>
-<button class="confirm_bind"   bindtap="intoPath" data-path="/pages/merchentSendPayment/merchentSendPayment">
+<button class="confirm_bind"   v-on:click="submit">
   支付发布
 </button>
 </div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+      
+                labelData:[],
+                submitData:{
+                  category_id:33,
+                  title:'',
+                  description:'',
+            
+                  gender:'',
+                  education:'',
+                  experience:'',
+                  price:'',
+                  stock:'',
+                  age:'',
+
+                },
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+              this.getLabelData()
+        },
+
+        methods:{
+
+
+              getLabelData(){
+                const self = this;
+                const postData = {};
+                postData.paginate = window.base.cloneForm(self.paginate);
+                postData.searchItem = {
+                  thirdapp_id:2
+                };
+                postData.getBefore = {
+                  labelData:{
+                    tableName:'label',
+                    searchItem:{
+                      title:['=',['经验筛选']],
+                    },
+                    middleKey:'parentid',
+                    key:'id',
+                    condition:'in',
+                  },
+                };
+                const callback = (res)=>{
+                  if(res.info.data.length>0){
+                    self.labelData.push.apply(self.labelData,res.info.data);
+                  }else{
+                    
+                    alert('没有更多了');
+                  };
+                };
+                window.base.labelGet(postData,callback);
+              },
+
+
+            productAdd(){
+              const self = this;
+              const postData = {
+                data:self.submitData,
+                token:"e04851b5344964f875c6716459ddab22"     
+              };
+              const callback = (res)=>{
+               if(res.solely_code==100000){       
+                  alert('发布成功')
+                }else{
+                  alert('网络故障')
+                }
+              }
+              window.base.productAdd(postData,callback);
+            },
+
+            gradeChange(){ 
+                const self = this;
+                var objS = document.getElementById("pid"); 
+                var grade = objS.options[objS.selectedIndex].grade; 
+                alert(grade); 
+              },
+
+
+
+
+            submit(){
+                const self = this;
+                if(window.base.checkComplete(self.submitData)){
+                    self.productAdd()
+                }else{
+                    alert('请补全信息')
+                }
+            },  
+        }
+    });
+            
+</script>
 </body>
 </html>

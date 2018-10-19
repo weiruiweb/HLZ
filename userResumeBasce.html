@@ -9,6 +9,10 @@
 <meta name="divport" content="width=device-width, initial-scale=1">
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
 </head>
 <body style="background: #fff;">
 <style>
@@ -164,97 +168,191 @@ select::-ms-expand { display: none; }
 }
 a{color:#fff;}
 </style>
-<div class="w750">
-    <div class="p40">
-        <div class="sum_txt flexRowBetween">
-            <div class="sumTxt">基础信息</div>
-            <div class="pencil">
-                <img src="images/pencil.png">编辑
-            </div>
-        </div>
-        <div class="gig">
-          <div class="bank_card flexRowBetween">
-              <div class="input_note">*</div>
-              <div class="input_before">
-                  真实姓名:
-              </div>
-              <div class="resume_info">
-                  <input placeholder="请输入真实姓名" value=""></input>
+<div id="app">
+  <div class="w750">
+      <div class="p40">
+          <div class="sum_txt flexRowBetween">
+              <div class="sumTxt">基础信息</div>
+              <div class="pencil">
+                  <img src="images/pencil.png">编辑
               </div>
           </div>
-          <div class="bank_card flexRowBetween">
-              <div class="input_note">*</div>
-              <div class="input_before">
-                  性 别:
-              </div>
-              <div class="resume_info">
-                  <input placeholder="请输入性别" value=""></input>
-              </div>
-          </div>
-          <div class="bank_card flexRowBetween">
-              <div class="input_note">*</div>
-              <div class="input_before">
-                  出生日期:
-              </div>
-              <div class="resume_info">
-                  <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
-                      <div class="picker flexRowBetween">
-                          <div>1992-9-8</div>
-                          <img src="images/choose_icon.png">
-                      </div>
-                  </picker>
-              </div>
-          </div>
-          <div class="bank_card flexRowBetween">
-              <div class="input_note">*</div>
-              <div class="input_before">
-                  身份证号:
-              </div>
-              <div class="resume_info">
-                  <input placeholder="请输入身份证号" value=""></input>
-              </div>
-          </div>
-        </div>
-    </div>
-    <div class="p40">
-        <div class="sum_txt flexRowBetween">
-            <div class="sumTxt">其他信息</div>
-        </div>
-        <div class="gig">
+          <div class="gig">
             <div class="bank_card flexRowBetween">
                 <div class="input_note">*</div>
                 <div class="input_before">
-                    学   历:
+                    真实姓名:
                 </div>
-                <div class="resume_info" style="width:74%;padding-left:2%;padding-right: 0;">
-                    <select id="AreaId" name="AreaId" size="1" class="sel">
-                       <option value="1">本科</option>
-                       <option value="2">硕士</option>
-                       <option value="3">博士</option>
-                    </select>
+                <div class="resume_info">
+                    <input placeholder="请输入真实姓名" v-model='submitData.name'></input>
                 </div>
-                <img src="images/choose_icon.png">
             </div>
             <div class="bank_card flexRowBetween">
                 <div class="input_note">*</div>
                 <div class="input_before">
-                    工作年限:
+                    性 别:
                 </div>
-                <div class="resume_info flexRowBetween" style="width:74%;padding-left:2%;padding-right: 0;">
-                    <select id="AreaId" name="AreaId" size="1" class="sel">
-                       <option value="1">1年</option>
-                       <option value="2">2年</option>
-                       <option value="3">3年</option>
-                    </select>
+                <div class="resume_info">
+                    <input placeholder="请输入性别" v-model='submitData.gender'></input>
                 </div>
-                <img src="images/choose_icon.png">
             </div>
-        </div>
-        <div class="btn flexRowBetween">
-            <button bindtap="setValue">取消</button>
-            <button class="save" style="background:#ed7101;"><a href="userResume.html">保存</a></button>
-        </div>
-    </div>
+            <div class="bank_card flexRowBetween">
+                <div class="input_note">*</div>
+                <div class="input_before">
+                    出生日期:
+                </div>
+                <div class="resume_info">
+                    <input placeholder="请输入身份证号" v-model='submitData.date'></input>
+                </div>
+            </div>
+            <div class="bank_card flexRowBetween">
+                <div class="input_note">*</div>
+                <div class="input_before">
+                    身份证号:
+                </div>
+                <div class="resume_info">
+                    <input placeholder="请输入身份证号" v-model='submitData.idCard'></input>
+                </div>
+            </div>
+          </div>
+      </div>
+      <div class="p40">
+          <div class="sum_txt flexRowBetween">
+              <div class="sumTxt">其他信息</div>
+          </div>
+          <div class="gig">
+              <div class="bank_card flexRowBetween">
+                  <div class="input_note">*</div>
+                  <div class="input_before">
+                      学   历:
+                  </div>
+                  <div class="resume_info" style="width:74%;padding-left:2%;padding-right: 0;">
+                      <select id="AreaId" name="AreaId" size="1" class="sel">
+                         <option value="1">本科</option>
+                         <option value="2">硕士</option>
+                         <option value="3">博士</option>
+                      </select>
+                  </div>
+                  <img src="images/choose_icon.png">
+              </div>
+              <div class="bank_card flexRowBetween">
+                  <div class="input_note">*</div>
+                  <div class="input_before">
+                      工作年限:
+                  </div>
+                  <div class="resume_info flexRowBetween" style="width:74%;padding-left:2%;padding-right: 0;">
+                      <select id="AreaId" name="AreaId" size="1" class="sel">
+                         <option value="1">1年</option>
+                         <option value="2">2年</option>
+                         <option value="3">3年</option>
+                      </select>
+                  </div>
+                  <img src="images/choose_icon.png">
+              </div>
+          </div>
+          <div class="btn flexRowBetween">
+              <button bindtap="setValue">取消</button>
+              <button class="save" style="background:#ed7101;" v-on:click="submit">保存</button>
+          </div>
+      </div>
+  </div>
 </div>
+<script type="text/javascript">  
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+                submitData:{
+                  date:'',
+                  gender:'',
+                  name:'',
+                  idCard:''
+                },
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+
+            this.userGet()
+        },
+
+        methods:{
+
+          userGet(){
+            const self = this;
+            const postData = {};
+            postData.token = "6f9abbd286b4791dea3cb8699b2873f0";
+            const callback = (res)=>{
+              if(res.info.data.length>0){
+                self.mainData = res.info.data[0];
+                self.submitData.date = self.mainData.info.date;
+                self.submitData.gender = self.mainData.info.gender;
+                self.submitData.idCard = self.mainData.info.idCard;
+                self.submitData.name = self.mainData.info.name; 
+              }
+            };
+             window.base.userGet(postData,callback);
+          },
+
+
+
+
+
+
+          userInfoUpdate(){
+            const self = this;
+            const postData = {};
+            postData.token = "6f9abbd286b4791dea3cb8699b2873f0";
+            postData.data = {};
+            postData.data = window.base.cloneForm(self.submitData);
+            const callback = (data)=>{
+              if(data.solely_code==100000){
+                alert('完善成功')
+                setTimeout(function(){
+                  window.location.href = "./user.html";
+                },300); 
+              }else{
+                alert('网络故障')
+              };
+            };
+             window.base.userInfoUpdate(postData,callback);
+          },
+          
+
+          
+
+          submit(){
+            const self = this;
+            const pass = window.base.checkComplete(self.submitData);
+            if(pass){  
+                self.userInfoUpdate();       
+            }else{
+              alert('请补全信息');
+            };
+          },  
+
+           
+        }
+    });            
+</script>
 </body>
 </html>

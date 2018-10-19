@@ -9,6 +9,10 @@
 <meta name="divport" content="width=device-width, initial-scale=1">
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
 </head>
 <body>
 <style>
@@ -101,6 +105,7 @@
 }
 a{color:#fff;}
 </style>
+<div id="app">
 <div class="w750">
 <div class="user_sort font36">
   <div class="user_item">
@@ -139,5 +144,75 @@ a{color:#fff;}
   </div>
 </div>
 </div>
+</div>
+  <script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+                submitData:{
+                  name:''
+                },
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+
+            this.messageGet()
+        },
+
+        methods:{
+
+            messageGet(){
+              const self = this;
+              const postData = {
+                token:'aeb3fc757b6cfc99cb98338e6daca6c1',
+                paginate:window.base.cloneForm(self.paginate),
+                searchItem:{
+                    type:6,
+                    user_no:'U910872296194660'
+                }
+              };
+              const callback = (res)=>{
+                  if(res.info.data.length>0){
+                      self.mainData.push.apply(self.mainData,res.info.data);
+                  }else{
+                      alert('没有更多了')
+                  }
+                  console.log(self.mainData)
+              }
+              window.base.messageGet(postData,callback);
+            },  
+
+            intoDetail(e) {
+                var self = this;
+                var art_id = window.base.getDataSet(e).id;
+                window.location.href = "./merchantResume.html?id=" + art_id;
+            },   
+
+           
+        }
+    });            
+</script>
 </body>
 </html>

@@ -9,7 +9,10 @@
 <meta name="divport" content="width=device-width, initial-scale=1">
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
-<script src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
 </head>
 <body>
 <style>
@@ -55,13 +58,14 @@
 }
 a{color:#fff;}
 </style>
+<div id="app">
 <div class="w750">
   <div class="cashNow">
     <div class="p40">
       <div style="height:1.2rem;line-height:1.2rem;color:#444;" class="font32">请输入体现金额</div>
       <div class="flexRowBetween">
         <div style="width:91%;height:1rem;border:solid 1px #ed7101;border-radius:.10rem;padding:0 2%;">
-          <input style="height:1rem;line-height:.80rem;font-size:.30rem;"></input>
+          <input style="height:1rem;line-height:.80rem;font-size:.30rem;" v-model='submitData.balance'></input>
         </div>
         <div style="font-size:.24rem;color:#666;width:5%;">元</div>
       </div>
@@ -92,9 +96,124 @@ a{color:#fff;}
     </div>
   </div>
   <div class="confirm_bind">
-    <a href="userCash.html">确认体现</a>
+    <div  v-on:click="submit">确认体现</div>
   </div>
 </div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                userData:[],
+                submitData:{
+                   balance:''
+                },
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+            this.getComputeData();
+            this.getUserInfoData()
+        },
+
+        methods:{
+
+           getUserInfoData(){
+              const self = this;
+              const postData = {};
+              postData.token = '3b5a3f60c49d78638ac036a6ff872259';
+              const callback = (res)=>{
+                if(res.info.data.length>0){
+                  self.userData = res.info.data[0]
+                }
+              };
+              window.base.userGet(postData,callback);   
+            },
+
+
+
+
+
+            flowLogAdd(){
+              const self = this;
+              const postData = {
+                token:'3b5a3f60c49d78638ac036a6ff872259',
+                data:{
+                  user_no:self.userData.user_no,
+                  count:-self.submitData.balance,
+                  trade_info:'提现',
+                  status:0,
+                  type:2
+                }
+              };
+              const callback = (res)=>{
+                if(res.solely_code==100000){
+                  alert('申请成功');  
+                }
+                
+              };
+              window.base.flowLogAdd(postData,callback)
+            },
+
+
+            
+
+            submit(){
+              const self = this;
+              if(!self.userData){
+                alert('数据错误请稍等')
+              }
+              var num = self.submitData.balance;
+              console.log(num)
+              console.log(self.userData)
+              const pass = window.base.checkComplete(self.submitData);
+              if(pass){  
+                if(parseFloat(self.userData.info.balance)>=num){
+                  if(!(/(^[1-9]\d*$)/.test(num))){
+                   alert('请输入正整数')
+                  }else{
+                    self.flowLogAdd();
+                  }   
+                }else{
+                  alert('佣金不足');  
+                }   
+              }else{
+                alert('请输入提现金额');
+              };
+            },
+
+ 
+
+             intoDetail(e) {
+                var self = this;
+                var art_id = window.base.getDataSet(e).id;
+                window.location.href = "./indexDetail.html?id=" + art_id;
+            },   
+
+           
+        }
+    });            
+</script>
 <script type="text/javascript">
   $(function(){
       function tabs(tabTit,on,tabCon){

@@ -9,6 +9,10 @@
 <meta name="divport" content="width=device-width, initial-scale=1">
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
 </head>
 <body>
 <style>
@@ -50,67 +54,150 @@
 }
 a{color:#fff;}
 </style>
-<div class="w750">
-    <div class="job">
-        <div class="w710">
-            <a class="job_list flexRowBetween" href="merchantJobModify.html">
-                <div class="list_left">
-                    <div class="job_type avoidOverflow">UI设计师</div>
-                    <div class="treatment flex">
-                        <div class="treatment_sort">五险一金</div>
-                        <div class="treatment_sort">加班补偿</div>
-                        <div class="treatment_sort">交通方便</div>
-                    </div>
-                    <div class="job_company flexRowBetween">
-                        <div class="company_img">
-                            <img src="images/navbar2-a.png">
-                        </div>
-                        <div class="company_introuce">
-                            <div class="company_name avoidOverflow">华路卓咨询有限公司</div>
-                            <div class="send_datail flexRowBetween">
-                                <div class="send_tiem font30">06年7月</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="list_right">
-                    <div class="payment">2K-10K</div>
-                    <div class="hongbao">
-                        <div class="numner">¥2</div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="user_sort font38">
-            <a class="user_item flexRowBetween" href="merchantResume.html">
+<div id="app">
+  <div class="w750">
+      <div class="job" v-for="item in mainData">
+          <div class="w710">
+              <a class="job_list flexRowBetween" href="merchantJobModify.html">
+                  <div class="list_left">
+                      <div class="job_type avoidOverflow">{{item.title}}</div>
+                      <div class="treatment flex">
+                          <div class="treatment_sort">五险一金</div>
+                          <div class="treatment_sort">加班补偿</div>
+                          <div class="treatment_sort">交通方便</div>
+                      </div>
+                      <div class="job_company flexRowBetween">
+                          <div class="company_img">
+                              <img src="images/navbar2-a.png">
+                          </div>
+                          <div class="company_introuce">
+                              <div class="company_name avoidOverflow">{{item.user[0].name}}</div>
+                              <div class="send_datail flexRowBetween">
+                                  <div class="send_tiem font30">{{item.create_time}}</div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="list_right">
+                      <div class="payment">{{item.price}}</div>
+                      <div class="hongbao">
+                          <div class="numner">¥2</div>
+                      </div>
+                  </div>
+              </a>
+          </div>
+          <div class="user_sort font38">
+              <a class="user_item flexRowBetween" :data-id="item.id"  @click="intoDetail">
+                  <div style="width:98%;">
+                      <div class="item_bottom" :data-id="item.id"  @click="intoDetail">收到报名
+                          <span class="color">(40)</span>
+                      </div>
+                  </div>
+                  <div class="vertical_line">
+                      <div style="width:1px;height:100%;border-left:dashed 1px #ed7101;"></div>
+                  </div>
+              </a>
+              <a class="user_item flexRowBetween" href="merchantJobNow.html">
+                  <div style="width:98%;">
+                      <div class="item_bottom">已入职
+                          <span class="color">(40)</span>
+                      </div>
+                  </div>
+                  <div class="vertical_line">
+                      <div style="width:1px;height:100%;border-left:dashed 1px #ed7101;"></div>
+                  </div>
+              </a>
+              <a class="user_item flexRowBetween" href="merchantReword.html">
                 <div style="width:98%;">
-                    <div class="item_bottom">收到报名
-                        <text>(40)</text>
-                    </div>
+                  <div class="item_bottom">已发奖金
+                      <span class="color">(40)</span>
+                  </div>
                 </div>
-                <div class="vertical_line">
-                    <div style="width:1px;height:100%;border-left:dashed 1px #ed7101;"></div>
-                </div>
-            </a>
-            <a class="user_item flexRowBetween" href="merchantJobNow.html">
-                <div style="width:98%;">
-                    <div class="item_bottom">已入职
-                        <text>(40)</text>
-                    </div>
-                </div>
-                <div class="vertical_line">
-                    <div style="width:1px;height:100%;border-left:dashed 1px #ed7101;"></div>
-                </div>
-            </a>
-            <a class="user_item flexRowBetween" href="merchantReword.html">
-              <div style="width:98%;">
-                <div class="item_bottom">已发奖金
-                    <text>(40)</text>
-                </div>
-              </div>
-            </a>
-        </div>
-    </div>
+              </a>
+          </div>
+      </div>
+  </div>
 </div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+                submitData:{
+                   login_name:'',
+                   password:''
+                },
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+
+            this.productGet()
+        },
+
+        methods:{
+
+            productGet(){
+                const self = this;
+                const postData = {
+                    paginate:window.base.cloneForm(self.paginate),
+                    searchItem:{
+                        type:1,
+                        category_id:33,
+                        user_no:'UA16739747349590'
+                    }
+                };
+                postData.getAfter = {
+                    user:{
+                        tableName:'userInfo',
+                        middleKey:'user_no',
+                        key:'user_no',
+                        searchItem:{
+                            status:1
+                        },
+                        condition:'='
+                    }
+                }
+                const callback = (res)=>{
+                    if(res.info.data.length>0){
+                        self.mainData.push.apply(self.mainData,res.info.data);
+                    }else{
+                        alert('没有更多了')
+                    }
+                    console.log(self.mainData)
+                }
+                window.base.productGet(postData,callback);
+            },  
+
+            intoDetail(e) {
+                var self = this;
+                var art_id = window.base.getDataSet(e).id;
+                window.location.href = "./merchantResume.html?id=" + art_id;
+            },   
+
+           
+        }
+    });            
+</script>
 </body>
 </html>

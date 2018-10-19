@@ -9,6 +9,10 @@
 <meta name="divport" content="width=device-width, initial-scale=1">
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
 </head>
 <body>
 <style>
@@ -147,104 +151,147 @@
 }
 a{color:#fff;}
 </style>
-<div class="job">
-  <div class="w710">
-    <a class="job_list flexRowBetween" href="merchentResumeDetail.html">
-      <div class="list_img">
-        <div class="user_img">
-            <open-data type="userAvatarUrl"></open-data>
+<div id="app">
+  <div class="job" v-for="item in mainData">
+    <div class="w710" >
+       <a class="job_list flexRowBetween" href="merchentResumeDetail.html">
+        <div class="list_img">
+          <div class="user_img">
+              <open-data type="userAvatarUrl"></open-data>
+          </div>
+        </div>
+        <div class="list_left">
+          <div class="flex">
+            <div class="job_type avoidOverflow">{{item.products[0].snap_product.title}}</div>
+            <div class="appointment font30"> 预约时间:06月07号</div>
+          </div>
+          <div class="treatment flex">
+            <div class="treatment_sort"><img src="images/resume1.png">11</div>
+            <div class="treatment_sort"><img src="images/resume2.png">{{item.userInfo[0].gender==1?'男':'女'}}</div>
+            <div class="treatment_sort"><img src="images/resume3.png">{{item.products[0].snap_product.education}}</div>
+            <div class="treatment_sort"><img src="images/resume4.png">{{item.products[0].snap_product.experience}}</div>
+            <div class="treatment_sort"><img src="images/resume5.png">20岁</div>
+          </div>
+          <div class="company_introuce avoidOverflow font36">
+          应聘职位:{{item.products[0].snap_product.description}}
+          </div>
+        </div>
+        <div class="list_right font34">
+         09月13号
+        </div>
+      </a>
+    </div>
+    <div class="resume_handle font34 flexRowBetween">
+      <div class="handle1">
+        <div class="handle_in flexRowaround">
+          <img src="images/resume6.png">
+          <div style="color:#fff;">{{item.userInfo[0].phone}}</div>
         </div>
       </div>
-      <div class="list_left">
-        <div class="flex">
-          <div class="job_type avoidOverflow">UI设计师</div>
-          <div class="appointment font30"> 预约时间:06月07号</div>
-        </div>
-        <div class="treatment flex">
-          <div class="treatment_sort"><img src="images/resume1.png">西安</div>
-          <div class="treatment_sort"><img src="images/resume2.png">女</div>
-          <div class="treatment_sort"><img src="images/resume3.png">大专</div>
-          <div class="treatment_sort"><img src="images/resume4.png">1-3年</div>
-          <div class="treatment_sort"><img src="images/resume5.png">20岁</div>
-        </div>
-        <div class="company_introuce avoidOverflow font36">
-        应聘职位:掏粪掏粪掏粪掏粪掏粪掏粪
+      <div class="handle2" style="margin:0. 1rem;">
+        <div class="handle_in flexRowaround" >
+          <img src="images/resume7.png">
+          <div style="color:#fff;">入职</div>
         </div>
       </div>
-      <div class="list_right font34">
-       09月13号
+      <div class="handle2">
+        <div class="handle_in flexRowaround">
+          <img src="images/resume8.png">
+          <div style="color:#fff;">删除</div>
+        </div>
       </div>
-    </a>
+    </div>
   </div>
-  <div class="resume_handle font34 flexRowBetween">
-    <div class="handle1 ">
-      <div class="handle_in flexRowaround">
-        <img src="images/resume6.png">
-        <div style="color:#fff;">155555555555</div>
-      </div>
-    </div>
-    <div class="handle2" style="margin:0. 1rem;">
-      <div class="handle_in flexRowaround" >
-        <img src="images/resume7.png">
-        <div style="color:#fff;">入职</div>
-      </div>
-    </div>
-    <div class="handle2">
-      <div class="handle_in flexRowaround">
-        <img src="images/resume8.png">
-        <div style="color:#fff;">删除</div>
-      </div>
-    </div>
-  </div>
-  <div class="w710">
-     <a class="job_list flexRowBetween" href="merchentResumeDetail.html">
-      <div class="list_img">
-        <div class="user_img">
-            <open-data type="userAvatarUrl"></open-data>
-        </div>
-      </div>
-      <div class="list_left">
-        <div class="flex">
-          <div class="job_type avoidOverflow">UI设计师</div>
-          <div class="appointment font30"> 预约时间:06月07号</div>
-        </div>
-        <div class="treatment flex">
-          <div class="treatment_sort"><img src="images/resume1.png">西安</div>
-          <div class="treatment_sort"><img src="images/resume2.png">女</div>
-          <div class="treatment_sort"><img src="images/resume3.png">大专</div>
-          <div class="treatment_sort"><img src="images/resume4.png">1-3年</div>
-          <div class="treatment_sort"><img src="images/resume5.png">20岁</div>
-        </div>
-        <div class="company_introuce avoidOverflow font36">
-        应聘职位:掏粪掏粪掏粪掏粪掏粪掏粪
-        </div>
-      </div>
-      <div class="list_right font34">
-       09月13号
-      </div>
-    </a>
-  </div>
-  <div class="resume_handle font34 flexRowBetween">
-    <div class="handle1">
-      <div class="handle_in flexRowaround">
-        <img src="images/resume6.png">
-        <div style="color:#fff;">155555555555</div>
-      </div>
-    </div>
-    <div class="handle2" style="margin:0. 1rem;">
-      <div class="handle_in flexRowaround" >
-        <img src="images/resume7.png">
-        <div style="color:#fff;">入职</div>
-      </div>
-    </div>
-    <div class="handle2">
-      <div class="handle_in flexRowaround">
-        <img src="images/resume8.png">
-        <div style="color:#fff;">删除</div>
-      </div>
-    </div>
   </div>
 </div>
-</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+                
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+
+            this.getMainData()
+        },
+
+        methods:{
+
+        getMainData(){
+          const self = this;
+          const postData = {};
+          postData.paginate = window.base.cloneForm(self.paginate);
+          postData.token = "9576f4ada14bbd5b4077220e449a96f3";
+           postData.searchItem = {
+              user_type:0
+           }
+          postData.getBefore={
+            order:{
+              tableName:'OrderItem',
+              searchItem:{
+                product_id:['in',[window.base.GetRequest().id]]
+              },
+              fixSearchItem:{
+                status:1
+              },
+              middleKey:'order_no',
+              key:'order_no',
+              condition:'in',
+            } 
+          };
+          postData.getAfter={
+            userInfo:{
+              tableName:'UserInfo',
+              middleKey:'user_no',
+              key:'user_no',
+              condition:'=',
+              searchItem:{
+                status:['in',[1]]
+              },
+            } 
+          };
+          const callback = (res)=>{
+            if(res.info.data.length>0){
+              self.mainData.push.apply(self.mainData,res.info.data);
+            }else{
+              alert('没有更多了','fail')
+            };
+          };
+          window.base.orderGet(postData,callback);
+        },
+
+        intoDetail(e) {
+          var self = this;
+          var art_id = window.base.getDataSet(e).id;
+          window.location.href = "./indexDetail.html?id=" + art_id;
+        },   
+
+           
+        }
+    });            
+</script>
 </body>
 </html>

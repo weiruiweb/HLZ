@@ -9,6 +9,10 @@
 <meta name="divport" content="width=device-width, initial-scale=1">
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
 </head>
 <body  style="background: #fff;">
 <style>
@@ -44,12 +48,13 @@
 }
 a{color:#fff;}
 </style>
+<div id="app">
 <div class="w750">
   <div class="sum flex">
   <div class="sum_in">
     <div style="width:100%;text-align:center;">
       <div style="font-size:.34rem;color:#666;">总支出</div>
-      <div style="font-size:.42rem;color:#ed7101;margin-top:.40rem;">10000.00元</div>
+      <div style="font-size:.42rem;color:#ed7101;margin-top:.40rem;">{{computeData.info?computeData.info.FlowLog.countsum:''}}元</div>
     </div>
   </div>
 </div>
@@ -67,23 +72,112 @@ a{color:#fff;}
         </div>
     </div>
   </div>
-  <div class="sum_cont flexRowBetween font34">
-   <div class="sort_item">
-      200元
+   <div class="sum_cont flexRowBetween font34" v-for="item in mainData">
+     <div class="sort_item">
+        {{item.count}}元
+      </div>
+      <div class="sort_item">
+        {{item.create_time}}
+      </div>
     </div>
-    <div class="sort_item">
-       2018.06.06
-    </div>
-  </div>
-  <div class="sum_cont flexRowBetween font34">
-   <div class="sort_item">
-      200元
-    </div>
-    <div class="sort_item">
-       2018.06.06
-    </div>
-  </div>
 </div>
 </div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+                computeData:[],
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+
+            this.getMainData();
+            this.getComputeData()
+        },
+
+        methods:{
+
+        getMainData(){
+          const self = this;
+          const postData = {};
+          postData.paginate = self.paginate;
+          postData.token = "6f9abbd286b4791dea3cb8699b2873f0";
+          postData.searchItem = {
+            type:'2',
+            user_type:0,
+            count:['<',0]
+          };
+          postData.order = {
+            create_time:'desc',
+          };
+
+          const callback = (res)=>{
+            if(res.info.data.length>0){
+              self.mainData.push.apply(self.mainData,res.info.data);
+            }else{
+              alert('没有更多了','fail')
+            };
+          };
+          window.base.flowLogGet(postData,callback);
+        },
+
+        intoDetail(e) {
+          var self = this;
+          var art_id = window.base.getDataSet(e).id;
+          window.location.href = "./indexDetail.html?id=" + art_id;
+        },
+
+        getComputeData(){
+          const self = this;
+          const postData = {};
+          postData.data = {
+            FlowLog:{
+              compute:{
+                count:'sum',
+              },
+              
+              searchItem:{
+                user_no:'UA16809144600791',
+                type:2,
+                count:['<',0]
+              }
+            }
+          };
+          const callback = (res)=>{
+           
+              self.computeData = res;
+        
+            console.log(self.computeData)
+          };
+          window.base.flowLogCompute(postData,callback);
+        },
+
+           
+        }
+    });            
+</script>
 </body>
 </html>
