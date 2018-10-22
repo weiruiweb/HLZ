@@ -111,7 +111,7 @@ a{color:#fff;}
             userGet(){
                 const self = this;
                 const postData = {
-                    token:"6f9abbd286b4791dea3cb8699b2873f0",
+                    token:window.base.getUserToken(),
                     thirdapp_id:2
                 };
                 const callback = (res)=>{

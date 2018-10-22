@@ -121,37 +121,19 @@ a{color:#333;}
                 </div>
             </div>
             <div class="gig">
-                <div class="education">
+                <div class="education" v-for="(item, index) in workExperience">
                     <div class="flexRowBetween">
                         <div>
-                            <text>●</text>2018.06-2018.10</div>
+                            <text>●</text>{{item.startDate}}-{{item.endDate}}</div>
                         <div class="add">
-                            <img src="images/minus.png" style="margin-right: 0;"/>
+                            <img src="images/minus.png" style="margin-right: 0;" :data-index="index" v-on:click="deleteExperience"/>
                         </div>
                     </div>
                     <div class="expericence_list">
                         <div class="expericence">
-                            <div class="exper_company"><span>华路卓咨咨询管理有限公司</span></div>
-                            <div class="detail"><span>1.负责app开发和pc端软件界面</span></div>
-                            <div class="detail"><span>2.负责app开发和pc端软件界面</span></div>
-                            <div class="detail"><span>3.负责app开发和pc端软件界面</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="education">
-                    <div class="flexRowBetween">
-                        <div>
-                            <text>●</text>2018.06-2018.10</div>
-                        <div class="add">
-                            <img src="images/minus.png" style="margin-right: 0;"/>
-                        </div>
-                    </div>
-                    <div class="expericence_list">
-                        <div class="expericence">
-                            <div class="exper_company"><span>华路卓咨咨询管理有限公司</span></div>
-                            <div class="detail"><span>1.负责app开发和pc端软件界面</span></div>
-                            <div class="detail"><span>2.负责app开发和pc端软件界面</span></div>
-                            <div class="detail"><span>3.负责app开发和pc端软件界面</span></div>
+                            <div class="exper_company"><span>{{item.companyName}}-{{item.job}}</span></div>
+                            <div class="detail"><span>{{item.content}}</span></div>
+                            
                         </div>
                     </div>
                 </div>
@@ -161,41 +143,23 @@ a{color:#333;}
             <div class="sum_txt flexRowBetween">
                 <div class="sumTxt">教育经历</div>
                 <div class="add">
-                    <a href="userResumeBasce.html"><img src="images/add.png" /></a>
+                    <a href="userResumeEdu.html"><img src="images/add.png" /></a>
                 </div>
             </div>
             <div class="gig">
-                <div class="education">
+                <div class="education" v-for="(item, index) in education">
                     <div class="flexRowBetween">
                         <div>
-                            <text>●</text>2018.06-2018.10</div>
+                            <text>●</text>{{item.startDate}}-{{item.endDate}}</div>
                         <div class="add">
-                            <img src="images/minus.png" style="margin-right: 0;"/>
+                            <img src="images/minus.png" style="margin-right: 0;" :data-index="index" v-on:click="deleteExperienceEdu"/>
                         </div>
                     </div>
                     <div class="expericence_list">
                         <div class="expericence">
-                            <div class="exper_company"><span>华路卓咨咨询管理有限公司</span></div>
-                            <div class="detail"><span>1.负责app开发和pc端软件界面</span></div>
-                            <div class="detail"><span>2.负责app开发和pc端软件界面</span></div>
-                            <div class="detail"><span>3.负责app开发和pc端软件界面</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="education">
-                    <div class="flexRowBetween">
-                        <div>
-                            <text>●</text>2018.06-2018.10</div>
-                        <div class="add">
-                            <img src="images/minus.png" style="margin-right: 0;"/>
-                        </div>
-                    </div>
-                    <div class="expericence_list">
-                        <div class="expericence">
-                            <div class="exper_company"><span>华路卓咨咨询管理有限公司</span></div>
-                            <div class="detail"><span>1.负责app开发和pc端软件界面</span></div>
-                            <div class="detail"><span>2.负责app开发和pc端软件界面</span></div>
-                            <div class="detail"><span>3.负责app开发和pc端软件界面</span></div>
+                            <div class="exper_company"><span>学校：{{item.schoolName}}</span></div>
+                            <div class="exper_company"><span>专业：{{item.object}}</span></div>
+                            <div class="exper_company"><span>学历：{{item.highEdu}}</span></div>
                         </div>
                     </div>
                 </div>
@@ -211,8 +175,8 @@ a{color:#333;}
             return {
                 
                 mainData:[],
-             
-                
+                workExperience:[],
+                education:[],
                 paginate: {
                     
                     count: 0,
@@ -242,35 +206,69 @@ a{color:#333;}
             userGet(){
                 const self = this;
                 const postData = {
-                    token:"6f9abbd286b4791dea3cb8699b2873f0",
+                    token:window.base.getUserToken(),
                     thirdapp_id:2
                 };
                 const callback = (res)=>{
                     if(res.info.data.length>0){
                         self.mainData = res.info.data[0];
-                        self.mainData.info.workExperience = self.mainData.info.workExperience?self.mainData.info.workExperience:[]
+                        self.mainData.info.workExperience = self.mainData.info.workExperience?self.mainData.info.workExperience:[];
+                        self.workExperience = self.mainData.info.workExperience;
+                        self.education = self.mainData.info.education;
+                        console.log(self.education)
                     }else{
                         alert('数据错误')
                     }
-                    console.log(self.mainData)
+                    console.log(self.workExperience)
                 }
                 window.base.userGet(postData,callback);
             },  
 
+
             deleteExperience(e){
                 const self = this;
-                
-                self.mainData.info.workExperience.splice(index, 1); 
+                var index = window.base.getDataSet(e,'index');
+                self.workExperience.splice(index, 1); 
+                const postData ={
+                    data:{
+                        workExperience:self.workExperience
+                    },
+                    token:window.base.getUserToken()
+                };
+                if(!postData.data.workExperience.length>0){
+                    postData.data.workExperience='[]'
+                };
+                const callback = (res)=>{
+                    if(res.solely_code==100000){
+                        alert('删除成功')
+                    }
+                };
+                 window.base.userInfoUpdate(postData,callback);
+            },
+            
+
+            deleteExperienceEdu(e){
+                const self = this;
+                var index = window.base.getDataSet(e,'index');
+                console.log(index)
+                self.education.splice(index, 1); 
+                console.log(self.education)
+
                 var postData ={
                     data:{
-                        workExperience:self.mainData.info.workExperience
+                        education:self.education
                     },
-                    token:window.base.token
+                    token:window.base.getUserToken()
+                };
+                if(!postData.data.education.length>0){
+                    postData.data.education='[]'
                 };
                 var callback = (res)=>{
-
+                    if(res.solely_code==100000){
+                        alert('删除成功')
+                    }
                 };
-                
+                 window.base.userInfoUpdate(postData,callback);
             }
 
            

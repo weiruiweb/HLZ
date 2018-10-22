@@ -300,7 +300,7 @@ a{color:#fff;}
           userGet(){
             const self = this;
             const postData = {};
-            postData.token = "6f9abbd286b4791dea3cb8699b2873f0";
+            postData.token =window.base.getUserToken();
             const callback = (res)=>{
               if(res.info.data.length>0){
                 self.mainData = res.info.data[0];
@@ -321,7 +321,7 @@ a{color:#fff;}
           userInfoUpdate(){
             const self = this;
             const postData = {};
-            postData.token = "6f9abbd286b4791dea3cb8699b2873f0";
+            postData.token =window.base.getUserToken();
             postData.data = {};
             postData.data = window.base.cloneForm(self.submitData);
             const callback = (data)=>{

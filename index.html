@@ -98,6 +98,23 @@ a{
  #active .img2{
     display: block;
 }
+.orgin{
+    width:100%;
+    opacity: 0;
+    height: 0;
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height .5s ease-out;
+}
+.after{
+    opacity: 1;
+    max-height: 1000px;
+    height: auto;
+/*        max-height: 250px;*/
+    -webkit-animation: slide-down .5s ease-in;
+    transition: max-height .5s ease-in;
+    transform-origin: 50% 0;
+}
 
 </style>
 <div id="app">
@@ -113,10 +130,11 @@ a{
         <div id="job">
             <div class="sort">
                 <div id="tab" class="flexRowBetween font36">
-                    <div class="sort_item">
-                        <div class="sort_in  flexRowCenter" style="height:100%;">
-                            <div class="text1" id="gr_zone_ids" data-id="130100" style="width:80%;text-align: center;">西安</div>
-                            <div style="width:20%;"><img src="images/up_icon.png" /></div>
+                    <div class="sort_item" :data-num="3"  @click="selectMeun">
+                        <div class="sort_in  flexRowCenter" style="height:100%;" :data-num="3"  @click="selectMeun">
+                            <div class="text1" id="gr_zone_ids" data-id="130100" style="width:80%;text-align: center;" :data-num="3"  @click="selectMeun">西安</div>
+                            <div style="width:20%;" :data-num="3"  @click="selectMeun"> <img src="images/up_icon_a.png" class="img1" :data-num="3"  @click="selectMeun" v-if="num==3"/>
+                            <img src="images/up_icon.png" class="img1" :data-num="3"  @click="selectMeun" v-else/></div>
                         </div>
                     </div>
                     <div class="sort_item tab_this" :data-num="0"  @click="selectMeun">
@@ -142,7 +160,21 @@ a{
                         </div>
                     </div>
                 </div>
-
+                <div class="choose">
+                        <div id="phone_menu" class="choose_item font32" v-for="(item, index) in cityData" :style="num==3?'display:block':''">
+                            <div class="choose_list" :data-show_id="item.id"  @click="toggleMenu"  :style="(show_id==item.id?'background:rgba(254,133,30,0.5)':'')">
+                                {{item.title}}
+                                
+                            </div>
+                            <div class="c_p_child">
+                                <div class="orgin"  :class="(show_id==item.id&&item.child?'after':'')" v-for="(c_item, c_index) in item.child" >
+                                    <div :data-show_child_id="c_item.id"   @click="experienceSearch" class="c_child">
+                                        {{c_item.title}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                </div>
                 <div class="choose" id="choose" >
                     <div class="choose_item font32" id="tab_cont" :style="num==0?'display:block':''">
                         <div class="choose_list" :class="[stringifyOrder=='{}'?'choose_this':'']" data-order="none" @click="changeSearch">
@@ -157,19 +189,21 @@ a{
                         <button class="btn_submit">确认</button>
                     </div>
                     <div class="choose_item font32" id="tab_cont" :style="num==1?'display:block':''">
-
-                        <div class="choose_list choose_this" v-for="item in labelData">
-                            {{item.title}}
-                        </div>
-                        
+                        <template v-for="item in labelData">
+                            <div class="choose_list"  :class="[searchItem.experience=='(item.title)'?'choose_this':'']"  @click="experienceSearch" >
+                                {{item.title}}
+                            </div>
+                        </template >
                         <button class="btn_submit">确认</button>
                     </div>
                     <div class="choose_item font32" id="tab_cont" :style="num==2?'display:block':''">
-                        
-                        <div class="choose_list" :data-time="1" @click="changeSearch">
+                         <div class="choose_list" :class="[stringifyOrder=='{}'?'choose_this':'']" data-order="none" @click="changeSearch">
+                            不限
+                            </div>
+                        <div class="choose_list" :class="[stringifyOrder=='{create_time:desc}'?'choose_this':'']" data-order="create_time:desc" @click="changeSearch">
                             由近到远
                         </div>
-                        <div class="choose_list" :data-time="2" @click="changeSearch">
+                        <div class="choose_list" :class="[stringifyOrder=='{create_time:asc}'?'choose_this':'']" data-order="create_time:asc" @click="changeSearch">
                             由远到近
                         </div>
                         <button class="btn_submit">确认</button>
@@ -183,9 +217,7 @@ a{
                     <div class="list_left" :data-id="item.id"  @click="intoDetail">
                         <div class="job_type avoidOverflow">{{item.title}}</div>
                         <div class="treatment flex" :data-id="item.id"  @click="intoDetail">
-                            <div class="treatment_sort">五险一金</div>
-                            <div class="treatment_sort">加班补偿</div>
-                            <div class="treatment_sort">交通方便</div>
+                            <div class="treatment_sort"  v-for="c_item in item.passage_array">{{c_item}}</div>
                         </div>
                         <div class="job_company flexRowBetween" :data-id="item.id"  @click="intoDetail">
                             <div class="company_img" :data-id="item.id"  @click="intoDetail">
@@ -243,19 +275,25 @@ a{
         el: '#app',
         data: function() {
             return {
+                cityData:[],
                 labelData:[],
                 mainData:[],
-              
-                
+                passage_array:[],
+                menu:[
+                    {title:'1',id:'1'},
+                    {title:'2',id:'2'},
+                ],
                 paginate: {
                     
                 },
 
                 searchItem:{
                    type:1,
-                   category_id:33  
+                   category_id:33,
+                  
                 },
-
+                show_id:'',
+                show_child_id:'',
                 pageArray:[],
                 allPages:0,
                 linkPage:'',
@@ -273,7 +311,8 @@ a{
         created: function () {
 
             this.productGet();
-            this.getLabelData()
+            this.getLabelData();
+            this.getCityData();
         },
 
         methods:{
@@ -289,7 +328,8 @@ a{
                         is_page: true,
                     }
                 };
-                const postData =  window.base.cloneForm(self.searchItem);
+                const postData = {}
+                postData.searchItem =  window.base.cloneForm(self.searchItem);
                 postData.order =  window.base.cloneForm(self.order);
                 postData.getAfter = {
                     user:{
@@ -300,19 +340,26 @@ a{
                             status:1
                         },
                         condition:'='
-                    }
+                    },
                 }
+             
 
                 const callback = (res)=>{
                     if(res.info.data.length>0){
                         self.mainData.push.apply(self.mainData,res.info.data);
+                       
+
                     }else{
                         alert('没有更多了')
                     }
-                    console.log(self.mainData)
+                    console.log(self.passage_array)
                 }
                 window.base.productGet(postData,callback);
             },  
+
+            intoList(){
+
+            },
 
             getLabelData(){
                 const self = this;
@@ -332,6 +379,9 @@ a{
                     condition:'in',
                   },
                 };
+                postData.order = {
+                    create_time:'asc'
+                }
                 const callback = (res)=>{
                   if(res.info.data.length>0){
                     self.labelData.push.apply(self.labelData,res.info.data);
@@ -341,6 +391,53 @@ a{
                   };
                 };
                 window.base.labelGet(postData,callback);
+            }, 
+
+
+            getCityData(){
+                const self = this;
+                const postData = {};
+                postData.paginate = window.base.cloneForm(self.paginate);
+                postData.searchItem = {
+                  type:7,
+                };
+          
+                postData.order = {
+                    create_time:'asc'
+                }
+                const callback = (res)=>{
+                  if(res.info.data.length>0){
+                    self.cityData.push.apply(self.cityData,res.info.data);
+                  }else{
+                    
+                    alert('没有更多了');
+                  };
+                };
+                window.base.labelGet(postData,callback);
+            },
+
+            toggleMenu: function(e) {
+                var self = this;
+                var dataSet = window.base.getDataSet(e);
+                if(dataSet.show_id){
+                    if(self.show_id==dataSet.show_id){
+                        self.show_id = '';
+                    }else{
+                        self.show_id = dataSet.show_id;
+                    };
+                }else if(dataSet.show_child_id){
+                    if(self.show_child_id==dataSet.show_child_id){
+                        self.show_child_id = '';
+                    }else{
+                        self.show_child_id = dataSet.show_child_id;
+                    };
+                }else{
+                    
+                    self.show_child_id = '';
+                    self.show_id = '';
+                };
+                
+            
             },
 
             intoDetail(e) {
@@ -364,9 +461,19 @@ a{
                     var orderArray = order.split(':');
                     self.order[orderArray[0]] = orderArray[1]
                 };
+                self.num ='10000';
                 console.log('order',self.order);
                 self.productGet(true);
             },
+
+            experienceSearch(e){
+                const self = this;
+                const experience = e.target.innerText;
+                console.log(e)
+                self.searchItem.experience = experience;
+                self.num ='10000';
+                self.productGet(true);
+            }
 
               
         }

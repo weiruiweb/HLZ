@@ -141,7 +141,7 @@ a{color:#fff;}
            getUserInfoData(){
               const self = this;
               const postData = {};
-              postData.token = '3b5a3f60c49d78638ac036a6ff872259';
+              postData.token = window.base.getUserToken();
               const callback = (res)=>{
                 if(res.info.data.length>0){
                   self.userData = res.info.data[0]
@@ -157,7 +157,7 @@ a{color:#fff;}
             flowLogAdd(){
               const self = this;
               const postData = {
-                token:'3b5a3f60c49d78638ac036a6ff872259',
+                token:window.base.getUserToken(),
                 data:{
                   user_no:self.userData.user_no,
                   count:-self.submitData.balance,

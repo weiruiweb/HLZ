@@ -8,9 +8,23 @@ window.base={
         if(token){
             return token;
         }else{
-            localStorage.setItem('user_token','632a55c5dd84a010e6f30bc2eabf4834');
+            localStorage.setItem('user_token',"a9d70fb27353f850ec28aeb666462904");
             localStorage.setItem('user_no','res.info.user_no');
             return localStorage.getItem('user_token');
+        }
+        
+    },    
+
+    getMerchantToken:function(){
+        var href =  window.location.href;
+        console.log('href',href);
+        var token = localStorage.getItem('merchant_token');
+        if(token){
+            return token;
+        }else{
+            localStorage.setItem('merchant_token','5bfa8220a9092f567156cece9db2eb9f');
+            localStorage.setItem('user_no','res.info.user_no');
+            return localStorage.getItem('merchant_token');
         }
         
     },

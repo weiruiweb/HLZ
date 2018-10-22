@@ -90,7 +90,7 @@
         <div class="input_before">
           座机号:
         </div>
-        <input v-model='submitData.phone'></input>
+        <input v-model='submitData.fixPhone'></input>
         <div class="pencil">
           <img src="images/pencil.png">
         </div>
@@ -132,7 +132,7 @@
         <div class="intro_edit">
           <img src="images/pencil1.png">
         </div>
-        <textarea v-model='submitData.startDate'> </textarea>
+        <textarea v-model='submitData.date'> </textarea>
       </div>
       <div class="sum_txt" style="border:none;">
         <div class="sumTxt">营业执照</div>
@@ -183,7 +183,9 @@
                   email:'',
                   address:'',
                   level:'',
-                  mainImg:[]
+                  mainImg:[],
+                  date:'',
+                  fixPhone:''
                 },
                 
                 paginate: {
@@ -215,7 +217,7 @@
           userGet(){
             const self = this;
             const postData = {};
-            postData.token = "a90968939279ceeb2b396d9086f00ab0";
+            postData.token =  window.base.getMerchantToken();
             const callback = (res)=>{
               if(res.info.data.length>0){
                 self.mainData = res.info.data[0];
@@ -259,7 +261,7 @@
           userInfoUpdate(){
             const self = this;
             const postData = {};
-            postData.token = "a90968939279ceeb2b396d9086f00ab0";
+            postData.token = window.base.getMerchantToken();
             postData.data = {};
             postData.data = window.base.cloneForm(self.submitData);
             const callback = (data)=>{

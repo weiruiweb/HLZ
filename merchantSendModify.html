@@ -29,6 +29,10 @@
 #choose{
   flex-wrap: wrap;
 }
+.choosed{
+  color:rgb(237, 113, 1);
+  border:solid 1px rgb(237, 113, 1);
+}
 .reward_sort{
   height:1.1rem;
   border-bottom:solid 1px #e0e0e0;
@@ -52,39 +56,39 @@
       <div class="input_before">
         标题:
       </div>
-      <input value="华路卓" v-model='submitData.title'></input>
+      <input v-model='submitData.title'></input>
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
         薪酬:
       </div>
-      <input value="华路卓" v-model='submitData.price'></input>
+      <input  v-model='submitData.price'></input>
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
         职位:
       </div>
-      <input value="1223233223" v-model='submitData.description'></input>
+      <input v-model='submitData.description'></input>
     </div>
    </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
         人数:
       </div>
-      <input value="019-3233223" v-model='submitData.stock'></input>
+      <input  v-model='submitData.stock'></input>
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
         学历:
       </div>
-      <input value="@3uiu415222525" v-model='submitData.education'></input>
+      <input v-model='submitData.education'></input>
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
-        经验:{{labelData}}
+        经验:
       </div>
        ‍‍<select id="pid"  data-key="experience" @change="selectChange" style="width:5rem;height:0.8rem;font-size:35px" > 
-        
+          <option >请选择</a> 
           <option v-for="item in labelData">{{item.title}}</option> 
         
       </select> 
@@ -93,7 +97,7 @@
       <div class="input_before">
         年龄:
       </div>
-      <input value="24岁" v-model='submitData.age'></input>
+      <input  v-model='submitData.age'></input>
     </div>
    
     <div class="bank_card flexRowBetween">
@@ -101,22 +105,23 @@
         性别:
       </div>
       ‍‍<select id="pid" data-key="gender" @change="selectChange" style="width:5rem;height:0.8rem;font-size:35px"> 
-          <option grade="1" value="2" >男女不限</a> 
-          <option grade="2" value="1" >男</a> 
-          <option grade="3" value="0" >女</a> 
+          <option >请选择</a> 
+          <option >男女不限</a> 
+          <option >男</a> 
+          <option >女</a> 
       </select> 
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
         工作地点:
       </div>
-      <input value="24岁"></input>
+      <input v-model='submitData.address'></input>
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
         福利待遇:
       </div>
-      <input value="24岁"></input>
+      <div class="choose_item" v-for="item in submitData.passage_array">{{item}}</div>
     </div>
 </div>
 </div>
@@ -126,36 +131,11 @@
 </div>
 <div class="p40">
   <div class="flexRowBetween" id="choose">
-    <div class="choose_item" :class="[submitData.passage_array.indexOf('五险一金')>=0?'choosed':'']" @click="buttonClick">
-      五险一金
-    </div>
-    <div class="choose_item" :class="[submitData.passage_array.indexOf('包吃')>=0?'choosed':'']" @click="buttonClick">
-      包吃
-    </div>
-    <div class="choose_item">
-      包住
-    </div>
-    <div class="choose_item">
-      周末双休
-    </div>
-    <div class="choose_item">
-      年底双薪
-    </div>
-    <div class="choose_item">
-      房补
-    </div>
-    <div class="choose_item">
-      话补
-    </div>
-    <div class="choose_item">
-      交通补助
-    </div>
-    <div class="choose_item">
-      饭补
-    </div>
-    <div class="choose_item">
-      加班补助
-    </div>
+    <template v-for="item in labelDataTwo">
+      <div class="choose_item" :class="[submitData.passage_array.indexOf(item.title)>=0?'choosed':'']" @click="buttonClick" >
+        {{item.title}}
+      </div>
+    </template>
   </div>
   <div class="reward_money flexRowBetween">
     <div class="reward_sort">入职:100元</div>
@@ -177,8 +157,9 @@
         el: '#app',
         data: function() {
             return {
-      
+          
                 labelData:[],
+                labelDataTwo:[],
                 submitData:{
                   category_id:33,
                   title:'',
@@ -189,7 +170,8 @@
                   price:'',
                   stock:'',
                   age:'',
-                  passage_array:[]
+                  passage_array:[],
+                  address:''
 
                 },
                 
@@ -215,47 +197,78 @@
         },
         
         created: function () {
-              this.getLabelData()
+              this.getLabelData();
+              this.getLabelDataTwo()
         },
 
         methods:{
 
 
-              getLabelData(){
-                const self = this;
-                const postData = {};
-                postData.paginate = window.base.cloneForm(self.paginate);
-                postData.searchItem = {
-                  thirdapp_id:2
-                };
-                postData.getBefore = {
-                  labelData:{
-                    tableName:'label',
-                    searchItem:{
-                      title:['=',['经验筛选']],
-                    },
-                    middleKey:'parentid',
-                    key:'id',
-                    condition:'in',
+            getLabelData(){
+              const self = this;
+              const postData = {};
+              postData.paginate = window.base.cloneForm(self.paginate);
+              postData.searchItem = {
+                thirdapp_id:2
+              };
+              postData.getBefore = {
+                labelData:{
+                  tableName:'label',
+                  searchItem:{
+                    title:['=',['经验筛选']],
                   },
+                  middleKey:'parentid',
+                  key:'id',
+                  condition:'in',
+                },
+              };
+              const callback = (res)=>{
+                if(res.info.data.length>0){
+                  self.labelData.push.apply(self.labelData,res.info.data);
+                  console.log('labelData',self.labelData)
+                }else{
+                  alert('没有更多了');
                 };
-                const callback = (res)=>{
-                  if(res.info.data.length>0){
-                    self.labelData.push.apply(self.labelData,res.info.data);
-                    console.log('labelData',self.labelData)
-                  }else{
-                    alert('没有更多了');
-                  };
+              };
+              window.base.labelGet(postData,callback);
+            },
+
+
+            getLabelDataTwo(){
+              const self = this;
+              const postData = {};
+              postData.paginate = window.base.cloneForm(self.paginate);
+              postData.searchItem = {
+                thirdapp_id:2
+              };
+              postData.getBefore = {
+                labelData:{
+                  tableName:'label',
+                  searchItem:{
+                    title:['=',['福利待遇']],
+                  },
+                  middleKey:'parentid',
+                  key:'id',
+                  condition:'in',
+                },
+              };
+              const callback = (res)=>{
+                if(res.info.data.length>0){
+                  self.labelDataTwo.push.apply(self.labelDataTwo,res.info.data);
+                
+                }else{
+                  alert('没有更多了');
                 };
-                window.base.labelGet(postData,callback);
-              },
+              };
+              window.base.labelGet(postData,callback);
+            },
 
 
             productAdd(){
               const self = this;
               const postData = {
                 data:self.submitData,
-                token:window.base.getUserToken()     
+                token:window.base.getMerchantToken()    
               };
               const callback = (res)=>{
                if(res.solely_code==100000){       

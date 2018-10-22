@@ -313,9 +313,8 @@ div{
                                         </div>
                                     </div>
                                     <div class="treatment flex font30 color6">
-                                        <div class="treatment_sort">五险一金</div>
-                                        <div class="treatment_sort">加班补偿</div>
-                                        <div class="treatment_sort">交通方便</div>
+                                        <div class="treatment_sort" v-for="item in mainData.passage_array">{{item}}</div>
+                                        
                                     </div>
                                 </div>
                             </div>

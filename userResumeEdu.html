@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>工作经历</title>
+<title>教育经历</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="baidu-site-verification" content="z8EeuYl0nS" />
 <meta name="keywords" content="华路卓">
@@ -159,16 +159,34 @@ a{color:#fff;}
   <div class="w750">
       <div class="p40">
           <div class="sum_txt flexRowBetween">
-              <div class="sumTxt">工作经验</div>
+              <div class="sumTxt">教育经历</div>
           </div>
           <div class="p40 gig">
               <div class="bank_card flexRowBetween">
                   <div class="input_note">*</div>
                   <div class="input_before">
-                      公司名称:
+                      院校名称:
                   </div>
                   <div class="resume_info">
-                      <input placeholder="请输入公司名称" v-model='submitData.companyName'></input>
+                      <input placeholder="请输入院校名称" v-model='submitData.schoolName'></input>
+                  </div>
+              </div>
+              <div class="bank_card flexRowBetween">
+                  <div class="input_note">*</div>
+                  <div class="input_before">
+                      所学专业:
+                  </div>
+                  <div class="resume_info">
+                      <input placeholder="所学专业" v-model='submitData.object'></input>
+                  </div>
+              </div>
+              <div class="bank_card flexRowBetween">
+                  <div class="input_note">*</div>
+                  <div class="input_before">
+                      最高学历:
+                  </div>
+                  <div class="resume_info">
+                      <input placeholder="最高学历" v-model='submitData.highEdu'></input>
                   </div>
               </div>
               <div class="bank_card flexRowBetween">
@@ -189,20 +207,7 @@ a{color:#fff;}
                       <input placeholder="结束时间" v-model='submitData.endDate'></input>
                   </div>
               </div>
-              <div class="bank_card flexRowBetween">
-                  <div class="input_note">*</div>
-                  <div class="input_before">
-                      职位名称:
-                  </div>
-                  <div class="resume_info">
-                      <input placeholder="职位名称" v-model='submitData.job'></input>
-                  </div>
-              </div>
-              <div style="height:1.1rem;line-height:1.1rem;color:#666;font-size:.38rem;">工作描述:</div>
-              <div class="job_des">
-                  <textarea placeholder="请输入工作描述,不少于20个字" style="color:#666;" v-model='submitData.content'>
-                  </textarea>
-              </div>
+             
           </div>
           <div class="btn flexRowBetween">
             <button bindtap="setValue">取消</button>
@@ -221,11 +226,11 @@ a{color:#fff;}
                 mainData:[],
                 workExperience:[],
                 submitData:{
-                  companyName:'',
+                  schoolName:'',
+                  object:'',
+                  highEdu:'',
                   startDate:'',
-                  endDate:'',
-                  job:'',
-                  content:''
+                  endDate:''
                 },
               
                 
@@ -264,8 +269,9 @@ a{color:#fff;}
             const callback = (res)=>{
               if(res.info.data.length>0){
                 self.mainData = res.info.data[0].info;
-                self.mainData.workExperience = self.mainData.workExperience?self.mainData.workExperience:[]
+                self.mainData.education = self.mainData.education?self.mainData.education:[]
               }
+              
             };
             window.base.userGet(postData,callback);
 
@@ -281,9 +287,9 @@ a{color:#fff;}
             const postData = {};
             postData.token =window.base.getUserToken();
             postData.data = {};
-            console.log('workExperience',self.mainData);
-            self.mainData.workExperience.push(self.submitData);
-            postData.data.workExperience = self.mainData.workExperience;
+            console.log('education',self.mainData);
+            self.mainData.education.push(self.submitData);
+            postData.data.education = self.mainData.education;
             
             const callback = (data)=>{
               if(data.solely_code==100000){

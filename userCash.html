@@ -266,7 +266,7 @@ c<!DOCTYPE html>
             userGet(){
                 const self = this;
                 const postData = {
-                    token:"3b5a3f60c49d78638ac036a6ff872259",
+                    token:window.base.getUserToken(),
                     thirdapp_id:2
                 };
                 const callback = (res)=>{
@@ -284,7 +284,7 @@ c<!DOCTYPE html>
                 const self = this;
                 const postData = {};
                 postData.paginate = window.base.cloneForm(self.paginate);
-                postData.token = "3b5a3f60c49d78638ac036a6ff872259";
+                postData.token = window.base.getUserToken();
                 postData.searchItem = window.base.cloneForm(self.searchItem)
                 postData.order = {
                   create_time:'desc',

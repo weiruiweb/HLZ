@@ -78,7 +78,7 @@
   <div class="user_sort">
     <div class="user_item flexRowBetween">
       <a style="width:98%;" href="userCash.html">
-       <div class="item_top font32">11000</div>
+       <div class="item_top font32">{{computeData?computeData:''}}.00</div>
        <div class="item_bottom font34">已提现(元)</div>
       </a>
       <div class="vertical_line">
@@ -194,7 +194,7 @@
             return {
                 
                 mainData:[],
-               
+               computeData:[],
                 
                 paginate: {
                     
@@ -216,7 +216,7 @@
         },
         
         created: function () {
-
+            this.getComputeData();
             this.userGet()
         },
 
@@ -225,7 +225,7 @@
             userGet(){
                 const self = this;
                 const postData = {
-                    token:"aeb3fc757b6cfc99cb98338e6daca6c1",
+                    token:window.base.getUserToken(),
                     thirdapp_id:2
                 };
                 const callback = (res)=>{
@@ -238,6 +238,32 @@
                 }
                 window.base.userGet(postData,callback);
             },  
+
+            getComputeData(){
+              const self = this;
+              const postData = {};
+              postData.data = {
+                FlowLog:{
+                  compute:{
+                    count:'sum',
+                  },
+                  
+                  searchItem:{
+                    user_no:self.mainData.user_no,
+                    type:2,
+                    count:['<',0],
+                    status:['in',[0,1]]
+                  }
+                }
+              };
+              const callback = (res)=>{
+                
+                  self.computeData = -res.info.FlowLog.countsum;
+              
+                console.log(self.computeData)
+              };
+              window.base.flowLogCompute(postData,callback);
+            },
 
              intoDetail(e) {
                 var self = this;

@@ -124,7 +124,7 @@ a{color:#fff;}
           const self = this;
           const postData = {};
           postData.paginate = self.paginate;
-          postData.token = "6f9abbd286b4791dea3cb8699b2873f0";
+          postData.token = window.base.getUserToken();
           postData.searchItem = {
             type:'2',
             user_type:0,
