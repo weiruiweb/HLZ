@@ -1,17 +1,39 @@
 window.base={
     g_restUrl:'http://solelytech.iicp.net/hualuzhuo/public/index.php/api/v1/',
+
+
     
-    getUserToken:function(){
-        var href =  window.location.href;
-        console.log('href',href);
-        var token = localStorage.getItem('user_token');
-        if(token){
-            return token;
+    getUserToken:function(callback){
+
+
+        var param = this.GetRequest();
+        console.log(param);
+        if(param.code){
+            var postData = {
+                thirdapp_id:2,
+                code:param.code,
+            };
+
+            var c_callback = (res)=>{
+                console.log(res)
+                if(res.token){
+                    localStorage.setItem('user_token',res.token);
+                    localStorage.setItem('user_no',res.info.user_no);
+                    callback&&callback();
+                }else{
+                    alert('获取token失败')
+                };
+            };  
+            this.getWxauthToken(postData, callback);
+
+        }else if(localStorage.getItem('user_token')){
+            callback&&callback();
         }else{
-            localStorage.setItem('user_token',"a9d70fb27353f850ec28aeb666462904");
-            localStorage.setItem('user_no','res.info.user_no');
-            return localStorage.getItem('user_token');
-        }
+            var href =  window.location.href;
+            window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7cd6c5fcb1acb373&redirect_uri='+
+            encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
+        };
+
         
     },    
 
@@ -26,6 +48,20 @@ window.base={
             localStorage.setItem('user_no','res.info.user_no');
             return localStorage.getItem('merchant_token');
         }
+        
+    },
+
+    getWxauthToken:function(param,callback) {
+  
+        var allParams = {
+            url:'Wxauth',
+            type:'post',
+            data:param,
+            sCallback: function(data){
+                callback&&callback(data);
+            }
+        };
+        this.getData(allParams)
         
     },
 
