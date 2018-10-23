@@ -115,7 +115,16 @@
       <div class="input_before">
         工作地点:
       </div>
-      <input v-model='submitData.address'></input>
+       ‍‍<select id="pid"   style="width:5rem;height:0.8rem;font-size:35px" > 
+          <option >请选择省</a> 
+          <option v-for="item in proviceData">{{item.title}}</option> 
+        
+      </select>  ‍‍
+      <select id="pid"  data-key="address" @change="selectChange" style="width:5rem;height:0.8rem;font-size:35px" > 
+          <option >请选择市</a> 
+          <option v-for="c_item in cityData">{{c_item.title}}</option> 
+        
+      </select> 
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
@@ -157,7 +166,8 @@
         el: '#app',
         data: function() {
             return {
-          
+                proviceData:[],
+                cityData:[],
                 labelData:[],
                 labelDataTwo:[],
                 submitData:{
@@ -189,16 +199,21 @@
                 pageArray:[],
                 allPages:0,
                 linkPage:'',
-                textArray:[]
+                textArray:[],
 
-
+                provice:''
             }
 
         },
         
         created: function () {
+            
+            var callback = (res)=>{
               this.getLabelData();
-              this.getLabelDataTwo()
+              this.getLabelDataTwo();
+              this.getCityData();
+            };
+            window.base.getMerchantToken(callback);
         },
 
         methods:{
@@ -227,6 +242,32 @@
                   self.labelData.push.apply(self.labelData,res.info.data);
                   console.log('labelData',self.labelData)
                 }else{
+                  alert('没有更多了');
+                };
+              };
+              window.base.labelGet(postData,callback);
+            },
+
+            getCityData(){
+              const self = this;
+              const postData = {};
+              postData.paginate = window.base.cloneForm(self.paginate);
+              postData.searchItem = {
+                type:7,
+              };
+        
+              postData.order = {
+                  create_time:'asc'
+              }
+              const callback = (res)=>{
+                if(res.info.data.length>0){
+                  self.proviceData.push.apply(self.proviceData,res.info.data);
+                  for (var i = 0; i < res.info.data.length; i++) {
+                    self.cityData.push.apply(self.cityData,res.info.data[i].child);
+                  }
+                  
+                }else{
+                  
                   alert('没有更多了');
                 };
               };
@@ -268,7 +309,7 @@
               const self = this;
               const postData = {
                 data:self.submitData,
-                token:window.base.getMerchantToken()    
+                token:localStorage.getItem('merchant_token')    
               };
               const callback = (res)=>{
                if(res.solely_code==100000){       
@@ -285,6 +326,10 @@
               self.submitData[window.base.getDataSet(e).key] = window.base.getSelectValue(e);
               console.log('selectChange',self.submitData);
             },
+
+         
+
+           
 
 
             buttonClick(e){ 

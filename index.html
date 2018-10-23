@@ -124,7 +124,7 @@ a{
                 最新岗位
             </div>
             <div class="tab_item font40">
-                最新工作
+                附近工作
             </div>
         </div>
         <div id="job">
@@ -132,7 +132,7 @@ a{
                 <div id="tab" class="flexRowBetween font36">
                     <div class="sort_item" :data-num="3"  @click="selectMeun">
                         <div class="sort_in  flexRowCenter" style="height:100%;" :data-num="3"  @click="selectMeun">
-                            <div class="text1" id="gr_zone_ids" data-id="130100" style="width:80%;text-align: center;" :data-num="3"  @click="selectMeun">西安</div>
+                            <div class="text1" id="gr_zone_ids" data-id="130100" style="width:80%;text-align: center;" :data-num="3"  @click="selectMeun">区域</div>
                             <div style="width:20%;" :data-num="3"  @click="selectMeun"> <img src="images/up_icon_a.png" class="img1" :data-num="3"  @click="selectMeun" v-if="num==3"/>
                             <img src="images/up_icon.png" class="img1" :data-num="3"  @click="selectMeun" v-else/></div>
                         </div>
@@ -168,7 +168,7 @@ a{
                             </div>
                             <div class="c_p_child">
                                 <div class="orgin"  :class="(show_id==item.id&&item.child?'after':'')" v-for="(c_item, c_index) in item.child" >
-                                    <div :data-show_child_id="c_item.id"   @click="experienceSearch" class="c_child">
+                                    <div :data-show_child_id="c_item.id"   @click="citySearch" class="c_child">
                                         {{c_item.title}}
                                     </div>
                                 </div>
@@ -279,10 +279,7 @@ a{
                 labelData:[],
                 mainData:[],
                 passage_array:[],
-                menu:[
-                    {title:'1',id:'1'},
-                    {title:'2',id:'2'},
-                ],
+              
                 paginate: {
                     
                 },
@@ -471,6 +468,15 @@ a{
                 const experience = e.target.innerText;
                 console.log(e)
                 self.searchItem.experience = experience;
+                self.num ='10000';
+                self.productGet(true);
+            },
+
+            citySearch(e){
+                const self = this;
+                const address = e.target.innerText;
+                console.log(e)
+                self.searchItem.address = address;
                 self.num ='10000';
                 self.productGet(true);
             }

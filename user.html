@@ -69,7 +69,7 @@
           </div>
           <div class="user_right">
               <div class="user_img">
-                <img class="user_img" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLicBxBs5icUzUlaSePibpqicPZO6FwKqibiaCJZkSPzibgOl9dc4Wr4TancmXJlU1ctJ5jf37ZMOFdicaf6Q/132" />
+                <img class="user_img" :src="mainData.headImgUrl" />
               </div>
           </div>
         </div>
@@ -136,7 +136,7 @@
         <div class="module_text">工资查询</div>
       </a>
     </div>
-    <a class="user_module" href="userMerchentIn.html">
+    <a class="user_module" href="merchant.html">
         <div class="module_img">
           <img src="images/user_icon6.png"/>
         </div>
@@ -193,31 +193,32 @@
         data: function() {
             return {
                 
-                mainData:[],
-               computeData:[],
-                
-                paginate: {
-                    
-                  count: 0,
-                  currentPage: 1,
-                  pagesize: 6,
-                  is_page: true,
-                },
+              mainData:[],
+              computeData:[],
+              paginate: {
+                count: 0,
+                currentPage: 1,
+                pagesize: 6,
+                is_page: true,
+              },
 
-                searchItem:{
-                    
-                },
-                pageArray:[],
-                allPages:0,
-                linkPage:'',
+              searchItem:{
+                  
+              },
+              pageArray:[],
+              allPages:0,
+              linkPage:'',
 
             }
 
         },
         
         created: function () {
-            this.getComputeData();
-            this.userGet()
+            var callback = (res)=>{
+              this.getComputeData();
+              this.userGet();
+            };
+            window.base.getUserToken(callback);
         },
 
         methods:{
@@ -225,7 +226,7 @@
             userGet(){
                 const self = this;
                 const postData = {
-                    token:window.base.getUserToken(),
+                    token:localStorage.getItem('user_token'),
                     thirdapp_id:2
                 };
                 const callback = (res)=>{

@@ -62,9 +62,7 @@ a{color:#fff;}
                   <div class="list_left">
                       <div class="job_type avoidOverflow">{{item.title}}</div>
                       <div class="treatment flex">
-                          <div class="treatment_sort">五险一金</div>
-                          <div class="treatment_sort">加班补偿</div>
-                          <div class="treatment_sort">交通方便</div>
+                          <div class="treatment_sort"  v-for="c_item in item.passage_array">{{c_item}}</div>
                       </div>
                       <div class="job_company flexRowBetween">
                           <div class="company_img">
@@ -151,8 +149,10 @@ a{color:#fff;}
         },
         
         created: function () {
-
-            this.productGet()
+          var callback = (res)=>{
+            this.productGet();
+          };
+          window.base.getMerchantToken(callback);
         },
 
         methods:{
@@ -164,7 +164,7 @@ a{color:#fff;}
                     searchItem:{
                         type:1,
                         category_id:33,
-                        user_no:'UA16739747349590'
+                        user_no:localStorage.getItem('merchant_no')
                     }
                 };
                 postData.getAfter = {

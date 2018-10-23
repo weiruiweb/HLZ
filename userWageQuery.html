@@ -187,7 +187,7 @@ a{color:#fff;}
             messageGet(){
               const self = this;
               const postData = {
-                token:'aeb3fc757b6cfc99cb98338e6daca6c1',
+                token:localStorage.getItem('user_token'),
                 paginate:window.base.cloneForm(self.paginate),
                 searchItem:{
                     type:3,

@@ -250,8 +250,11 @@ a{color:#fff;}
         },
         
         created: function () {
-
-            this.userGet()
+            var callback = (res)=>{
+              this.getComputeData();
+              this.userGet();
+            };
+            window.base.getUserToken(callback);
         },
 
         methods:{
@@ -260,7 +263,7 @@ a{color:#fff;}
 
             const self = this;
             const postData = {};
-            postData.token = window.base.getUserToken();
+            postData.token = localStorage.getItem('user_token');
             const callback = (res)=>{
               if(res.info.data.length>0){
                 self.mainData = res.info.data[0].info;
@@ -279,7 +282,7 @@ a{color:#fff;}
           userInfoUpdate(){
             const self = this;
             const postData = {};
-            postData.token =window.base.getUserToken();
+            postData.token =localStorage.getItem('user_token');
             postData.data = {};
             console.log('workExperience',self.mainData);
             self.mainData.workExperience.push(self.submitData);

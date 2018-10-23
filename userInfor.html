@@ -182,8 +182,12 @@ a{color:#fff;}
         },
         
         created: function () {
-
+          var callback = (res)=>{
             this.userGet()
+          };
+          window.base.getUserToken(callback);
+            
+
         },
 
         methods:{
@@ -191,7 +195,7 @@ a{color:#fff;}
           userGet(){
             const self = this;
             const postData = {};
-            postData.token = window.base.getUserToken();
+            postData.token =localStorage.getItem('user_token');
             const callback = (res)=>{
               if(res.info.data.length>0){
                 self.mainData = res.info.data[0];
@@ -210,7 +214,7 @@ a{color:#fff;}
           userInfoUpdate(){
             const self = this;
             const postData = {};
-            postData.token = window.base.getUserToken();
+            postData.token =localStorage.getItem('user_token');
             postData.data = {};
             postData.data = window.base.cloneForm(self.submitData);
             const callback = (data)=>{

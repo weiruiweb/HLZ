@@ -102,8 +102,10 @@ a{color:#fff;}
         },
         
         created: function () {
-
-            this.userGet()
+            var callback = (res)=>{
+              this.userGet();
+            };
+            window.base.getUserToken(callback);
         },
 
         methods:{
@@ -111,7 +113,7 @@ a{color:#fff;}
             userGet(){
                 const self = this;
                 const postData = {
-                    token:window.base.getUserToken(),
+                    token:localStorage.getItem('user_token'),
                     thirdapp_id:2
                 };
                 const callback = (res)=>{

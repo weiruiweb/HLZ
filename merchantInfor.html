@@ -9,6 +9,10 @@
 <meta name="divport" content="width=device-width, initial-scale=1">
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
 </head>
 <body>
 <style>
@@ -53,6 +57,7 @@
 }
 a{color:#fff;}
 </style>
+<div id="app">
 <div class="w750">
   <div class="p40">
   <div class="sum_txt flexRowBetween">
@@ -106,7 +111,7 @@ a{color:#fff;}
       <div class="input_before">
         地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址:
       </div>
-      <input value="@3uiu415222525"  disabled="true"></input>
+      <input  disabled="true"></input>
     
     </div>
      <div class="sum_txt flexRowBetween" style="border:none;">
@@ -116,8 +121,8 @@ a{color:#fff;}
       </div>
     </div>
     <div class="intro">
-      <p>
-      华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司"</p>
+      <p>{{mainData.info?mainData.info.date:''}}
+    </p>
     </div>
     <div class="sum_txt" style="border:none;">
       <div class="sumTxt">营业执照</div>
@@ -139,5 +144,63 @@ a{color:#fff;}
   </div>
 </div>
 </div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+        
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+                isIos:false
+            }
+
+        },
+        
+        created: function () {
+           var callback = (res)=>{
+      
+              this.userGet();
+            };
+            window.base.getMerchantToken(callback);
+      
+        },
+
+        methods:{
+
+          userGet(){
+            const self = this;
+            const postData = {};
+            postData.token = localStorage.getItem('merchant_token');
+            const callback = (res)=>{
+              if(res.info.data.length>0){
+                self.mainData = res.info.data[0];
+              }
+            };
+             window.base.userGet(postData,callback);
+          },
+
+
+           
+        }
+    });            
+</script>
 </body>
 </html>

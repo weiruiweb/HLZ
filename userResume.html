@@ -91,7 +91,7 @@ a{color:#333;}
                     <div class="input_before">
                         工作经验:
                     </div>
-                    <div class="resume_info"></div>
+                    <div class="resume_info">{{mainData.info?mainData.info.email:''}}</div>
                 </div>
                 <div class="bank_card flexRowBetween">
                     <div class="input_before">
@@ -197,8 +197,11 @@ a{color:#333;}
         },
         
         created: function () {
-
-            this.userGet()
+          var callback = (res)=>{
+            this.userGet();
+         
+          };
+          window.base.getUserToken(callback);
         },
 
         methods:{
@@ -206,7 +209,7 @@ a{color:#333;}
             userGet(){
                 const self = this;
                 const postData = {
-                    token:window.base.getUserToken(),
+                    token:localStorage.getItem('user_token'),
                     thirdapp_id:2
                 };
                 const callback = (res)=>{
@@ -233,7 +236,7 @@ a{color:#333;}
                     data:{
                         workExperience:self.workExperience
                     },
-                    token:window.base.getUserToken()
+                    token:localStorage.getItem('user_token')
                 };
                 if(!postData.data.workExperience.length>0){
                     postData.data.workExperience='[]'
@@ -258,7 +261,7 @@ a{color:#333;}
                     data:{
                         education:self.education
                     },
-                    token:window.base.getUserToken()
+                    token:localStorage.getItem('user_token')
                 };
                 if(!postData.data.education.length>0){
                     postData.data.education='[]'

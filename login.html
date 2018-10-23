@@ -149,8 +149,8 @@
                 const callback = (res)=>{
                   if(res.solely_code==100000){
               		localStorage.setItem('merchant_token',res.token);
-              		localStorage.setItem('user_no',res.info.user_no);
-                   /* window.location.href='./userMerchentIn.html'*/
+              		localStorage.setItem('merchant_no',res.info.user_no);
+                    window.location.href='./merchant.html'
                   }else{
                     alert('网络故障')
                   }

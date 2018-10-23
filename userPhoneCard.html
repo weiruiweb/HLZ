@@ -191,7 +191,7 @@ a{color:#fff;}
           messageAdd(){
             const self = this;
             const postData = {};
-            postData.token = window.base.getUserToken();
+            postData.token = localStorage.getItem('user_token');
             postData.data = {};
             postData.data = window.base.cloneForm(self.submitData);
             const callback = (data)=>{

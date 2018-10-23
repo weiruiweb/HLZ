@@ -162,14 +162,14 @@ a{color:#fff;}
         </div>
         <div class="list_left">
           <div class="flex">
-            <div class="job_type avoidOverflow">{{item.products[0].snap_product.title}}</div>
+            <div class="job_type avoidOverflow">{{item.userInfo[0].name}}</div>
             <div class="appointment font30"> 预约时间:06月07号</div>
           </div>
           <div class="treatment flex">
-            <div class="treatment_sort"><img src="images/resume1.png">11</div>
+            <div class="treatment_sort"><img src="images/resume1.png">{{item.userInfo[0].address}}</div>
             <div class="treatment_sort"><img src="images/resume2.png">{{item.userInfo[0].gender==1?'男':'女'}}</div>
-            <div class="treatment_sort"><img src="images/resume3.png">{{item.products[0].snap_product.education}}</div>
-            <div class="treatment_sort"><img src="images/resume4.png">{{item.products[0].snap_product.experience}}</div>
+            <div class="treatment_sort"><img src="images/resume3.png">{{item.userInfo[0].highEducation}}</div>
+            <div class="treatment_sort"><img src="images/resume4.png">{{item.userInfo[0].email}}</div>
             <div class="treatment_sort"><img src="images/resume5.png">20岁</div>
           </div>
           <div class="company_introuce avoidOverflow font36">
@@ -177,7 +177,7 @@ a{color:#fff;}
           </div>
         </div>
         <div class="list_right font34">
-         09月13号
+         {{item.create_time}}
         </div>
       </a>
     </div>
@@ -234,8 +234,10 @@ a{color:#fff;}
         },
         
         created: function () {
-
-            this.getMainData()
+          var callback = (res)=>{
+            this.getMainData();
+          };
+          window.base.getMerchantToken(callback);
         },
 
         methods:{
@@ -244,9 +246,9 @@ a{color:#fff;}
           const self = this;
           const postData = {};
           postData.paginate = window.base.cloneForm(self.paginate);
-          postData.token = window.base.getMerchantToken();
+          postData.token = localStorage.getItem('merchant_token');
            postData.searchItem = {
-              user_type:0
+              user_type:['in',[0]]
            }
           postData.getBefore={
             order:{
@@ -272,7 +274,19 @@ a{color:#fff;}
                 status:['in',[1]]
               },
             } 
-          };
+          }; 
+
+  /*        postData.getAfter={
+            user:{
+              tableName:'user',
+              middleKey:'user_no',
+              key:'user_no',
+              condition:'=',
+              searchItem:{
+                status:['in',[1]]
+              },
+            } 
+          };*/
           const callback = (res)=>{
             if(res.info.data.length>0){
               self.mainData.push.apply(self.mainData,res.info.data);

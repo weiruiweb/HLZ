@@ -113,9 +113,11 @@ a{color:#fff;}
         },
         
         created: function () {
-
+          var callback = (res)=>{
             this.getMainData();
             this.getComputeData()
+          };
+          window.base.getUserToken(callback);
         },
 
         methods:{
@@ -124,7 +126,7 @@ a{color:#fff;}
           const self = this;
           const postData = {};
           postData.paginate = self.paginate;
-          postData.token = window.base.getUserToken();
+          postData.token = localStorage.getItem('user_token');
           postData.searchItem = {
             type:'2',
             user_type:0,

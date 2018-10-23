@@ -13,19 +13,18 @@ window.base={
                 thirdapp_id:2,
                 code:param.code,
             };
-
             var c_callback = (res)=>{
                 console.log(res)
                 if(res.token){
                     localStorage.setItem('user_token',res.token);
                     localStorage.setItem('user_no',res.info.user_no);
+                    localStorage.setItem('user_info',res.info);
                     callback&&callback();
                 }else{
                     alert('获取token失败')
                 };
             };  
-            this.getWxauthToken(postData, callback);
-
+            this.getWxauthToken(postData,c_callback);
         }else if(localStorage.getItem('user_token')){
             callback&&callback();
         }else{
@@ -33,22 +32,18 @@ window.base={
             window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7cd6c5fcb1acb373&redirect_uri='+
             encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
         };
-
         
     },    
 
-    getMerchantToken:function(){
+    getMerchantToken:function(callback){
         var href =  window.location.href;
         console.log('href',href);
         var token = localStorage.getItem('merchant_token');
         if(token){
-            return token;
+           callback&&callback();
         }else{
-            localStorage.setItem('merchant_token','5bfa8220a9092f567156cece9db2eb9f');
-            localStorage.setItem('user_no','res.info.user_no');
-            return localStorage.getItem('merchant_token');
-        }
-        
+            window.location.href = './login.html'
+        };
     },
 
     getWxauthToken:function(param,callback) {
@@ -61,7 +56,7 @@ window.base={
                 callback&&callback(data);
             }
         };
-        this.getData(allParams)
+        this.getData(allParams);
         
     },
 
@@ -74,14 +69,23 @@ window.base={
             type:params.type,
             url:this.g_restUrl+params.url,
             data:params.data,
-
-            beforeSend: function (XMLHttpRequest) {
-                if (params.tokenFlag) {
-                    XMLHttpRequest.setRequestHeader('token', that.getLocalStorage('token'));
-                }
-            },
             success:function(res){
-                params.sCallback && params.sCallback(res);
+                if(res.solely_code==201000){
+                    var loca = window.location;
+                    window.location.href = loca.origin + loca.pathname;
+                }else if(res.solely_code==200000){
+                    if(that.GetUrlRelativePath().substr(8,4)=='user'){
+                        localStorage.removeItem('user_token');
+                        localStorage.removeItem('user_no');
+                        that.getUserToken();
+                    }else if(that.GetUrlRelativePath().substr(8,8)=='merchant'){
+                        localStorage.removeItem('merchant_token');
+                        localStorage.removeItem('merchant_no');
+                        window.location.href = './login.html'
+                    };
+                }else{
+                    params.sCallback && params.sCallback(res);
+                };
             },
             error:function(res){
                 params.eCallback && params.eCallback(res);
@@ -488,6 +492,20 @@ window.base={
 
     getHtmlValue:function(e) {   
         return e.target.innerText;
+    },
+
+    GetUrlRelativePath:function() {   
+           
+　　　　var url = document.location.toString();
+　　　　var arrUrl = url.split("//");
+
+　　　　var start = arrUrl[1].indexOf("/");
+　　　　var relUrl = arrUrl[1].substring(start);//stop省略，截取从start开始到结尾的所有字符
+
+　　　　if(relUrl.indexOf("?") != -1){
+　　　　　　relUrl = relUrl.split("?")[0];
+　　　　}
+　　　　return relUrl;
     },
 
 

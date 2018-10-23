@@ -256,9 +256,14 @@ c<!DOCTYPE html>
         
         created: function () {
             
-            this.userGet();
-            this.getMainData();
-            this.getComputeData();
+            
+
+            var callback = (res)=>{
+                this.userGet();
+                this.getMainData();
+                this.getComputeData();
+            };
+            window.base.getUserToken(callback);
         },
 
         methods:{
@@ -266,7 +271,7 @@ c<!DOCTYPE html>
             userGet(){
                 const self = this;
                 const postData = {
-                    token:window.base.getUserToken(),
+                    token:localStorage.getItem('user_token'),
                     thirdapp_id:2
                 };
                 const callback = (res)=>{
@@ -284,7 +289,7 @@ c<!DOCTYPE html>
                 const self = this;
                 const postData = {};
                 postData.paginate = window.base.cloneForm(self.paginate);
-                postData.token = window.base.getUserToken();
+                postData.token = localStorage.getItem('user_token');
                 postData.searchItem = window.base.cloneForm(self.searchItem)
                 postData.order = {
                   create_time:'desc',

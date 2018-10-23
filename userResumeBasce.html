@@ -227,10 +227,12 @@ a{color:#fff;}
                       学   历:
                   </div>
                   <div class="resume_info" style="width:74%;padding-left:2%;padding-right: 0;">
-                      <select id="AreaId" name="AreaId" size="1" class="sel">
-                         <option value="1">本科</option>
-                         <option value="2">硕士</option>
-                         <option value="3">博士</option>
+                      <select data-key="highEducation" @change="selectChange" style="width:5rem;height:0.8rem;font-size:35px">
+                        <option >请选择</a> 
+                        <option >专科</option>
+                        <option >本科</option>
+                        <option >硕士</option>
+                        <option >博士</option>
                       </select>
                   </div>
                   <img src="images/choose_icon.png">
@@ -241,11 +243,10 @@ a{color:#fff;}
                       工作年限:
                   </div>
                   <div class="resume_info flexRowBetween" style="width:74%;padding-left:2%;padding-right: 0;">
-                      <select id="AreaId" name="AreaId" size="1" class="sel">
-                         <option value="1">1年</option>
-                         <option value="2">2年</option>
-                         <option value="3">3年</option>
-                      </select>
+                      ‍‍<select id="pid"  data-key="email" @change="selectChange" style="width:5rem;height:0.8rem;font-size:35px" > 
+                          <option >请选择</a> 
+                          <option v-for="item in labelData">{{item.title}}</option>   
+                      </select> 
                   </div>
                   <img src="images/choose_icon.png">
               </div>
@@ -262,13 +263,15 @@ a{color:#fff;}
         el: '#app',
         data: function() {
             return {
-                
+                labelData:[],
                 mainData:[],
                 submitData:{
                   date:'',
                   gender:'',
                   name:'',
-                  idCard:''
+                  idCard:'',
+                  email:'',
+                  highEducation:'',
                 },
                 
                 paginate: {
@@ -292,7 +295,11 @@ a{color:#fff;}
         
         created: function () {
 
-            this.userGet()
+          var callback = (res)=>{
+            this.userGet();
+            this.getLabelData()
+          };
+          window.base.getUserToken(callback);
         },
 
         methods:{
@@ -300,7 +307,7 @@ a{color:#fff;}
           userGet(){
             const self = this;
             const postData = {};
-            postData.token =window.base.getUserToken();
+            postData.token =localStorage.getItem('user_token');
             const callback = (res)=>{
               if(res.info.data.length>0){
                 self.mainData = res.info.data[0];
@@ -308,12 +315,41 @@ a{color:#fff;}
                 self.submitData.gender = self.mainData.info.gender;
                 self.submitData.idCard = self.mainData.info.idCard;
                 self.submitData.name = self.mainData.info.name; 
+                self.submitData.email = self.mainData.info.email; 
+                self.submitData.highEducation = self.mainData.info.highEducation; 
               }
             };
              window.base.userGet(postData,callback);
           },
 
-
+          getLabelData(){
+            const self = this;
+            const postData = {};
+            postData.paginate = window.base.cloneForm(self.paginate);
+            postData.searchItem = {
+              thirdapp_id:2
+            };
+            postData.getBefore = {
+              labelData:{
+                tableName:'label',
+                searchItem:{
+                  title:['=',['经验筛选']],
+                },
+                middleKey:'parentid',
+                key:'id',
+                condition:'in',
+              },
+            };
+            const callback = (res)=>{
+              if(res.info.data.length>0){
+                self.labelData.push.apply(self.labelData,res.info.data);
+                console.log('labelData',self.labelData)
+              }else{
+                alert('没有更多了');
+              };
+            };
+            window.base.labelGet(postData,callback);
+          },
 
 
 
@@ -321,7 +357,7 @@ a{color:#fff;}
           userInfoUpdate(){
             const self = this;
             const postData = {};
-            postData.token =window.base.getUserToken();
+            postData.token = localStorage.getItem('user_token');
             postData.data = {};
             postData.data = window.base.cloneForm(self.submitData);
             const callback = (data)=>{
@@ -336,6 +372,13 @@ a{color:#fff;}
             };
              window.base.userInfoUpdate(postData,callback);
           },
+
+          selectChange(e){ 
+            const self = this;
+            self.submitData[window.base.getDataSet(e).key] = window.base.getSelectValue(e);
+            console.log('selectChange',self.submitData);
+          },
+
           
 
           
