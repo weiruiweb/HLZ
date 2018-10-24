@@ -74,7 +74,7 @@ window.base={
                     var loca = window.location;
                     window.location.href = loca.origin + loca.pathname;
                 }else if(res.solely_code==200000){
-                    if(that.GetUrlRelativePath().substr(8,4)=='user'){
+                    if(that.GetUrlRelativePath().substr(8,4)=='user'||that.GetUrlRelativePath().substr(8,5)=='index'){
                         localStorage.removeItem('user_token');
                         localStorage.removeItem('user_no');
                         that.getUserToken();
