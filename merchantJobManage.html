@@ -160,23 +160,24 @@ a{color:#fff;}
             productGet(){
                 const self = this;
                 const postData = {
-                    paginate:window.base.cloneForm(self.paginate),
-                    searchItem:{
-                        type:1,
-                        category_id:33,
-                        user_no:localStorage.getItem('merchant_no')
-                    }
+                  paginate:window.base.cloneForm(self.paginate),
+                  searchItem:{
+                      type:1,
+                      category_id:33,
+                      user_no:localStorage.getItem('merchant_no')
+                  }
                 };
+                
                 postData.getAfter = {
-                    user:{
-                        tableName:'userInfo',
-                        middleKey:'user_no',
-                        key:'user_no',
-                        searchItem:{
-                            status:1
-                        },
-                        condition:'='
-                    }
+                  user:{
+                      tableName:'userInfo',
+                      middleKey:'user_no',
+                      key:'user_no',
+                      searchItem:{
+                          status:1
+                      },
+                      condition:'='
+                  }
                 }
                 const callback = (res)=>{
                     if(res.info.data.length>0){
