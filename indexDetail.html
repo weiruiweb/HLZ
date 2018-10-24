@@ -486,7 +486,7 @@ div{
               addOrder(){
                 const self = this;
                 const postData = {
-                  token:'b4aaf06bc623592630345c0993176164',
+                  token:localStorage.getItem('user_token'),
                   product:[
                     {id:window.base.GetRequest().id,count:1}
                   ],
