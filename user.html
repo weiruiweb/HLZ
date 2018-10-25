@@ -7,12 +7,14 @@
 <meta name="keywords" content="华路卓">
 <meta name="description" content="华路卓">
 <meta name="divport" content="width=device-width, initial-scale=1">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
 <script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
 <script src="js/browser.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="js/base.js" type="application/javascript"></script>
+<script src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js" type="application/javascript"></script>
 </head>
 <body>
 <style>
@@ -65,7 +67,9 @@
               {{mainData.nickname}}
             </div>
             <div class="resume font34" style="height:40%;display: flex;align-items: center;">
-              <a href="userResume.html">个人简历 >> </a></div>
+              <a href="userResume.html">个人简历 >> </a>
+            </div>
+            <button @click="share">分享</button>
           </div>
           <div class="user_right">
               <div class="user_img">
@@ -217,11 +221,54 @@
             var callback = (res)=>{
               this.getComputeData();
               this.userGet();
+              this.wxJsSdk()
             };
             window.base.getUserToken(callback);
         },
 
         methods:{
+
+            share(){
+              console.log(123)
+              wx.showAllNonBaseMenuItem();
+            },
+
+            wxJsSdk(){
+                const self = this;
+                const postData = {
+                    thirdapp_id:2,
+                    url:window.location.href
+                };
+                const callback = (res)=>{
+                    console.log(res)
+                    wx.config({
+                      debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                      appId:res.appId, // 必填，公众号的唯一标识
+                      timestamp:res.timestamp , // 必填，生成签名的时间戳
+                      nonceStr:res.nonceStr, // 必填，生成签名的随机串
+                      signature:res.signature,// 必填，签名
+                      jsApiList: ['onMenuShareAppMessage','showAllNonBaseMenuItem'] // 必填，需要使用的JS接口列表
+                  });
+
+
+                  wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                      wx.onMenuShareAppMessage({ 
+                          title: 'test', // 分享标题
+                          desc: 'test', // 分享描述
+                          link: 'http://solelytech.iicp.net/hlzweb/user.html', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                          imgUrl: 'http://solelytech.iicp.net/hlzweb/images/user_icon1.png', // 分享图标
+                      }, function(res) { 
+                        console.log('res',res)
+                      });  
+                  });
+
+
+                  wx.error(function(res){
+                    console.log('error',res)
+                  });
+                };
+                window.base.WxJssdk(postData,callback);
+            },
 
             userGet(){
                 const self = this;

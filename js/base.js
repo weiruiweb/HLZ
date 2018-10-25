@@ -60,6 +60,20 @@ window.base={
         
     },
 
+    WxJssdk:function(param,callback) {
+  
+        var allParams = {
+            url:'WxJssdk',
+            type:'post',
+            data:param,
+            sCallback: function(data){
+                callback&&callback(data);
+            }
+        };
+        this.getData(allParams);
+        
+    },
+
     getData:function(params){
         if(!params.type){
             params.type='get';
