@@ -10,6 +10,7 @@
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
 <script src="js/browser.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="js/base.js" type="application/javascript"></script>
 <script src="js/jquery1.8.3.js"></script>
@@ -99,6 +100,27 @@
       </div>
       <input  v-model='submitData.age'></input>
     </div>
+
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        转发:
+      </div>
+      <input  v-model='submitData.distributionOne'></input>
+    </div>  
+
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        二级转发:
+      </div>
+      <input  v-model='submitData.distributionTwo'></input>
+    </div>  
+
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        入职:
+      </div>
+      <input  v-model='submitData.distributionEntry'></input>
+    </div>
    
     <div class="bank_card flexRowBetween">
       <div class="input_before">
@@ -111,8 +133,8 @@
           <option >女</a> 
       </select> 
     </div>
-    <div class="bank_card flexRowBetween">
-      <div class="input_before">
+    <div class="bank_card flexRowBetween" >
+      <div class="input_before" style="width: 37%">
         工作地点:
       </div>
        ‍‍<select id="pid"   style="width:5rem;height:0.8rem;font-size:35px" > 
@@ -125,6 +147,16 @@
           <option v-for="c_item in cityData">{{c_item.title}}</option> 
         
       </select> 
+    </div>
+    <a  href="merchantMap.html">
+    <div class="bank_card flexRowBetween">
+      <div class="input_before" style="width: 37%">
+        选择具体地址:
+      </div>
+      <div  style="width: 63%">
+       
+      </div>
+      </a>
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
@@ -146,12 +178,7 @@
       </div>
     </template>
   </div>
-  <div class="reward_money flexRowBetween">
-    <div class="reward_sort">入职:100元</div>
-    <div class="reward_sort">一级转发:180元</div>
-    <div class="reward_sort">转发:2元每次</div>
-    <div class="reward_sort">二级转发:20元</div>
-  </div>
+
 </div>
 <div style="height:1.00rem;width:100%;margin-bottom: 1rem;">
  
@@ -181,7 +208,10 @@
                   stock:'',
                   age:'',
                   passage_array:[],
-                  address:''
+                  address:'',
+                  distributionOne:'',
+                  distributionTwo:'',
+                  distributionEntry:'',
 
                 },
                 

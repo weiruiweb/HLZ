@@ -459,8 +459,12 @@ div{
         },
         
         created: function () {
-
-            this.productGet()
+            var callback = (res)=>{
+                this.productGet();
+                
+            };
+            window.base.getUserToken(callback);
+            
         },
 
         methods:{
@@ -474,16 +478,104 @@ div{
                 };
                 const callback = (res)=>{
                     if(res.info.data.length>0){
-                        self.mainData = res.info.data[0]
+                        self.mainData = res.info.data[0];
+                        self.getDistri();
                     }else{
                         alert('数据错误')
-                    }
-                    console.log(self.mainData)
-                }
+                    };
+                   
+                };
                 window.base.productGet(postData,callback);
             },  
 
-              addOrder(){
+
+            getDistri(){
+                const self = this;
+                console.log(666)
+                if(window.base.GetRequest().user_no){
+                    var postData = {};
+                    postData.token = localStorage.getItem('user_token'),
+                    postData.searchItem = {
+                        child_no:window.base.GetRequest().user_no,
+                        product_id:window.base.GetRequest().id
+                    };
+                    postData.searchItemOr = {
+                        child_no:localStorage.getItem('user_no'),
+                        product_id:window.base.GetRequest().id
+                    };
+                    const callback = (res)=>{
+                        console.log(res)
+                        if(res.info.data.length>0){
+                            for (var i = 0; i < res.info.data.length; i++) {
+                                if(res.info.data[i].child_no==window.base.GetRequest().user_no){
+                                    var p_parentNo = res.info.data[i].parent_no
+                                }
+                                if(res.info.data[i].child_no==localStorage.getItem('user_no')){
+                                    var parent_no = res.info.data[i].parent_no
+                                }
+                            }
+                            if(!parent_no&&p_parentNo){
+                                self.addDistri(p_parentNo)
+                            }
+                        }else{
+                            self.addDistri()
+                        }
+
+                    }
+                    window.base.distriGet(postData,callback); 
+                }
+            },        
+
+
+            addDistri(parent_no){
+                const self = this;
+                var postData = {};
+                postData.token = localStorage.getItem('user_token'),
+                postData.data = {
+                    parent_no:window.base.GetRequest().user_no,
+                    child_no:localStorage.getItem('user_no'),
+                    product_id:window.base.GetRequest().id
+                };
+                postData.saveAfter = [
+
+                    {
+                      tableName:'FlowLog',
+                      FuncName:'add',
+                      data:{
+                        count:self.mainData.distributionOne,
+                        trade_info:'一级转发奖励',
+                        user_no:window.base.GetRequest().user_no,
+                        type:3,
+                        thirdapp_id:2
+                      }
+                    }
+                    
+                ];
+                if(parent_no){
+                    postData.saveAfter.push(
+                        {
+                          tableName:'FlowLog',
+                          FuncName:'add',
+                          data:{
+                            count:self.mainData.distributionTwo,
+                            trade_info:'二级转发奖励',
+                            user_no:parent_no,
+                            type:3,
+                            thirdapp_id:2
+                          }
+                        }
+                    )
+                };
+                
+                const callback = (res)=>{
+                console.log(res)   
+
+                }
+                window.base.distriAdd(postData,callback); 
+            },
+
+
+            addOrder(){
                 const self = this;
                 const postData = {
                   token:localStorage.getItem('user_token'),
@@ -505,7 +597,8 @@ div{
                   } 
                 };
                 window.base.addOrder(postData,callback);    
-              },
+            },
+            
 
              intoDetail(e) {
                 var self = this;

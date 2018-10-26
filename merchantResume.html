@@ -163,19 +163,19 @@ a{color:#fff;}
         <div class="list_left">
           <div class="flex">
             <div class="job_type avoidOverflow">{{item.userInfo[0].name}}</div>
-            <div class="appointment font30"> 预约时间:06月07号</div>
+            
           </div>
           <div class="treatment flex">
             <div class="treatment_sort"><img src="images/resume1.png">{{item.userInfo[0].address}}</div>
             <div class="treatment_sort"><img src="images/resume2.png">{{item.userInfo[0].gender==1?'男':'女'}}</div>
             <div class="treatment_sort"><img src="images/resume3.png">{{item.userInfo[0].highEducation}}</div>
             <div class="treatment_sort"><img src="images/resume4.png">{{item.userInfo[0].email}}</div>
-            <div class="treatment_sort"><img src="images/resume5.png">20岁</div>
+            
           </div>
           <div class="company_introuce avoidOverflow font36">
           应聘职位:{{item.products[0].snap_product.description}}
           </div>
-        </div>
+        </div>  
         <div class="list_right font34">
          {{item.create_time}}
         </div>
@@ -188,13 +188,13 @@ a{color:#fff;}
           <div style="color:#fff;">{{item.userInfo[0].phone}}</div>
         </div>
       </div>
-      <div class="handle2" style="margin:0. 1rem;">
+      <div class="handle2" style="margin:0. 1rem;"  @click="orderUpdate" :data-id='item.id' >
         <div class="handle_in flexRowaround" >
           <img src="images/resume7.png">
-          <div style="color:#fff;">入职</div>
+          <div style="color:#fff;" >入职</div>
         </div>
       </div>
-      <div class="handle2">
+      <div class="handle2" @click="orderDelete" :data-id='item.id'>
         <div class="handle_in flexRowaround">
           <img src="images/resume8.png">
           <div style="color:#fff;">删除</div>
@@ -212,7 +212,7 @@ a{color:#fff;}
             return {
                 
                 mainData:[],
-                
+                distributionData:[],
                 
                 paginate: {
                     
@@ -234,21 +234,35 @@ a{color:#fff;}
         },
         
         created: function () {
+
           var callback = (res)=>{
             this.getMainData();
+            this.productGet();
+
+            
           };
           window.base.getMerchantToken(callback);
         },
 
         methods:{
 
-        getMainData(){
+        getMainData(isNew){
           const self = this;
+          if(isNew){
+              self.mainData = [];
+              self.paginate = {
+                  count: 0,
+                  currentPage: 1,
+                  pagesize: 6,
+                  is_page: true,
+              }
+          };
           const postData = {};
           postData.paginate = window.base.cloneForm(self.paginate);
           postData.token = localStorage.getItem('merchant_token');
            postData.searchItem = {
-              user_type:['in',[0]]
+              user_type:['in',[0]],
+              order_step:0
            }
           postData.getBefore={
             order:{
@@ -275,7 +289,6 @@ a{color:#fff;}
               },
             } 
           }; 
-
   /*        postData.getAfter={
             user:{
               tableName:'user',
@@ -291,8 +304,10 @@ a{color:#fff;}
             if(res.info.data.length>0){
               self.mainData.push.apply(self.mainData,res.info.data);
             }else{
-              alert('没有更多了','fail')
+              alert('没有更多了')
             };
+            
+            this.getDistri();
           };
           window.base.orderGet(postData,callback);
         },
@@ -303,6 +318,161 @@ a{color:#fff;}
           window.location.href = "./indexDetail.html?id=" + art_id;
         },   
 
+        orderUpdate(e){
+          const self = this;
+          
+          console.log(window.base.getDataSet(e).id)
+          const postData = {};
+          postData.token = localStorage.getItem('merchant_token');
+          postData.data ={
+            order_step:2
+          }
+          postData.searchItem = {
+            user_type:0
+          };
+          postData.searchItem.id = 5;
+          const callback  = res=>{
+            alert('已入职');
+          /*  var index = window.base.getDataSet(e).index;
+            console.log(window.base.getDataSet(e).index)*/
+            
+            self.userInfoUpdate();
+            
+          };
+          window.base.orderUpdate(postData,callback);
+        },
+
+
+
+
+
+        getDistri(){
+          const self = this;
+          
+          const postData = {};
+          postData.token = localStorage.getItem('merchant_token');
+          postData.searchItem = {
+            child_no:self.mainData[0].user_no,
+            product_id:window.base.GetRequest().id
+          }
+          postData.getAfter = {
+            distri:{
+              tableName:'Distribution',
+              middleKey:'parent_no',
+              key:'child_no',
+              searchItem:{
+                status:1,
+                product_id:window.base.GetRequest().id
+              },
+              condition:'='
+            }
+          };
+          const callback = (res)=>{
+            self.distributionData = res;
+          };
+          window.base.distriGet(postData,callback);
+        },  
+
+        userInfoUpdate(){
+          const self = this;
+          const postData = {};
+          postData.token = localStorage.getItem('merchant_token'); 
+          postData.data = {
+            update_time:new Date().getTime(),
+          };
+          postData.saveAfter=[];
+          postData.saveAfter.push(
+            {
+              tableName:'FlowLog',
+              FuncName:'add',
+              data:{
+                count:self.productData.distributionEntry,
+                trade_info:'入职奖励',
+                user_no:self.mainData[0].user_no,
+                type:3,
+                thirdapp_id:2
+              }  
+            },       
+          );
+          console.log('userInfoUpdate',postData);
+          if(self.distributionData.info.data.length>0){
+
+            postData.saveAfter.push(
+              {
+                tableName:'FlowLog',
+                FuncName:'add',
+                data:{
+                  count:self.productData.distributionEntryOne,
+                  trade_info:'下级入职奖励',
+                  user_no:self.distributionData.info.data[0].parent_no,
+                  type:3,
+                  thirdapp_id:2
+                }  
+              },       
+            );
+
+            if(self.distributionData.info.data[0].distri){
+              postData.saveAfter.push(
+                {
+                  tableName:'FlowLog',
+                  FuncName:'add',
+                  data:{
+                    count:self.productData.distributionEntryTwo,
+                    trade_info:'下级入职奖励',
+                    user_no:self.distributionData.info.data[0].distri[0].parent_no,
+                    type:3,
+                    thirdapp_id:2
+                  }  
+                },
+              )
+            };
+            
+          };
+          console.log('distributionData',postData);
+          const callback = (res)=>{
+            console.log('userInfoUpdate',res);
+            self.getMainData(true);
+          };
+          window.base.userInfoUpdate(postData,callback); 
+        },
+
+
+
+        productGet(){
+          const self = this;
+          const postData = {};
+          postData.token = localStorage.getItem('merchant_token');
+          postData.searchItem = {
+            id:window.base.GetRequest().id
+          }
+
+          const callback = (res)=>{
+            if(res.info.data.length>0){
+              self.productData = res.info.data[0]
+            }
+          };
+          window.base.productGet(postData,callback);
+        }, 
+
+        orderDelete(e){
+          const self = this;
+          const postData = {};
+          postData.token = localStorage.getItem('merchant_token');
+          postData.searchItem = {
+            user_type:0,
+            id:window.base.getDataSet(e).id
+          };
+          
+          const callback  = res=>{
+            alert('已删除');
+            self.getMainData(true);
+          };
+          window.base.orderDelete(postData,callback);
+        },
+
+
+
+        
            
         }
     });            

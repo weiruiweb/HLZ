@@ -174,6 +174,33 @@ window.base={
         this.getData(allParams)
     }, 
 
+    distriGet:function(param,callback) {
+  
+        var allParams = {
+            url:'Common/Distribution/get',
+            type:'post',
+            data:param,
+            sCallback: function(data){
+                callback&&callback(data);
+            }
+        };
+        this.getData(allParams)
+    },     
+
+
+    distriAdd:function(param,callback) {
+  
+        var allParams = {
+            url:'Common/Distribution/add',
+            type:'post',
+            data:param,
+            sCallback: function(data){
+                callback&&callback(data);
+            }
+        };
+        this.getData(allParams)
+    }, 
+
     flowLogGet:function(param,callback) {
   
         var allParams = {
