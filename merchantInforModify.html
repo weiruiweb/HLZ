@@ -6,7 +6,7 @@
 <meta name="baidu-site-verification" content="z8EeuYl0nS" />
 <meta name="keywords" content="华路卓">
 <meta name="description" content="华路卓">
-<meta name="divport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
 <script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
@@ -25,8 +25,8 @@
 }
 .uploder_item{
   width:46.5%;
-  height:3.64rem;
-  line-height:1.90rem;
+  height:3rem;
+  line-height:1.30rem;
   text-align:center;
   overflow:hidden;
   border:solid 1px #b5b5b5;
@@ -34,8 +34,8 @@
 }
 .uploader_input{
   width:100%;
-  height:2.20rem;
-  line-height:2.8rem;
+  height:1.70rem;
+  line-height:1.7rem;
   overflow:hidden;
 }
 /*.uploader_input img{
@@ -43,8 +43,8 @@
   height:100%;
 }*/
 .upload_noe{
-  height:.92rem;
-  line-height:.92rem;
+  height:.84rem;
+  line-height:.84rem;
   overflow:hidden;
   font-size:.40rem;
   color:#666;
@@ -145,12 +145,12 @@
               <img :src="item.url">
             </div>
                   <div class="uploder_item" @change="upload"  :style="submitData.mainImg.length>=1&&submitData.mainImg?'display:none':''" >
-                    <input  type="file" style="opacity: 0;position: absolute;z-index: 1;height:2rem;width: 29%" accept="image/*" 
+                    <input  type="file" style="opacity: 0;position: absolute;z-index: 1;height:1.5rem;width: 29%" accept="image/*" 
                        multiple v-if="isIos"></input>
-                    <input  type="file" style="opacity: 0;position: absolute;z-index: 1;height:2rem;width: 29%" accept="image/*" 
+                    <input  type="file" style="opacity: 0;position: absolute;z-index: 1;height:1.5rem;width: 29%" accept="image/*" 
                       capture="" multiple v-else></input>
                       <div class="uploader_input">
-                        <img src="images/cash_icon1.png" style="width:.82rem;height:.82rem;">
+                        <img src="images/cash_icon1.png" style="width:.74rem;height:.74rem;">
                       </div>
                       <div class="upload_noe">点击添加照片</div>
                   </div>

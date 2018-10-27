@@ -93,25 +93,25 @@ div{
 	width:100%;
 }
 .font28{
-  font-size:0.28rem;
+  font-size:0.22rem;
 }
 .font30{
-  font-size:0.3rem;
+  font-size:0.24rem;
 }
 .font32{
-  font-size:0.32rem;
+  font-size:0.26rem;
 }
 .font34{
-  font-size:0.34rem;
+  font-size:0.28rem;
 }
 .font36{
-  font-size:0.36rem;
+  font-size:0.3rem;
 }
 .font38{
-  font-size:0.38rem;
+  font-size:0.32rem;
 }
 .font40{
-  font-size:0.4rem;
+  font-size:0.34rem;
 }
 .color{
   color:#ed7101;
@@ -136,7 +136,7 @@ div{
 }
 /***********navbar***********/
 .navbar{
-	height:1.40rem;
+	height:1.1rem;
 	width:100%;
 	position:fixed;
 	left:0;
@@ -149,8 +149,8 @@ div{
 	align-items:center;
 }
 .nav_img img{
-	width:0.6rem;
-	height:0.6rem;
+	width:0.5rem;
+	height:0.5rem;
 }
 .navbar_item{
 	width:33.3%;
@@ -159,7 +159,7 @@ div{
 }
 .navbar .text{
 	color:#666;
-	font-size:0.34rem;
+	font-size:0.3rem;
 }
 .navbar .this-text{
 	color:#ed7100;
@@ -369,21 +369,21 @@ div{
 }
 /***************简历列表********************/
 .job_list{
-  height:2.80rem;
+  height:2.40rem;
   width:100%;
 }
 .list_left{
   width:70%;
-  height:2.80rem;
+  height:2.40rem;
 }
 .list_right{
   width:30%;
-  height:2.80rem;
+  height:2.40rem;
   text-align:right;
 }
 .job_type{
   height:25%;
-  font-size:0.40rem;
+  font-size:0.32rem;
   color:#333;
 }
 .treatment{
@@ -394,13 +394,13 @@ div{
   width:100%;
 }
 .treatment_sort{
-  height:0.44rem;
+  height:0.38rem;
   background:#f6f6f6;
   text-align:center;
-  line-height:0.44rem;
-  margin-right:0.20rem;
+  line-height:0.38rem;
+  margin-right:0.12rem;
   color:#666;
-  font-size:0.28rem;
+  font-size:0.24rem;
 }
 .company_img{
   width:16%;
@@ -409,8 +409,8 @@ div{
   display:flex;
 }
 .company_img img{
-  width:0.70rem;
-  height:0.70rem;
+  width:0.50rem;
+  height:0.50rem;
 }
 .company_introuce{
   width:84%;
@@ -419,7 +419,7 @@ div{
 .company_name{
   height:50%;
   color:#333;
-  font-size:0.38rem;
+  font-size:0.3rem;
 }
 .send_datail{
   width:85%;
@@ -433,11 +433,11 @@ div{
 .payment{
   height:50%;
   color:#ed7100;
-  font-size: 0.4rem;
+  font-size: 0.32rem;
 }
 .hongbao img{
-  width:0.86rem;
-  height:1.02rem;
+  width:0.76rem;
+  height:0.9rem;
 }
 .hongbao{
   height:50%;
@@ -451,15 +451,15 @@ div{
   color:#fff;
 }
 .numner{
-  width:.60rem;
-  height:.60rem;
-  line-height:.60rem;
+  width:.52rem;
+  height:.52rem;
+  line-height:.52rem;
   border-radius:50%;
   background:#ed7101;
   align-items:center;
   text-align:center;
   color:#fff;
-  font-size:.32rem;
+  font-size:.26rem;
   float:right;
   position:absolute;
   right:0;
@@ -468,16 +468,16 @@ div{
   width:21%;
 }
 .list_img .user_img{
-  width:1.6rem;
-  height:1.6rem;
+  width:1.2rem;
+  height:1.2rem;
   border-radius:50%;
   overflow:hidden;
   border:solid 1px #e0e0e0;
 }
 /********************tab选项卡******************/
 .index_tab{
-  height:1.2rem;
-  line-height:1.2rem;
+  height:0.9rem;
+  line-height:0.9rem;
   width:100%;
   overflow: hidden;
 }
@@ -488,7 +488,6 @@ div{
   width:50%;
   border-bottom:solid 1px #d9d9d9;
   text-align:center;
-  font-size:0.4rem;
   color:#333;
 }
 .this_tab{
@@ -496,19 +495,19 @@ div{
   color:#ed7100;
 }
 .sort{
-  height:0.98rem;
+  height:0.9rem;
   border:solid 1px #d9d9d9;
   position:relative;
 }
 /***********************资产****************************/
 .sum{
-  height:5.78rem;
+  height:4.78rem;
   background:#fff;
   align-items:center;
 }
 .sum_in{
-  height:4.68rem;
-  width:4.68rem;
+  height:3.68rem;
+  width:3.68rem;
   border-radius:50%;
   border:.1rem solid #ee720d;
   margin:0 auto;
@@ -517,16 +516,16 @@ div{
   display:flex;
 }
 #sum{
-  height:1.60rem;
+  height:1rem;
   display:flex;
   align-items:center;
   background:#fff;
-  margin-top:.20rem;
+  margin-top:.12rem;
 }
 .sumIn{
-  width:6.28rem;
-  height:1rem;
-  line-height:1rem;
+  width:5.68rem;
+  height:0.8rem;
+  line-height:0.8rem;
   border-radius:.10rem;
   text-align:center;
   color:#fff;
@@ -534,16 +533,16 @@ div{
   margin:0 auto;
 }
 .sum_txt{
-  height:1rem;
+  height:0.8rem;
   align-items:center;
   width:100%;
   display:flex;
   border-bottom:solid 1px #e0e0e0;
 }
 .sumTxt{
-  height:.5rem;
-  padding-left:.20rem;
-  font-size:.38rem;
+  height:.42rem;
+  padding-left:.12rem;
+  font-size:.3rem;
   color:#666;
   border-left:solid 2px #ed7101;
 }
@@ -551,58 +550,58 @@ div{
 .user{
   flex-wrap:wrap;
   background:#fff;
-  margin-top:.30rem;
+  margin-top:.20rem;
 }
 .user_module{
   width:33.33%;
-  height:3.00rem;
+  height:2.2rem;
   border-top:solid 1px #e0e0e0;
   text-align:center;
 }
 .module_img img{
-  width:.56rem;
-  height:.56rem;
+  width:.46rem;
+  height:.46rem;
 }
 .module_img{
   height:1.8rem;
-  line-height:2.28rem;
+  line-height:1.68rem;
   overflow:hidden;
 }
 .module_text{
-  font-size:.32rem;
+  font-size:.26rem;
   color:#666;
 }
 .banner{
   width:100%;
-  height:3.78rem;
+  height:1.78rem;
   overflow:hidden;
   position:relative;
   background:#ed7100;
 }
 .banner_top{
-  height:.90rem;
+  height:.80rem;
 }
 .banner_top img{
-  width:.41rem;
-  height:.50rem;
+  width:.32rem;
+  height:.42rem;
 }
 .banner_bottom{
-  height:1.60rem;
-  margin-top: 0.5rem;
+  height:1rem;
+  margin-top: 0.3rem;
 }
 .user_left{
   width:76%;
-  height:1.60rem;
+  height:1rem;
   align-items: center;
   display: flex;
 }
 .user_right{
   width:24%;
-  height:1.60rem;
+  height:1rem;
 }
 .banner .user_img{
-    width:1.60rem;
-    height:1.60rem;
+    width:1rem;
+    height:1rem;
     border-radius:50%;
     overflow:hidden;
     margin:0px auto;
@@ -615,45 +614,45 @@ div{
 }
 .loan_jm_spa1 {
     width: 39%;
-    height: .80rem;
+    height: .60rem;
     line-height: .80rem;
-    font-size: 0.36rem;
+    font-size: 0.28rem;
     color: #666;
     display: block;
     float: left;
 }
 
 .loan_jm_l1 {
-    margin-top: .20rem;
-    margin-bottom: .25rem;
-    height: .60rem;
+    margin-top: .12rem;
+    margin-bottom: .2rem;
+    height: .50rem;
 }
 
 .wbk_srn {
     width: 57%;
-    height: .80rem;
+    height: .70rem;
     border: 1px solid #ccc;
     background: #FFF;
     float: left;
     padding-left: 3%;
-    line-height: .80rem;
+    line-height: .70rem;
     color: #ADADAD;
-    font-size: 0.32rem;
+    font-size: 0.24rem;
     background-size: 45%;
     background-position: center;
     background: #fff;
 }
 
 .wbk_srn b {
-    width: .60rem;
-    height: .80rem;
+    width: .50rem;
+    height: .70rem;
     border: 1px solid #ccc;
     background: #FFF;
     float: left;
     padding-left: 3%;
-    line-height: .80rem;
+    line-height: .70rem;
     color: #ADADAD;
-    font-size: 0.32em;
+    font-size: 0.24em;
     background-size: 45%;
 }
 /*城市弹层*/
@@ -669,11 +668,11 @@ div{
 .letter {
     width: 7%;
     overflow: hidden;
-    line-height: .72rem;
-    font-size: .36rem;
+    line-height: .62rem;
+    font-size: .28rem;
     position: fixed;
     top: 5%;
-    right: .10rem;
+    right: .05rem;
     text-align: center;
     background:rgba(237,113,1,0.5);
 }
@@ -687,7 +686,7 @@ div{
 .city {
     width: 90%;
     overflow: hidden;
-    padding: .30rem;
+    padding: .20rem;
 }
 .city-list {
     width: 100%;
@@ -695,9 +694,9 @@ div{
 }
 .city-list .city-letter {
     color: #6e6e6e;
-    font-size: .36rem;
+    font-size: .28rem;
     display: inline-block;
-    padding-top: .15rem;
+    padding-top: .1rem;
     padding-bottom: 0.05rem;
     border-bottom: 1px solid #e8ecf1;
     width: 100%;
@@ -705,9 +704,9 @@ div{
 .city-list p {
     color: #afafaf;
     width: 95%;
-    font-size: 0.32rem;
-    height: 0.8rem;
-    line-height: 0.8rem;
+    font-size: 0.24rem;
+    height: 0.7rem;
+    line-height: 0.7rem;
     border-bottom: 1px solid #e8ecf1;
     cursor: pointer;
 }

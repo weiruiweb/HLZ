@@ -6,11 +6,10 @@
 <meta name="baidu-site-verification" content="z8EeuYl0nS" />
 <meta name="keywords" content="华路卓">
 <meta name="description" content="华路卓">
-<meta name="divport" content="width=device-width, initial-scale=1">
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
 <script src="js/browser.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="js/base.js" type="application/javascript"></script>
 <script src="js/jquery1.8.3.js"></script>
@@ -19,13 +18,13 @@
 <style>
 .choose_item{
   width:29.8%;
-  height:.90rem;
+  height:.82rem;
   text-align:center;
-  line-height:.90rem;
-  font-size:.36rem;
+  line-height:.82rem;
+  font-size:.3rem;
   border:solid 1px #e0e0e0;
   border-radius:.10rem;
-  margin-top:.40rem;
+  margin-top:.32rem;
 }
 #choose{
   flex-wrap: wrap;
@@ -35,12 +34,12 @@
   border:solid 1px rgb(237, 113, 1);
 }
 .reward_sort{
-  height:1.1rem;
+  height:0.8rem;
   border-bottom:solid 1px #e0e0e0;
-  font-size:.36rem;
+  font-size:.3rem;
   color:#666;
   width:50%;
-  line-height:1.1rem;
+  line-height:0.8rem;
 }
 .reward_money{
   flex-wrap:wrap;
@@ -88,7 +87,7 @@
       <div class="input_before">
         经验:
       </div>
-       ‍‍<select id="pid"  data-key="experience" @change="selectChange" style="width:5rem;height:0.8rem;font-size:35px" > 
+       ‍‍<select id="pid"  data-key="experience" @change="selectChange" style="width:4.2rem;height:0.72rem;font-size:35px" > 
           <option >请选择</a> 
           <option v-for="item in labelData">{{item.title}}</option> 
         
@@ -126,7 +125,7 @@
       <div class="input_before">
         性别:
       </div>
-      ‍‍<select id="pid" data-key="gender" @change="selectChange" style="width:5rem;height:0.8rem;font-size:35px"> 
+      ‍‍<select id="pid" data-key="gender" @change="selectChange" style="width:4.2rem;height:0.72rem;font-size:35px"> 
           <option >请选择</a> 
           <option >男女不限</a> 
           <option >男</a> 
@@ -137,12 +136,12 @@
       <div class="input_before" style="width: 37%">
         工作地点:
       </div>
-       ‍‍<select id="pid"   style="width:5rem;height:0.8rem;font-size:35px" > 
+       ‍‍<select id="pid"   style="width:4.2rem;height:0.72rem;font-size:35px" > 
           <option >请选择省</a> 
           <option v-for="item in proviceData">{{item.title}}</option> 
         
       </select>  ‍‍
-      <select id="pid"  data-key="address" @change="selectChange" style="width:5rem;height:0.8rem;font-size:35px" > 
+      <select id="pid"  data-key="address" @change="selectChange" style="width:4.2rem;height:0.72rem;font-size:35px" > 
           <option >请选择市</a> 
           <option v-for="c_item in cityData">{{c_item.title}}</option> 
         
@@ -166,9 +165,9 @@
     </div>
 </div>
 </div>
-<div style="height:1.2rem;line-height:1.2rem;background:#f2f2f2;width:100%;position:relative;font-size:.38rem;text-align:center;margin-top:0.3rem;">
+<div style="height:0.96rem;line-height:0.96rem;background:#f2f2f2;width:100%;position:relative;font-size:.32rem;text-align:center;margin-top:0.2rem;">
    福利待遇可多选
-   <div style="position:absolute;right:.50rem;top:0;color:#ED7101;font-size:0.36rem">完成</div>
+   <div style="position:absolute;right:.72rem;top:0;color:#ED7101;font-size:0.3rem">完成</div>
 </div>
 <div class="p40">
   <div class="flexRowBetween" id="choose">
@@ -180,7 +179,7 @@
   </div>
 
 </div>
-<div style="height:1.00rem;width:100%;margin-bottom: 1rem;">
+<div style="height:0.6rem;width:100%;margin-bottom: 0.6rem;">
  
 </div>
 <button class="confirm_bind"   v-on:click="submit">
