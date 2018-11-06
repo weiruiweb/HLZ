@@ -1,4 +1,4 @@
-c<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <title>账户信息</title>
@@ -140,7 +140,7 @@ c<!DOCTYPE html>
                 </div>
                 <div class="user_right">
                     <div class="user_img">
-                        <img class="user_img" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLicBxBs5icUzUlaSePibpqicPZO6FwKqibiaCJZkSPzibgOl9dc4Wr4TancmXJlU1ctJ5jf37ZMOFdicaf6Q/132" />
+                        <img class="user_img" :src="userData.headImgUrl" />
                       </div>
                 </div>
             </div>
@@ -170,13 +170,14 @@ c<!DOCTYPE html>
         </div>
     </div>
     <div class="index_tab  flexRowBetween">
-        <div class="tab_item active">
+        <div class="tab_item active" :data-num='0' @click="menuClick">
             提现记录
         </div>
-        <div class="tab_item">
+        <div class="tab_item" :data-num='1' @click="menuClick">
             奖励记录
         </div>
     </div>
+
     <div class="tab_cont">
         <div class="cash" style="display: block;">
             <div class="p40 font32">
@@ -195,6 +196,7 @@ c<!DOCTYPE html>
                 
             </div>
         </div>
+
         <div class="cash font34">
             <div class="p40">
                 <div class="cash_tlt flexRowBetween">
@@ -208,15 +210,10 @@ c<!DOCTYPE html>
                         时间
                     </div>
                 </div>
-                <div class="cash_cont flexRowBetween">
-                    <div class="tlt_item">200元</div>
-                    <div class="tlt_item">转发</div>
-                    <div class="tlt_item"> 2016.09.08</div>
-                </div>
-                <div class="cash_cont flexRowBetween">
-                    <div class="tlt_item">200元</div>
-                    <div class="tlt_item">入职</div>
-                    <div class="tlt_item"> 2016.09.08</div>
+                <div class="cash_cont flexRowBetween" v-for="item in mainData">
+                    <div class="tlt_item">{{item.count}}元</div>
+                    <div class="tlt_item">{{item.trade_info}}</div>
+                    <div class="tlt_item">{{item.create_time}}</div>
                 </div>
             </div>
         </div>
@@ -268,6 +265,8 @@ c<!DOCTYPE html>
 
         methods:{
 
+
+
             userGet(){
                 const self = this;
                 const postData = {
@@ -285,8 +284,17 @@ c<!DOCTYPE html>
                 window.base.userGet(postData,callback);
             },  
 
-            getMainData(){
+            getMainData(isNew){
                 const self = this;
+                if(isNew){
+                    self.mainData = [];
+                    self.paginate = {
+                        count: 0,
+                        currentPage: 1,
+                        pagesize: 6,
+                        is_page: true,
+                    }
+                };
                 const postData = {};
                 postData.paginate = window.base.cloneForm(self.paginate);
                 postData.token = localStorage.getItem('user_token');
@@ -332,11 +340,28 @@ c<!DOCTYPE html>
             },
 
 
-             intoDetail(e) {
+            intoDetail(e) {
                 var self = this;
                 var art_id = window.base.getDataSet(e).id;
                 window.location.href = "./indexDetail.html?id=" + art_id;
-            },   
+            },  
+
+			menuClick: function (e) {
+			    const self = this;
+			    const num = e.currentTarget.dataset.num;
+			    self.changeSearch(num);
+			  },
+
+			changeSearch(num){
+			    const self = this;
+			    if(num=='0'){
+			    	self.searchItem.count = ['<',0]
+			    }else if(num=='1'){
+			      self.searchItem.count = ['>=',0]
+			    }
+
+			    self.getMainData(true);
+			  }, 
 
            
         }

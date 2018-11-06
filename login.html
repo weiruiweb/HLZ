@@ -108,8 +108,8 @@
             return {
 
                 submitData:{
-                   login_name:'',
-                   password:''
+                   login_name:'测试商户',
+                   password:'chuncuiwangluo'
                 },
                 
                 paginate: {
@@ -152,7 +152,7 @@
               		localStorage.setItem('merchant_no',res.info.user_no);
                     window.location.href='./merchant.html'
                   }else{
-                    alert('网络故障')
+                    alert(res.msg)
                   }
                 }
                 window.base.login(postData,callback);

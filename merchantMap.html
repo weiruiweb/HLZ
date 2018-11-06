@@ -27,7 +27,7 @@
     <div id="allmap"></div>
     <input id="searchContent" placeholder="输入关键字查询" style="margin-top: 20px"></input>
     <div><input id="address" placeholder="地址详情" style="margin-top: 20px"></input></div>
-    <button id="confirm">确定</button>
+    <a href=merchantSendModify.html#” onClick=”javascript :history.back(-1);”>确定</a>
   </body>
 </html>
 
@@ -84,9 +84,15 @@
     var pt = e.point;
     geoc.getLocation(pt, function(rs){
       console.log('addComp',rs);
+      localStorage.setItem('lng',rs.point.lng);
+      localStorage.setItem('lat',rs.point.lat);
+      localStorage.setItem('detail',rs.address+rs.surroundingPois[0].title);
       $("#address").val(rs.address)
     });  
   }
+
+
+
   
 
 </script>

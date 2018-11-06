@@ -13,6 +13,16 @@
 <script src="js/browser.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="js/base.js" type="application/javascript"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<script src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js" type="application/javascript"></script>
+<style type="text/css">
+    body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+    #allmap{height:150px;width:100%;}
+    #r-result{width:100%; font-size:14px;}
+</style>
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=W0dj26r0e4nDYKmCvXNBWR0Edcemccau"></script>
 </head>
 <body>
 <style>
@@ -302,12 +312,10 @@ div{
                                         </div>
                                         <div class="sort_items font30 color9">性别:
                                             {{mainData.gender==1?'男':'女'}}
-                                        </div>
+                           				</div>
                                     </div>
                                     <div class="company_name flex">
-                                        <div class="sort_items font30 color9">学历:
-                                            {{mainData.education}}
-                                        </div>
+                                        <div class="sort_items font30 color9">学历:{{mainData.qualifications}}</div>
                                         <div class="sort_items font30 color9">经验:
                                             {{mainData.experience}}
                                         </div>
@@ -333,20 +341,17 @@ div{
             <div class="reward">
                 <div class="sum_txt flexRowBetween">
                     <div class="sumTxt">奖励</div>
-                    <div class="pencil font28" style="width:32%">
-                        悬赏人数：100人
-                    </div>
+                   
                 </div>
                 <div class="reward_detail font32 line48">
-                    <div>如果您成功入职满一个月，可获得奖金100元</div>
-                    <div>职位转发微信朋友一次，获得2元， </div>
-                    <div>微信朋友成功入职，您获200元 </div>
+                    <div>如果您成功入职满一个月，可获得奖金{{mainData.distributionEntry}}元</div>
+                    <div>职位转发微信朋友一次，获得{{mainData.distributionOne}}元， </div>
+                    <div>微信朋友成功入职，您获{{mainData.distributionEntryOne}}元 </div>
                 </div>
                 <div class="share flexRowBetween font34">
-                    <div class="share1 share2">入职·300元</div>
-                    <div class="share1 share2">转发·2元</div>
-                    <div class="share1">距结束
-                        <text>300</text>小时</div>
+                    <div class="share1 share2">入职·{{mainData.distributionEntry}}元</div>
+                    <div class="share1 share2">转发·{{mainData.distributionOne}}元</div>
+                   
                 </div>
             </div>
         </div>
@@ -368,13 +373,15 @@ div{
                     <div class="sumTxt">公司简介</div>
                 </div>
                 <div class="reward_detail  font32 line48">
-                    <div>广州华路卓企业管理咨询有限公司是一家集网络技术研究、开发;计算机技术开发、技术服务;软件开发;信息技术咨询服务为一体的综合性互</div>
+                    <div>11</div>
                 </div>
             </div>
         </div>
+
         <div class="map">
-            <img src="images/map.jpg">
+            <div id="allmap"></div>
         </div>
+
         <div style="height:1.3rem;width:100%;"></div>
         <div class="mask_cont">
             <div class="mask" id="mask1" >
@@ -412,17 +419,17 @@ div{
             </div>
         </div>
         <div class="footer flexRowBetween font34">
-            <div class="footer1">
+            <div class="footer1" @click="collect">
                 <img src="images/collect.png"/>
             </div>
             <div class="footer1">
-                <img src="images/phone.png"/>
+                <a href="tel://13764567708"><img src="images/phone.png"/></a>
             </div>
             <div class="footer1">
-                <div class="footer3" onclick="share()">分享赚钱</div>
+                <div class="footer3">分享赚钱</div>
             </div>
            
-            <div class="footer2"  v-on:click="addOrder">投递简历</div>
+            <div class="footer2"  v-on:click="submit">投递简历</div>
         </div>
     </div>
 </div>
@@ -432,7 +439,7 @@ div{
         el: '#app',
         data: function() {
             return {
-                
+                checkOrderData:[],
                 mainData:[],
                 submitData:{
                    login_name:'',
@@ -461,6 +468,7 @@ div{
         created: function () {
             var callback = (res)=>{
                 this.productGet();
+                this.wxJsSdk()
                 
             };
             window.base.getUserToken(callback);
@@ -469,6 +477,8 @@ div{
 
         methods:{
 
+        
+
             productGet(){
                 const self = this;
                 const postData = {
@@ -476,17 +486,89 @@ div{
                        id:window.base.GetRequest().id,
                     }
                 };
+                postData.getAfter = {
+                	merchant:{
+                		tableName:'UserInfo',
+                		middleKey:'user_no',
+                		key:'user_no',
+                		searchItem:{
+                			status:1
+                		},
+                		condition:'='
+                	}
+                };
                 const callback = (res)=>{
                     if(res.info.data.length>0){
                         self.mainData = res.info.data[0];
                         self.getDistri();
+                        this.theLocation()
                     }else{
                         alert('数据错误')
                     };
-                   
+                   this.checkOrder()
                 };
                 window.base.productGet(postData,callback);
             },  
+
+          
+
+            wxJsSdk(){
+                const self = this;
+                const postData = {
+                    thirdapp_id:2,
+                    url:window.location.href
+                };
+                const callback = (res)=>{
+            
+                    wx.config({
+                      debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                      appId:res.appId, // 必填，公众号的唯一标识
+                      timestamp:res.timestamp , // 必填，生成签名的时间戳
+                      nonceStr:res.nonceStr, // 必填，生成签名的随机串
+                      signature:res.signature,// 必填，签名
+                      jsApiList: ['onMenuShareAppMessage','showAllNonBaseMenuItem'] // 必填，需要使用的JS接口列表
+                  });
+
+
+                  wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                      wx.onMenuShareAppMessage({ 
+                          title: '111', // 分享标题
+                          desc: '111', // 分享描述
+                          link: 'http://www.walhr.com/web/indexDetail.html?id='+self.mainData.id+'&user_no='+localStorage.getItem('user_no'), 
+                          // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                          imgUrl: 'http://www.walhr.com/web/images/user_icon1.png', // 分享图标
+                      }, function(res) { 
+                         
+                      });  
+                  });
+
+
+                  wx.error(function(res){
+                   
+                  });
+                };
+                window.base.WxJssdk(postData,callback);
+            },
+
+    
+
+            theLocation(){
+                const self = this;
+                var map = new BMap.Map("allmap");
+                map.centerAndZoom(new BMap.Point(116.331398,39.897445),11);
+                map.enableScrollWheelZoom(true);
+                
+                // 用经纬度设置地图中心点
+               
+                if(self.mainData.lng != "" && self.mainData.lat != ""){
+                    map.clearOverlays(); 
+                    var new_point = new BMap.Point(self.mainData.lng,self.mainData.lat);
+                    var marker = new BMap.Marker(new_point);  // 创建标注
+                    map.addOverlay(marker);              // 将标注添加到地图中
+                    map.panTo(new_point);      
+                }
+              
+            },
 
 
             getDistri(){
@@ -545,7 +627,7 @@ div{
                         count:self.mainData.distributionOne,
                         trade_info:'一级转发奖励',
                         user_no:window.base.GetRequest().user_no,
-                        type:3,
+                        type:2,
                         thirdapp_id:2
                       }
                     }
@@ -560,7 +642,7 @@ div{
                             count:self.mainData.distributionTwo,
                             trade_info:'二级转发奖励',
                             user_no:parent_no,
-                            type:3,
+                            type:2,
                             thirdapp_id:2
                           }
                         }
@@ -575,19 +657,58 @@ div{
             },
 
 
+            collect(){
+                const self = this;  
+                const id = window.base.GetRequest().id;
+               	localStorage.setItem('collectData',JSON.stringify(self.mainData));
+             	
+            },
+
+            checkOrder(){
+            	const self = this;
+            	console.log(666)
+            	const postData = {
+            		token:localStorage.getItem('user_token'),
+            		searchItem:{
+            			product_id:window.base.GetRequest().id,
+            			user_no:localStorage.getItem('user_no')
+            		}	
+            	};
+
+            	const callback = (res)=>{
+            		if(res.info.data.length>0){
+            			self.checkOrderData.push.apply(self.checkOrderData,res.info.data);	
+            		}
+            		console.log(self.checkOrderData)
+            	};
+            	window.base.orderItemGet(postData,callback);    
+            },
+
+            submit(){
+            	const self = this;
+            	console.log(self.checkOrderData.length);
+            	if(self.checkOrderData.length>0){
+            		alert('请勿重复投递')
+            	}else{
+            		self.addOrder()
+            	}
+            },
+
+
             addOrder(){
                 const self = this;
-                const postData = {
+                const postData = {	
                   token:localStorage.getItem('user_token'),
                   product:[
                     {id:window.base.GetRequest().id,count:1}
                   ],
                   pay:{balance:0},
                   type:1,
-                  
+                  passage1:self.mainData.user_no
                 };
                 const callback = (res)=>{
                   if(res&&res.solely_code==100000){
+                  	alert('投递成功！')
                     setTimeout(function(){
                         self.buttonClicked=false
                     },1000);       

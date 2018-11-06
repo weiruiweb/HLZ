@@ -152,12 +152,12 @@
 a{color:#fff;}
 </style>
 <div id="app">
-  <div class="job" v-for="item in mainData">
+  <div class="job" v-for="(item,index) in mainData">
     <div class="w710" >
-       <a class="job_list flexRowBetween" href="merchentResumeDetail.html">
+       <a class="job_list flexRowBetween" @click="intoDetail" :data-user_no="item.user_no">
         <div class="list_img">
           <div class="user_img">
-              <open-data type="userAvatarUrl"></open-data>
+              <img  class="user_img" :src="item.user[0].headImgUrl" />
           </div>
         </div>
         <div class="list_left">
@@ -188,16 +188,20 @@ a{color:#fff;}
           <div style="color:#fff;">{{item.userInfo[0].phone}}</div>
         </div>
       </div>
-      <div class="handle2" style="margin:0. 1rem;"  @click="orderUpdate" :data-id='item.id' >
-        <div class="handle_in flexRowaround" >
-          <img src="images/resume7.png">
-          <div style="color:#fff;" >入职</div>
+      <div class="handle2" style="margin:0. 1rem;"  @click="orderUpdate" :data-id='item.id' :data-index="index">
+        <div class="handle_in flexRowaround"  @click="orderUpdate" :data-id='item.id' :data-index="index">
+          <img src="images/resume7.png"  @click="orderUpdate" :data-id='item.id' :data-index="index">
+	          <div style="color:#fff;" v-if="item.order_step=='0'"  @click="orderUpdate" :data-id='item.id' :data-index="index">邀请面试</div>
+	          <div style="color:#fff;" v-if="item.order_step=='1'">已通知面试</div>
+		      <div style="color:#fff;" v-if="item.order_step=='2'"  @click="orderUpdate" :data-id='item.id' :data-index="index">邀请入职</div>
+		      <div style="color:#fff;" v-if="item.order_step=='3'" >已被拒绝</div>
+		      <div style="color:#fff;" v-if="item.order_step=='4'" >已入职</div>
         </div>
       </div>
       <div class="handle2" @click="orderDelete" :data-id='item.id'>
         <div class="handle_in flexRowaround">
           <img src="images/resume8.png">
-          <div style="color:#fff;">删除</div>
+	          <div style="color:#fff;">删除</div>
         </div>
       </div>
     </div>
@@ -262,7 +266,7 @@ a{color:#fff;}
           postData.token = localStorage.getItem('merchant_token');
            postData.searchItem = {
               user_type:['in',[0]],
-              order_step:0
+              order_step:['in',[0,1,2,3,4]]
            }
           postData.getBefore={
             order:{
@@ -287,9 +291,7 @@ a{color:#fff;}
               searchItem:{
                 status:['in',[1]]
               },
-            } 
-          }; 
-  /*        postData.getAfter={
+            },
             user:{
               tableName:'user',
               middleKey:'user_no',
@@ -299,7 +301,8 @@ a{color:#fff;}
                 status:['in',[1]]
               },
             } 
-          };*/
+          }; 
+        
           const callback = (res)=>{
             if(res.info.data.length>0){
               self.mainData.push.apply(self.mainData,res.info.data);
@@ -314,30 +317,40 @@ a{color:#fff;}
 
         intoDetail(e) {
           var self = this;
-          var art_id = window.base.getDataSet(e).id;
-          window.location.href = "./indexDetail.html?id=" + art_id;
+          var user_no = window.base.getDataSet(e).user_no;
+          window.location.href = "./merchentResumeDetail.html?id=" + user_no;
         },   
 
         orderUpdate(e){
           const self = this;
-          
+          console.log(e)
+          var index = window.base.getDataSet(e).index;
           console.log(window.base.getDataSet(e).id)
+          console.log(window.base.getDataSet(e).index)
           const postData = {};
           postData.token = localStorage.getItem('merchant_token');
-          postData.data ={
-            order_step:2
-          }
+          
           postData.searchItem = {
-            user_type:0
+            user_type:0,
+            id:window.base.getDataSet(e).id
           };
-          postData.searchItem.id = 5;
-          const callback  = res=>{
-            alert('已入职');
-          /*  var index = window.base.getDataSet(e).index;
-            console.log(window.base.getDataSet(e).index)*/
-            
-            self.userInfoUpdate();
-            
+          if(self.mainData[index].order_step=='0'){
+          	postData.data = {
+          		order_step:1
+          	}
+          }else if(self.mainData[index].order_step=='2'){
+          	postData.data = {
+          		order_step:4
+          	}
+          }
+          const callback  = (res)=>{
+          	if(res.solely_code==100000){
+          		alert('更新状态成功')
+          	}else{
+          		alert('网络故障')
+          	} 
+          	
+          	self.userInfoUpdate();
           };
           window.base.orderUpdate(postData,callback);
         },
@@ -369,6 +382,7 @@ a{color:#fff;}
           };
           const callback = (res)=>{
             self.distributionData = res;
+
           };
           window.base.distriGet(postData,callback);
         },  
@@ -389,7 +403,7 @@ a{color:#fff;}
                 count:self.productData.distributionEntry,
                 trade_info:'入职奖励',
                 user_no:self.mainData[0].user_no,
-                type:3,
+                type:2,
                 thirdapp_id:2
               }  
             },       
@@ -405,7 +419,7 @@ a{color:#fff;}
                   count:self.productData.distributionEntryOne,
                   trade_info:'下级入职奖励',
                   user_no:self.distributionData.info.data[0].parent_no,
-                  type:3,
+                  type:2,
                   thirdapp_id:2
                 }  
               },       
@@ -420,7 +434,7 @@ a{color:#fff;}
                     count:self.productData.distributionEntryTwo,
                     trade_info:'下级入职奖励',
                     user_no:self.distributionData.info.data[0].distri[0].parent_no,
-                    type:3,
+                    type:2,
                     thirdapp_id:2
                   }  
                 },

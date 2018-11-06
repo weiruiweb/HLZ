@@ -9,7 +9,7 @@
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
 <script src="js/browser.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="js/base.js" type="application/javascript"></script>
 <script src="js/jquery1.8.3.js"></script>
@@ -81,7 +81,7 @@
       <div class="input_before">
         学历:
       </div>
-      <input v-model='submitData.education'></input>
+      <input v-model='submitData.qualifications'></input>
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
@@ -119,6 +119,21 @@
         入职:
       </div>
       <input  v-model='submitData.distributionEntry'></input>
+    </div>    
+
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        入职一级:
+      </div>
+      <input  v-model='submitData.distributionEntryOne'></input>
+    </div>    
+
+
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        入职二级:
+      </div>
+      <input  v-model='submitData.distributionEntryTwo'></input>
     </div>
    
     <div class="bank_card flexRowBetween">
@@ -149,12 +164,10 @@
     </div>
     <a  href="merchantMap.html">
     <div class="bank_card flexRowBetween">
-      <div class="input_before" style="width: 37%">
-        选择具体地址:
+      <div class="input_before" style="width: 100%">
+        选择具体地址:{{detail}}
       </div>
-      <div  style="width: 63%">
-       
-      </div>
+      
       </a>
     </div>
     <div class="bank_card flexRowBetween">
@@ -182,7 +195,7 @@
 <div style="height:0.6rem;width:100%;margin-bottom: 0.6rem;">
  
 </div>
-<button class="confirm_bind"   v-on:click="submit">
+<button class="confirm_bind"   @click="submit">
   支付发布
 </button>
 </div>
@@ -201,7 +214,7 @@
                   title:'',
                   description:'',
                   gender:'',
-                  education:'',
+                  qualifications:'',
                   experience:'',
                   price:'',
                   stock:'',
@@ -211,7 +224,10 @@
                   distributionOne:'',
                   distributionTwo:'',
                   distributionEntry:'',
-
+                  distributionEntryOne:'',
+                  distributionEntryTwo:'',
+                  lat:localStorage.getItem('lat'),
+                  lng:localStorage.getItem('lng'),
                 },
                 
                 paginate: {
@@ -229,7 +245,7 @@
                 allPages:0,
                 linkPage:'',
                 textArray:[],
-
+                detail:localStorage.getItem('detail'),
                 provice:''
             }
 
@@ -266,6 +282,7 @@
                   condition:'in',
                 },
               };
+
               const callback = (res)=>{
                 if(res.info.data.length>0){
                   self.labelData.push.apply(self.labelData,res.info.data);
@@ -349,6 +366,10 @@
               }
               window.base.productAdd(postData,callback);
             },
+
+
+
+
 
             selectChange(e){ 
               const self = this;

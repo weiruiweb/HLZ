@@ -117,7 +117,7 @@ a{color:#fff;}
             this.getMainData();
             this.getComputeData()
           };
-          window.base.getUserToken(callback);
+          window.base.getMerchantToken(callback);
         },
 
         methods:{
@@ -126,10 +126,9 @@ a{color:#fff;}
           const self = this;
           const postData = {};
           postData.paginate = self.paginate;
-          postData.token = localStorage.getItem('user_token');
+          postData.token = localStorage.getItem('merchant_token');
           postData.searchItem = {
             type:'2',
-            user_type:0,
             count:['<',0]
           };
           postData.order = {
@@ -162,7 +161,7 @@ a{color:#fff;}
               },
               
               searchItem:{
-                user_no:'UA16809144600791',
+                user_no:localStorage.getItem('merchant_token'),
                 type:2,
                 count:['<',0]
               }

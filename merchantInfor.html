@@ -70,48 +70,48 @@ a{color:#fff;}
       <div class="input_before">
         公司名称:
       </div>
-      <input value="华路卓" disabled="true"></input>
+      <input  disabled="true" v-bind:value="mainData.info?mainData.info.name:''"></input>
       
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
         联&nbsp;&nbsp;系&nbsp;人:
       </div>
-      <input value="华路卓"  disabled="true"></input>
+      <input   disabled="true" v-bind:value="mainData.info?mainData.info.people:''"></input>
       
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
         手&nbsp;&nbsp;机&nbsp;号:
       </div>
-      <input value="1223233223"  disabled="true"></input>
+      <input  disabled="true" v-bind:value="mainData.info?mainData.info.phone:''"></input>
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
         座&nbsp;&nbsp;机&nbsp;号:
       </div>
-      <input value="019-3233223"  disabled="true"></input>
+      <input   disabled="true" v-bind:value="mainData.info?mainData.info.fixPhone:''"></input>
       
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
         邮&nbsp;&nbsp;箱&nbsp;号:
       </div>
-      <input value="@3uiu415222525"  disabled="true"></input>
+      <input   disabled="true" v-bind:value="mainData.info?mainData.info.email:''"></input>
       
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
         企业规模:
       </div>
-      <input value="019-3233223"  disabled="true"></input>
+      <input  disabled="true" v-bind:value="mainData.info?mainData.info.level:''"></input>
       
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
         地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址:
       </div>
-      <input v-bind:value="mainData.address" disabled="true"></input>
+      <input  disabled="true" v-bind:value="mainData.info?mainData.info.address:''"></input>
     
     </div>
      <div class="sum_txt flexRowBetween" style="border:none;">
@@ -124,24 +124,8 @@ a{color:#fff;}
       <p>{{mainData.info?mainData.info.date:''}}
     </p>
     </div>
-    <div class="sum_txt" style="border:none;">
-      <div class="sumTxt">营业执照</div>
-    </div>
-    <div id="upload">
-      
-        <div class="uploder">
-            <div class="uploder_all flexRowBetween">
-             <!-- <block wx:for="{{web_imgData}}"> -->
-                <div class="uploder_item" bindtap="upLoadImg" >
-                    <div class="uploader_input">
-                      <img src="images/cash_icon1.png" style="width:.72rem;height:.72rem;">
-                    </div>
-                    <div class="upload_noe">上传身份证正面</div>
-                </div>
-              <!--</block>-->
-            </div>
-        </div>
-  </div>
+    
+
 </div>
 </div>
 </div>

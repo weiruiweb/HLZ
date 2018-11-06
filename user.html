@@ -68,7 +68,7 @@
             <div class="resume font34" style="height:40%;display: flex;align-items: center;">
               <a href="userResume.html">个人简历 >> </a>
             </div>
-            <button @click="share">分享</button>
+ 
           </div>
           <div class="user_right">
               <div class="user_img">
@@ -89,17 +89,17 @@
       </div>
     </div>
     <div class="user_item flexRowBetween">
-      <a style="width:98%;" href="userProperty.html">
-       <div class="item_top font32">{{mainData.info?mainData.info.balance:''}}</div>
+      <div style="width:98%;">
+       <div cldss="item_top font32">{{mainData.info?mainData.info.balance:''}}</div>
        <div class="item_bottom font34">我的余额(元)</div>
-      </a>
+      </div>
       <div class="vertical_line">
         <div style="width:1px;height:100%;border-left:dashed 1px #ed7101;"></div>
       </div>
     </div>
     <div class="user_item">
       <a href="userNext.html">
-       <div class="item_top font32">11000</div>
+       <div class="item_top font32">{{num}}</div>
        <div class="item_bottom font34">我的下级</div>
       </a>
     </div>
@@ -195,7 +195,7 @@
         el: '#app',
         data: function() {
             return {
-                
+              distriData:[],
               mainData:[],
               computeData:[],
               paginate: {
@@ -211,7 +211,7 @@
               pageArray:[],
               allPages:0,
               linkPage:'',
-
+              num:''
             }
 
         },
@@ -220,7 +220,8 @@
             var callback = (res)=>{
               this.getComputeData();
               this.userGet();
-              this.wxJsSdk()
+              this.wxJsSdk();
+              this.getDistri()
             };
             window.base.getUserToken(callback);
         },
@@ -311,6 +312,28 @@
               };
               window.base.flowLogCompute(postData,callback);
             },
+
+            getDistri(){
+                const self = this;
+                console.log(666)
+                var postData = {};
+                postData.token = localStorage.getItem('user_token'),
+                postData.searchItem = {
+                    parent_no:localStorage.getItem('user_no')
+                };
+               
+                const callback = (res)=>{
+                    console.log(res)
+                    if(res.info.data.length>0){
+                    	self.distriData.push.apply(self.distriData,res.info.data);
+                    	self.num = self.distriData.length;
+                    	console.log(self.distriData.length)
+                    }
+                    	
+                }
+                window.base.distriGet(postData,callback); 
+                
+            },  
 
              intoDetail(e) {
                 var self = this;

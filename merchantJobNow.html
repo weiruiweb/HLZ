@@ -9,7 +9,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
-<script src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
 </head>
 <body>
 <style>
@@ -190,47 +193,52 @@
 }
 a{color:#fff;}
 </style>
+<div id="app">
 <div class="w750">
     <div class="index_tab flexRowBetween">
-        <div class="tab_item active">
-            已离职
-        </div>
-        <div class="tab_item">
+    	<div class="tab_item" :data-num='0' @click="menuClick" :style="num=='0'?'color:#ed7101':''">
             已入职
         </div>
-        <div class="tab_item">
+
+        <div class="tab_item" :data-num='1' @click="menuClick" :style="num=='1'?'color:#ed7101':''">
+            已离职
+        </div>
+        
+        <div class="tab_item" :data-num='2' @click="menuClick" :style="num=='2'?'color:#ed7101':''">
             已悬赏
         </div>
     </div>
-    <div class="job">
+    <div class="job" v-for="(item,index) in mainData">
       <div style="display: block;">
-        <div class="w710">
-            <div class="job_list flexRowBetween">
-                <div class="list_img">
-                    <div class="user_img">
-                        <open-data type="userAvatarUrl"></open-data>
-                    </div>
-                </div>
-                <div class="list_left">
-                    <div class="flex">
-                        <div class="job_type avoidOverflow">张仄仄</div>
-                    </div>
-                    <div class="treatment flex">
-                        <div class="treatment_sort"><img src="images/resume1.png">西安</div>
-                        <div class="treatment_sort"><img src="images/resume2.png">女</div>
-                        <div class="treatment_sort"><img src="images/resume3.png">大专</div>
-                        <div class="treatment_sort"><img src="images/resume4.png">1-3年</div>
-                        <div class="treatment_sort"><img src="images/resume5.png">20岁</div>
-                    </div>
-                    <div class="company_introuce avoidOverflow">
-                        应聘职位:掏粪掏粪掏粪掏粪掏粪掏粪
-                    </div>
-                </div>
-                <div class="list_right">
-                    2k-3k
-                </div>
-            </div>
-        </div>
+		 <div class="w710" >
+		       <a class="job_list flexRowBetween" >
+		        <div class="list_img">
+		          <div class="user_img">
+		              <img  class="user_img" :src="item.user[0].headImgUrl" />
+		          </div>
+		        </div>
+		        <div class="list_left">
+		          <div class="flex">
+		            <div class="job_type avoidOverflow">{{item.userInfo[0].name}}</div>
+		            
+		          </div>
+		          <div class="treatment flex">
+		            <div class="treatment_sort"><img src="images/resume1.png">{{item.userInfo[0].address}}</div>
+		            <div class="treatment_sort"><img src="images/resume2.png">{{item.userInfo[0].gender==1?'男':'女'}}</div>
+		            <div class="treatment_sort"><img src="images/resume3.png">{{item.userInfo[0].highEducation}}</div>
+		            <div class="treatment_sort"><img src="images/resume4.png">{{item.userInfo[0].email}}</div>
+		            
+		          </div>
+		          <div class="company_introuce avoidOverflow font36">
+		          应聘职位:{{item.products[0].snap_product.description}}
+		          </div>
+		        </div>  
+		        <div class="list_right font34">
+		         {{item.price}}
+		        </div>
+		      </a>
+		    </div>
+
         <div class="resume_handle flexRowBetween">
             <div class="handle1">
                 <div class="handle_in flexRowaround">
@@ -239,71 +247,27 @@ a{color:#fff;}
                         <text>5</text>天</div>
                 </div>
             </div>
-            <div class="handle2" style="margin:0.05rem;">
-                <div class="handle_in flexRowaround">
-                    <img src="images/job2.png">
-                    <div style="color:#fff;">设为已入职</div>
-                </div>
-            </div>
-            <div class="handle2">
-                <div class="handle_in flexRowaround">
-                    <img src="images/job3.png">
-                    <div style="color:#fff;">已悬赏</div>
-                </div>
-            </div>
-        </div>
-      </div>
-      <div>
-        <div class="w710">
-            <div class="job_list flexRowBetween">
-                <div class="list_img">
-                    <div class="user_img">
-                        <open-data type="userAvatarUrl"></open-data>
-                    </div>
-                </div>
-                <div class="list_left">
-                    <div class="flex">
-                        <div class="job_type avoidOverflow">张仄仄</div>
-                    </div>
-                    <div class="treatment flex">
-                        <div class="treatment_sort"><img src="images/resume1.png">西安</div>
-                        <div class="treatment_sort"><img src="images/resume2.png">女</div>
-                        <div class="treatment_sort"><img src="images/resume3.png">大专</div>
-                        <div class="treatment_sort"><img src="images/resume4.png">1-3年</div>
-                        <div class="treatment_sort"><img src="images/resume5.png">20岁</div>
-                    </div>
-                    <div class="company_introuce avoidOverflow">
-                        应聘职位:掏粪掏粪掏粪掏粪掏粪掏粪
-                    </div>
-                </div>
-                <div class="list_right">
-                    2k-3k
-                </div>
-            </div>
-        </div>
-        <div class="resume_handle flexRowBetween">
-            <div class="handle1">
-                <div class="handle_in flexRowaround">
-                    <img src="images/job1.png">
-                    <div>距悬赏
-                        <text>5</text>天</div>
-                </div>
-            </div>
+
             <div class="handle2" style="margin:0. 05rem;">
                 <div class="handle_in flexRowaround">
                     <img src="images/job2.png">
-                    <div style="color:#fff;">设为已入职</div>
+                     	<div style="color:#fff;" v-if="item.order_step=='4'"  @click="orderUpdate" :data-id='item.id' :data-index="index">设为离职</div>
+			          <div style="color:#fff;" v-if="item.order_step=='5'">已离职</div>
+				  
                 </div>
             </div>
+
             <div class="handle2">
                 <div class="handle_in flexRowaround">
                     <img src="images/job3.png">
                     <div style="color:#fff;">已悬赏</div>
                 </div>
             </div>
+
         </div>
       </div>
     </div>
+</div>
 </div>
 <script type="text/javascript">
   $(function(){
@@ -316,6 +280,156 @@ a{color:#fff;}
     };
       tabs(".index_tab","active",".job");
   });
+</script>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+             
+                mainData:[],
+                passage_array:[],
+              
+                paginate: {
+                    
+                },
+
+                searchItem:{
+                	user_type:0,
+                  	passage1:localStorage.getItem('merchant_no'),
+                },
+              
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+                num:'0'
+            }   
+
+        },
+        computed: {
+            // 计算属性的 getter
+            stringifyOrder: function () {
+              return JSON.stringify(this.order).replace(/\"/g,"");
+            }
+        },
+
+        created: function () {
+            var callback = (res)=>{
+               this.productGet()
+                
+            };
+            window.base.getMerchantToken(callback);
+        },
+
+        methods:{
+
+            productGet(isNew){
+                const self = this;
+                if(isNew){
+                    self.mainData = [];
+                    self.paginate = {
+                        count: 0,
+                        currentPage: 1,
+                        pagesize: 6,
+                        is_page: true,
+                    }
+                };
+                const postData = {}
+                postData.token = localStorage.getItem('merchant_token');
+                postData.searchItem = window.base.cloneForm(self.searchItem);
+                postData.getAfter={
+		            userInfo:{
+		              tableName:'UserInfo',
+		              middleKey:'user_no',
+		              key:'user_no',
+		              condition:'=',
+		              searchItem:{
+		                status:['in',[1]]
+		              },
+		            },
+		            user:{
+		              tableName:'UserInfo',
+		              middleKey:'passage1',
+		              key:'user_no',
+		              condition:'=',
+		              searchItem:{
+		                status:['in',[1]]
+		              },
+		            } 
+		          }; 
+    
+                const callback = (res)=>{
+                    if(res.info.data.length>0){
+                        self.mainData.push.apply(self.mainData,res.info.data);
+                       
+
+                    }else{
+                        alert('没有更多了')
+                    }
+                  
+                }
+                window.base.orderGet(postData,callback);
+            },  
+
+                orderUpdate(e){
+		          const self = this;
+		          console.log(e)
+		      
+		          console.log(window.base.getDataSet(e).id)
+	
+		          const postData = {};
+		          postData.token = localStorage.getItem('merchant_token');
+		          postData.data = {
+		          	order_step:5
+		         }
+		          postData.searchItem = {
+		            user_type:0,
+		            id:window.base.getDataSet(e).id
+		          };
+		          const callback  = (res)=>{
+		          	if(res.solely_code==100000){
+		          		alert('更新状态成功')
+		          	}else{
+		          		alert('网络故障')
+		          	} 
+		          	
+		          	self.productGet(true);
+		          };
+		          window.base.orderUpdate(postData,callback);
+		        },
+
+
+            menuClick(e){
+            	const  self = this;
+            	self.num = window.base.getDataSet(e).num;
+            	self.changeSearch(self.num)
+            },
+
+            changeSearch(num){
+            	const self = this;
+            	if(num=='0'){
+            		self.searchItem.order_step = 4
+            	}else if(num=='1'){
+            		self.searchItem.order_step = 5
+            	}else if(num=='2'){
+            		self.searchItem.order_step = 6
+            	}
+            	self.productGet(true)
+            },
+
+
+            intoDetail(e) {
+                var self = this;
+                var art_id = window.base.getDataSet(e).id;
+                window.location.href = "./indexDetail.html?id=" + art_id;
+            },   
+
+
+
+    } 
+
+});           
 </script>
 </body>
 </html>

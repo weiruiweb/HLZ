@@ -9,6 +9,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
 </head>
 <body>
 <style>
@@ -58,89 +62,205 @@
 }
 a{color:#fff;}
 </style>
+<div id="app">
 <div class="w750">
-  <view class="job">
-  <view class="flexRowBetween" style="height:2.62rem;overflow:hidden;width:100%;margin-bottom:.22rem;">
-    <view style="width:87%;height:2.62rem;">
-      <view class="w710">
-        <view class="job_list flexRowBetween">
-          <view class="list_left">
-            <view class="job_type avoidOverflow">UI设计师</view>
-            <view class="treatment flex">
-              <view class="treatment_sort">五险一金</view>
-              <view class="treatment_sort">加班补偿</view>
-              <view class="treatment_sort">交通方便</view>
-            </view>
-            <view class="job_company flexRowBetween">
-              <view class="company_img">
+  <div class="job">
+  <div class="flexRowBetween" style="height:2.62rem;overflow:hidden;width:100%;margin-bottom:.24rem;" v-for="item in mainData">
+    <div style="width:87%;height:2.62rem;">
+      <div class="w710">
+        <div class="job_list flexRowBetween">
+          <div class="list_left">
+            <div class="job_type avoidOverflow">{{item.products[0]?item.products[0].snap_product.title:''}}</div>
+            <div class="treatment flex" >
+              <div class="treatment_sort" v-for="c_item in item.products[0].snap_product.passage_array">{{c_item}}</div>
+            </div>
+            <div class="job_company flexRowBetween">
+              <div class="company_img">
                 <img src="images/navbar2-a.png">
-              </view>
-              <view class="company_introuce">
-                 <view class="company_name font40 avoidOverflow">华路卓咨询有限公司</view>
-                 <view class="send_datail font30 flexRowBetween">
-                    <view class="send_tiem">06年7月</view>
-                    <view class="send_need">陕西|普工</view>
-                 </view>
-              </view>
-            </view>
-          </view>
-          <view class="list_right">
-            <view class="payment">2K-10K</view>
-            <view class="hongbao">
-                <view class="numner">¥2</view>
-            </view>
-          </view>
-        </view>
-      </view>
-    </view>
-    <view class="handle">
-      <view class="handle_top">
-          <img src="images/interview2.png">
-      </view>
-      <view class="handle_top handle_bottom"><img src="images/interview1.png"></view>
-    </view>
-  </view>
-  <view class="flexRowBetween" style="height:2.62rem;overflow:hidden;width:100%;margin-bottom:.24rem;">
-    <view style="width:87%;height:2.62rem;">
-      <view class="w710">
-        <view class="job_list flexRowBetween">
-          <view class="list_left">
-            <view class="job_type avoidOverflow">UI设计师</view>
-            <view class="treatment flex">
-              <view class="treatment_sort">五险一金</view>
-              <view class="treatment_sort">加班补偿</view>
-              <view class="treatment_sort">交通方便</view>
-            </view>
-            <view class="job_company flexRowBetween">
-              <view class="company_img">
-                <img src="images/navbar2-a.png">
-              </view>
-              <view class="company_introuce">
-                 <view class="company_name font40 avoidOverflow">华路卓咨询有限公司</view>
-                 <view class="send_datail font30 flexRowBetween">
-                    <view class="send_tiem">06年7月</view>
-                    <view class="send_need">陕西|普工</view>
-                 </view>
-              </view>
-            </view>
-          </view>
-          <view class="list_right">
-            <view class="payment">2K-10K</view>
-            <view class="hongbao">
-                <view class="numner">¥2</view>
-            </view>
-          </view>
-        </view>
-      </view>
-    </view>
-    <view class="handle">
-      <view class="handle_top">
-          <img src="images/interview2.png">
-      </view>
-      <view class="handle_top handle_bottom"><img src="images/interview1.png"></view>
-    </view>
-  </view>
-</view>
+              </div>
+              <div class="company_introuce">
+                 <div class="company_name font40 avoidOverflow">华路卓咨询有限公司</div>
+                 <div class="send_datail font30 flexRowBetween">
+                    <div class="send_tiem">{{item.create_time}}</div>
+                    <div class="send_need">{{item.products[0]?item.products[0].snap_product.address:''}}|{{item.products[0]?item.products[0].snap_product.description:''}}</div>
+                 </div>
+              </div>
+            </div>
+          </div>
+          <div class="list_right">
+            <div class="payment">{{item.products[0]?item.products[0].snap_product.price:''}}</div>
+            <div class="hongbao">
+                <div class="numner">¥{{item.products[0]?item.products[0].snap_product.distributionOne:''}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="handle">
+      <div class="handle_top" :data-id="item.id" :data-num="0" @click="orderUpdate" >
+        	<img src="images/interview2.png" :data-id="item.id" :data-num="0" @click="orderUpdate">
+      </div>
+      <div class="handle_top handle_bottom" :data-id="item.id" :data-num="1" @click="orderUpdate">
+      	<img src="images/interview1.png" :data-id="item.id" :data-num="1" @click="orderUpdate"></div>
+    </div>
+  </div>
 </div>
+</div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+ 
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+
+          var callback = (res)=>{
+            this.getMainData(); 
+          };
+          window.base.getUserToken(callback);
+        },
+
+        methods:{
+
+        getMainData(isNew){
+          const self = this;
+          if(isNew){
+              self.mainData = [];
+              self.paginate = {
+                  count: 0,
+                  currentPage: 1,
+                  pagesize: 6,
+                  is_page: true,
+              }
+          };
+          const postData = {};
+          postData.paginate = window.base.cloneForm(self.paginate);
+          postData.token = localStorage.getItem('user_token');
+          postData.searchItem = {
+              user_type:['in',[0]],
+              order_step:['in',[1]]
+           }
+        
+          const callback = (res)=>{
+            if(res.info.data.length>0){
+              self.mainData.push.apply(self.mainData,res.info.data);
+            }else{
+              alert('没有更多了')
+            };
+            console.log(self.mainData)
+          };
+          window.base.orderGet(postData,callback);
+        },
+
+
+        intoDetail(e) {
+          var self = this;
+          var art_id = window.base.getDataSet(e).id;
+          window.location.href = "./indexDetail.html?id=" + art_id;
+        },   
+
+
+        orderUpdate(e){
+          const self = this
+          console.log(e)
+          var num = window.base.getDataSet(e).num;
+          const postData = {};
+          postData.token = localStorage.getItem('user_token');
+          
+          postData.searchItem = {	
+            id:window.base.getDataSet(e).id
+          };
+          if(num=='0'){
+          	postData.data = {
+	          order_step:2
+	        }
+          }else if(num=="1"){
+          	postData.data = {
+          		order_step:3
+          	}
+          }
+          const callback  = (res)=>{
+          	if(res.solely_code==100000){
+          		alert('更新状态成功')
+          	}else{
+          		alert('网络故障')
+          	} 
+          	self.getMainData(true);
+          };
+          window.base.orderUpdate(postData,callback);
+        },
+
+
+
+
+
+
+
+
+
+
+        productGet(){
+          const self = this;
+          const postData = {};
+          postData.token = localStorage.getItem('user_token');
+          postData.searchItem = {
+            id:window.base.GetRequest().id
+          }
+
+          const callback = (res)=>{
+            if(res.info.data.length>0){
+              self.productData = res.info.data[0]
+            }
+          };
+          window.base.productGet(postData,callback);
+        }, 
+
+        orderDelete(e){
+          const self = this;
+          const postData = {};
+          postData.token = localStorage.getItem('user_token');
+          postData.searchItem = {
+            user_type:0,
+            id:window.base.getDataSet(e).id
+          };
+          
+          const callback  = res=>{
+            alert('已删除');
+            self.getMainData(true);
+          };
+          window.base.orderDelete(postData,callback);
+        },
+
+
+
+        
+           
+        }
+    });            
+</script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 window.base={
-    g_restUrl:'http://solelytech.iicp.net/hualuzhuo/public/index.php/api/v1/',
+    g_restUrl:'http://www.walhr.com/api/public/index.php/api/v1/',
 
 
     
@@ -71,7 +71,6 @@ window.base={
             }
         };
         this.getData(allParams);
-        
     },
 
     getData:function(params){
@@ -88,11 +87,12 @@ window.base={
                     var loca = window.location;
                     window.location.href = loca.origin + loca.pathname;
                 }else if(res.solely_code==200000){
-                    if(that.GetUrlRelativePath().substr(8,4)=='user'||that.GetUrlRelativePath().substr(8,5)=='index'){
+                	console.log(that.GetUrlRelativePath().substr(6,5));
+                    if(that.GetUrlRelativePath().substr(5,4)=='user'||that.GetUrlRelativePath().substr(5,5)=='index'){
                         localStorage.removeItem('user_token');
                         localStorage.removeItem('user_no');
                         that.getUserToken();
-                    }else if(that.GetUrlRelativePath().substr(8,8)=='merchant'){
+                    }else if(that.GetUrlRelativePath().substr(5,8)=='merchant'){
                         localStorage.removeItem('merchant_token');
                         localStorage.removeItem('merchant_no');
                         window.location.href = './login.html'
@@ -165,6 +165,19 @@ window.base={
   
         var allParams = {
             url:'Common/Label/get',
+            type:'post',
+            data:param,
+            sCallback: function(data){
+                callback&&callback(data);
+            }
+        };
+        this.getData(allParams)
+    }, 
+
+    orderItemGet:function(param,callback) {
+  
+        var allParams = {
+            url:'Common/OrderItem/get',
             type:'post',
             data:param,
             sCallback: function(data){
@@ -691,7 +704,97 @@ window.base={
             });
             return false;
         }      
-    }
+    },
+
+    footOne(res,name,limit,objName){
+        const self = this;
+        if(localStorage.getItem(objName)){
+          var history = localStorage.getItem(objName);
+          var limitSum = self.getJsonLength(history);
+          console.log(limitSum);
+          
+          if(history[res[name]]){
+            history[res[name]] = res;
+            localStorage.setItem(objName,JSON.stringify(history));
+          }else{
+            if(limitSum < limit){
+              history[res[name]] = res;
+            }else{
+              const historyArray = self.jsonToArray(history,'push');
+              historyArray.splice(0,1);
+              historyArray.push(res);
+              var history = {};
+              for(var i=0;i<historyArray.length;i++){
+                history[historyArray[i][name]] = historyArray[i];
+                
+              };
+            }
+            localStorage.setItem(objName,JSON.stringify(history));
+          }
+          
+        }else{
+          var history = {};
+          history[res[name]] = res;
+          localStorage.setItem(objName,JSON.stringify(history));
+        }
+
+    },
+
+    updateFootOne(name,objName,fieldName,field){
+        const self = this;
+        if(localStorage.getItem(objName)){
+          var history = localStorage.getItem(objName);
+          console.log(history);
+          if(history[name]){
+            history[name][fieldName] = field;
+            localStorage.setItem(objName,JSON.stringify(history));
+          }
+        }else{
+          return false;
+        }
+
+    },
+
+    deleteFootOne(name,objName){
+        const self = this;
+        if(localStorage.getItem(objName)){
+          var history = localStorage.getItem(objName);
+          console.log(history);
+          if(history[name]){
+            delete history[name];
+            localStorage.setItem(objName,history);
+          }
+        }else{
+          return false;
+        }
+
+    },
+
+    getJsonLength(json){
+        var length = 0;
+        for(var item in json ){
+            length++ 
+        };
+        return length;
+    },
+
+    jsonToArray(obj,type) {
+        
+        const result = [];
+        for (let key in obj) {
+            //result.push(key);
+            if(type=='push'){
+                result.push(obj[key]);
+            }
+
+            if(type=='unshift'){
+                result.unshift(obj[key]);
+            }
+            
+            
+        }
+        return result;
+    },
 
 
 

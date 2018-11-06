@@ -8,8 +8,14 @@
 <meta name="description" content="华路卓">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
 <link href="css/basic.css" rel="stylesheet"/>
-<script src="js/rem.js"></script>
+
 <script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/rem.js"></script>
+<script src="js/browser.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+
 </head>
 <body>
 <style>
@@ -146,52 +152,53 @@
 }
 a{color:#fff;}
 </style>
+<div id="app">
 <div class="w750">
   <div class="index_tab flexRowBetween">
-    <div class="tab_item active">
+    <div class="tab_item" :data-num='0' @click="menuClick" :style="num=='0'?'color:#ed7101':''">
         已拒绝
     </div>
-    <div class="tab_item">
+    <div class="tab_item" :data-num='1' @click="menuClick" :style="num=='1'?'color:#ed7101':''">
         待面试
     </div>
-    <div class="tab_item">
+    <div class="tab_item" :data-num='2' @click="menuClick" :style="num=='2'?'color:#ed7101':''">
         已入职
     </div>
-    <div class="tab_item">
+    <div class="tab_item" :data-num='3' @click="menuClick" :style="num=='3'?'color:#ed7101':''">
         已离职
     </div>
   </div>
-  <div class="job">
+  <div class="job" v-for="item in mainData">
     <div style="display: block">
       <div class="flexRowBetween" style="height:2.62rem;overflow:hidden;width:100%;margin-bottom:.14rem;">
           <div style="width:87%;height:2.62rem;">
               <div class="w710">
                   <div class="job_list flexRowBetween">
                       <div class="list_left">
-                          <div class="job_type avoidOverflow">UI设计师</div>
+                          <div class="job_type avoidOverflow">{{item.userInfo[0].name}}</div>
                           <div class="treatment flex font28">
                               <div class="treatment_sort">
-                                  <img src="images/resume1.png"/>西安</div>
+                                  <img src="images/resume1.png"/>{{item.userInfo[0].address}}</div>
                               <div class="treatment_sort">
-                                  <img src="images/resume2.png"/>女</div>
+                                  <img src="images/resume2.png"/>{{item.userInfo[0].gender=='1'?'男':'女'}}</div>
                           </div>
                           <div class="treatment flex font28">
                               <div class="treatment_sort">
-                                  <img src="images/resume4.png"/>1-3年</div>
+                                  <img src="images/resume4.png"/>{{item.userInfo[0].email}}</div>
                               <div class="treatment_sort">
-                                  <img src="images/resume5.png"/>24岁</div>
+                                  <img src="images/resume5.png"/>{{item.userInfo[0].date}}</div>
                           </div>
                           <div class="job_company flex font28">
                               <div class="company_img">
                                   <img src="images/navbar2-a.png"/>
                               </div>
-                              <div class="company_name avoidOverflow font38">华路卓咨询有限公司</div>
+                              <div class="company_name avoidOverflow font38">{{item.user[0].name}}</div>
                           </div>
                       </div>
                       <div class="list_right">
-                          <div class="payment">2K-10K</div>
+                          <div class="payment">{{item.products[0].snap_product.price}}</div>
                           <div class="hongbao font34">
-                              <div style="width:100%;text-align: right;">06月5号</div>
+                              <div style="width:100%;text-align: right;">{{item.create_time	}}</div>
                           </div>
                       </div>
                   </div>
@@ -212,6 +219,7 @@ a{color:#fff;}
     <div>4</div>
   </div>
 </div>
+</div>
 <script type="text/javascript">
   $(function(){
       function tabs(tabTit,on,tabCon){
@@ -223,6 +231,131 @@ a{color:#fff;}
     };
       tabs(".index_tab","active",".job");
   });
+</script>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+             
+                mainData:[],
+                passage_array:[],
+              
+                paginate: {
+                    
+                },
+
+                searchItem:{
+                	user_type:0,
+                  	passage1:localStorage.getItem('merchant_no'),
+                  	order_step:3
+                },
+              
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+                num:'0'
+            }   
+
+        },
+        computed: {
+            // 计算属性的 getter
+            stringifyOrder: function () {
+              return JSON.stringify(this.order).replace(/\"/g,"");
+            }
+        },
+
+        created: function () {
+            var callback = (res)=>{
+               this.productGet()
+                
+            };
+            window.base.getMerchantToken(callback);
+        },
+
+        methods:{
+
+            productGet(isNew){
+                const self = this;
+                if(isNew){
+                    self.mainData = [];
+                    self.paginate = {
+                        count: 0,
+                        currentPage: 1,
+                        pagesize: 6,
+                        is_page: true,
+                    }
+                };
+                const postData = {}
+                postData.token = localStorage.getItem('merchant_token');
+                postData.searchItem = window.base.cloneForm(self.searchItem);
+                postData.getAfter={
+		            userInfo:{
+		              tableName:'UserInfo',
+		              middleKey:'user_no',
+		              key:'user_no',
+		              condition:'=',
+		              searchItem:{
+		                status:['in',[1]]
+		              },
+		            },
+		            user:{
+		              tableName:'UserInfo',
+		              middleKey:'passage1',
+		              key:'user_no',
+		              condition:'=',
+		              searchItem:{
+		                status:['in',[1]]
+		              },
+		            } 
+		          }; 
+    
+                const callback = (res)=>{
+                    if(res.info.data.length>0){
+                        self.mainData.push.apply(self.mainData,res.info.data);
+                       
+
+                    }else{
+                        alert('没有更多了')
+                    }
+                  
+                }
+                window.base.orderGet(postData,callback);
+            },  
+
+            menuClick(e){
+            	const  self = this;
+            	self.num = window.base.getDataSet(e).num;
+            	self.changeSearch(self.num)
+            },
+
+            changeSearch(num){
+            	const self = this;
+            	if(num=='0'){
+            		self.searchItem.order_step = 3
+            	}else if(num=='1'){
+            		self.searchItem.order_step = 2
+            	}else if(num=='2'){
+            		self.searchItem.order_step = 4
+            	}else if(num=='3'){
+            		self.searchItem.order_step = 5
+            	};
+            	self.productGet(true)
+            },
+
+
+            intoDetail(e) {
+                var self = this;
+                var art_id = window.base.getDataSet(e).id;
+                window.location.href = "./indexDetail.html?id=" + art_id;
+            },   
+
+
+
+    } 
+
+});           
 </script>
 </body>
 </html>

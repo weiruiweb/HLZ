@@ -9,6 +9,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
 </head>
 <body>
 <style>
@@ -156,112 +160,146 @@
 }
 a{color:#fff;}
 </style>
+<div id="app">
 <div class="w750">
 <div class="w710">
     <div class="job_list flexRowBetween">
       <div class="list_img">
         <div class="user_img">
-            <open-data type="userAvatarUrl"></open-data>
+            <img class="user_img" :src="mainData.headImgUrl" />
         </div>
       </div>
       <div class="list_left">
         <div class="flex">
-          <div class="job_type avoidOverflow font40">UI设计师</div>
-          <div class="appointment font34"> 预约时间:06月07号</div>
+          <div class="job_type avoidOverflow font40">{{mainData.info?mainData.info.name:''}}</div>
+ 
         </div>
         <div class="treatment flex font28">
-          <div class="treatment_sort"><img src="images/resume1.png"/>西安</div>
-          <div class="treatment_sort"><img src="images/resume2.png"/>女</div>
-          <div class="treatment_sort"><img src="images/resume3.png"/>大专</div>
-          <div class="treatment_sort"><img src="images/resume4.png"/>1-3年</div>
-          <div class="treatment_sort"><img src="images/resume5.png"/>20岁</div>
+          <div class="treatment_sort"><img src="images/resume1.png"/>{{mainData.info?mainData.info.address:''}}</div>
+          <div class="treatment_sort"><img src="images/resume2.png"/>{{mainData.info.gender=='1'?'男':'女'}}</div>
+          <div class="treatment_sort"><img src="images/resume3.png"/>{{mainData.info?mainData.info.highEducation:''}}</div>
+          <div class="treatment_sort"><img src="images/resume4.png"/>{{mainData.info?mainData.info.email:''}}</div>
+          <div class="treatment_sort"><img src="images/resume5.png"/>{{mainData.info?mainData.info.date:''}}</div>
         </div>
         <div class="company_introuce avoidOverflow font36">
         应聘职位:掏粪掏粪掏粪掏粪掏粪掏粪
         </div>
       </div>
-      <div class="list_right font34">
-       09月13号
-      </div>
+      
     </div>
   </div>
 <div class="p40">
     <div class="sum_txt flexRowBetween">
-      <div class="sumTxt">基础信息</div>
+        <div class="sumTxt">基础信息</div>
     </div>
-    <div class="gig" style="padding-left:.44rem;">
-    <div class="phone_infor" >
-      <div class="bank_card flexRowBetween">
-        <div class="input_before">
-          公司名称:
+    <div class="gig" style="padding-left:.42rem;">
+        <div class="phone_infor">
+            <div class="bank_card flexRowBetween">
+                <div class="input_before">
+                    姓名:
+                </div>
+                <div class="resume_info">{{mainData.info?mainData.info.name:''}}</div>
+            </div>
+            <div class="bank_card flexRowBetween">
+                <div class="input_before">
+                    性别:
+                </div>
+                <div class="resume_info">{{mainData.info?mainData.info.gender==0?'女':'男':''}}</div>
+            </div>
+            <div class="bank_card flexRowBetween">
+                <div class="input_before">
+                    婚姻状况:
+                </div>
+                <div class="resume_info">{{mainData.info?mainData.info.married==0?'未婚':'已婚':''}}</div>
+            </div>
         </div>
-        <div class="resume_info">华路卓</div>
-      </div>
-      <div class="bank_card flexRowBetween">
-        <div class="input_before">
-          联&nbsp;&nbsp;系&nbsp;人:
+        <div class="bank_card flexRowBetween">
+            <div class="input_before">
+                出生年月:
+            </div>
+            <div class="resume_info">{{mainData.info?mainData.info.date:''}}</div>
         </div>
-        <div class="resume_info">岩谷</div>
-      </div>
-      <div class="bank_card flexRowBetween">
-        <div class="input_before">
-          手&nbsp;&nbsp;机&nbsp;号:
+        <div class="bank_card flexRowBetween">
+            <div class="input_before">
+                身份证号:
+            </div>
+            <div class="resume_info">{{mainData.info?mainData.info.idCard:''}}</div>
         </div>
-        <div class="resume_info">1223233223</div>
-      </div>
-     </div>
-
-      <div class="bank_card flexRowBetween">
-        <div class="input_before">
-          座&nbsp;&nbsp;机&nbsp;号:
+        <div class="bank_card flexRowBetween">
+            <div class="input_before">
+                最高学历:
+            </div>
+            <div class="resume_info">{{mainData.info?mainData.info.highEducation:''}}</div>
         </div>
-        <div class="resume_info">1223233223</div>
-      </div>
-      <div class="bank_card flexRowBetween">
-        <div class="input_before">
-          邮&nbsp;&nbsp;箱&nbsp;号:
+        <div class="bank_card flexRowBetween">
+            <div class="input_before">
+                工作经验:
+            </div>
+            <div class="resume_info">{{mainData.info?mainData.info.email:''}}</div>
         </div>
-        <div class="resume_info">1223233223</div>
-        
-      </div>
-      <div class="bank_card flexRowBetween">
-        <div class="input_before">
-          企业规模:
+        <div class="bank_card flexRowBetween">
+            <div class="input_before">
+                目前状态:
+            </div>
+            <div class="resume_info">{{mainData.info?mainData.info.nowStatus:''}}</div>
         </div>
-        <div class="resume_info">223</div>
-        
-      </div>
-      <div class="bank_card flexRowBetween">
-        <div class="input_before">
-          地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址:
+        <div class="bank_card flexRowBetween">
+            <div class="input_before">
+                期望薪资:
+            </div>
+            <div class="resume_info">{{mainData.info?mainData.info.idCard:''}}</div>
         </div>
-        <div class="resume_info">国际大都荟</div>
-      </div>
+        <div class="bank_card flexRowBetween">
+            <div class="input_before">
+                期望地区:
+            </div>
+            <div class="resume_info">{{mainData.info?mainData.info.address:''}}</div>
+        </div>
     </div>
 </div>
+
 <div class="p40">
     <div class="sum_txt flexRowBetween">
-      <div class="sumTxt">工作经历</div>
+        <div class="sumTxt">工作经历</div>
+     
     </div>
     <div class="gig">
-      <div class="expericence_list">
-        <div class="expericence_time"><span><text>●</text>2018.06-2018.10</span></div>
-        <div class="expericence">
-          <div class="exper_company"><span>华路卓咨咨询管理有限公司</span></div>
-          <div class="detail"><span>1.负责app开发和pc端软件界面</span></div>
-          <div class="detail"><span>2.负责app开发和pc端软件界面</span></div>
-          <div class="detail"><span>3.负责app开发和pc端软件界面</span></div>
+        <div class="education" v-for="(item, index) in workExperience">
+            <div class="flexRowBetween">
+                <div>
+                    <text>●</text>{{item.startDate}}-{{item.endDate}}</div>
+                
+            </div>
+            <div class="expericence_list">
+                <div class="expericence">
+                    <div class="exper_company"><span>{{item.companyName}}-{{item.job}}</span></div>
+                    <div class="detail"><span>{{item.content}}</span></div>
+                    
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="expericence_list">
-        <div class="expericence_time"><span><text>●</text>2018.06-2018.10</span></div>
-        <div class="expericence">
-          <div  class="exper_company"><span>华路卓咨咨询管理有限公司</span></div>
-          <div class="detail"><span>1.负责app开发和pc端软件界面</span></div>
-          <div class="detail"><span>2.负责app开发和pc端软件界面</span></div>
-          <div class="detail"><span>3.负责app开发和pc端软件界面</span></div>
+    </div>
+</div>
+<div class="p40" style="margin-bottom: 1rem;">
+    <div class="sum_txt flexRowBetween">
+        <div class="sumTxt">教育经历</div>
+    
+    </div>
+    <div class="gig">
+        <div class="education" v-for="(item, index) in education">
+            <div class="flexRowBetween">
+                <div>
+                    <text>●</text>{{item.startDate}}-{{item.endDate}}</div>
+                
+            </div>
+            <div class="expericence_list">
+                <div class="expericence">
+                    <div class="exper_company"><span>学校：{{item.schoolName}}</span></div>
+                    <div class="exper_company"><span>专业：{{item.object}}</span></div>
+                    <div class="exper_company"><span>学历：{{item.highEdu}}</span></div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 </div>
 <div style="height:0.95rem;width:100%;"></div>
@@ -269,7 +307,7 @@ a{color:#fff;}
     <div class="handle1">
       <div class="handle_in flexRowaround">
         <img src="images/resume6.png"/>
-        <div style="color:#fff;">155555555555</div>
+        <div style="color:#fff;">{{mainData.info?mainData.info.phone:''}}</div>
       </div>
     </div>
     <div class="handle2" style="margin:0 1px;">
@@ -284,5 +322,71 @@ a{color:#fff;}
     </div>
   </div>
 </div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+                distributionData:[],
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+
+          var callback = (res)=>{
+            this.getMainData();
+          };
+          window.base.getMerchantToken(callback);
+        },
+
+        methods:{
+
+        getMainData(){
+          const self = this;
+          const postData = {};
+          postData.paginate = window.base.cloneForm(self.paginate);
+          postData.token = localStorage.getItem('merchant_token');
+          postData.searchItem = {
+            user_type:['in',[0]],
+   			user_no:window.base.GetRequest().id					
+          }
+          const callback = (res)=>{
+            if(res.info.data.length>0){
+              	self.mainData = res.info.data[0]
+             	self.mainData.info.workExperience = self.mainData.info.workExperience?self.mainData.info.workExperience:[];
+                self.workExperience = self.mainData.info.workExperience;
+                self.education = self.mainData.info.education;
+            }else{
+              alert('数据错误')
+            };
+            
+          };
+          window.base.userGet(postData,callback);
+        }
+       
+    }
+});            
+</script>
 </body>
 </html>

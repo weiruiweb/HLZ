@@ -71,7 +71,7 @@ a{color:#fff;}
       </div>
     </div>
   </div>
-  <div id="upload" style="margin-top:.72rem;">
+ <div id="upload" style="margin-top:.72rem;">
     <div class="p40">
       <div class="uploder">
           <div class="uploder_all flexRowBetween">
@@ -96,7 +96,7 @@ a{color:#fff;}
     </div>
   </div>
   <div class="confirm_bind">
-    <div  v-on:click="submit">确认体现</div>
+    <div  v-on:click="submit">确认提现</div>
   </div>
 </div>
 </div>
@@ -134,7 +134,7 @@ a{color:#fff;}
         created: function () {
            
            var callback = (res)=>{
-              this.getComputeData();
+
               this.getUserInfoData()
           };
           window.base.getUserToken(callback);

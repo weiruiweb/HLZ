@@ -43,13 +43,13 @@ a{color:#fff;}
     </div>
   </div>
   <div id="sum" class="font38">
-    <a class="sum_list flexRowBetween" href="userPropertyIn.html">
+    <a class="sum_list flexRowBetween" href="merchantPropertyIn.html">
         <div class="sum_left flex">
             <div style="color:#ed7101;margin-right:.24rem;">●</div>
             <div>总充值</div>
         </div>
         <div class="sum_center">
-            11111元
+            {{computeData}}元
         </div>
         <div class="sum_right">
           <img src="images/next_page.jpg"/>
@@ -57,13 +57,13 @@ a{color:#fff;}
     </a>
   </div>
   <div id="sum" class="font38">
-    <a class="sum_list flexRowBetween" href="userPropertyOut.html">
+    <a class="sum_list flexRowBetween" href="merchantPropertyOut.html">
         <div class="sum_left flex">
             <div style="color:#ed7101;margin-right:.24rem;">●</div>
             <div>已支出</div>
         </div>
         <div class="sum_center">
-            11111元
+             {{computeDataTwo}}元
         </div>
         <div class="sum_right">
           <img src="images/next_page.jpg"/>
@@ -81,7 +81,8 @@ a{color:#fff;}
                 
                 mainData:[],
              
-                
+                computeData:[],
+                computeDataTwo:[],
                 paginate: {
                     
                     count: 0,
@@ -104,8 +105,10 @@ a{color:#fff;}
         created: function () {
             var callback = (res)=>{
               this.userGet();
+              this.getComputeData();
+              this.getComputeDataTwo()
             };
-            window.base.getUserToken(callback);
+            window.base.getMerchantToken(callback);
         },
 
         methods:{
@@ -113,7 +116,7 @@ a{color:#fff;}
             userGet(){
                 const self = this;
                 const postData = {
-                    token:localStorage.getItem('user_token'),
+                    token:localStorage.getItem('merchant_token'),
                     thirdapp_id:2
                 };
                 const callback = (res)=>{
@@ -125,7 +128,57 @@ a{color:#fff;}
                     console.log(self.mainData)
                 }
                 window.base.userGet(postData,callback);
-            },  
+            }, 
+
+            getComputeData(){
+                  const self = this;
+                  const postData = {};
+                  postData.data = {
+                    FlowLog:{
+                      compute:{
+                        count:'sum',
+                      },
+                      
+                      searchItem:{
+                        user_no:localStorage.getItem('merchant_no'),
+                        type:2,
+                        count:['>',0]
+                      }
+                    }
+                  };
+                  const callback = (res)=>{
+                    
+                      self.computeData = res.info.FlowLog.countsum;
+                  
+                    console.log(self.computeData)
+                  };
+                  window.base.flowLogCompute(postData,callback);
+            }, 
+
+
+                getComputeDataTwo(){
+                  const self = this;
+                  const postData = {};
+                  postData.data = {
+                    FlowLog:{
+                      compute:{
+                        count:'sum',
+                      },
+                      
+                      searchItem:{
+                        user_no:localStorage.getItem('merchant_token'),
+                        type:2,
+                        count:['<',0]
+                      }
+                    }
+                  };
+                  const callback = (res)=>{
+                   
+                      self.computeDataTwo = res.info.FlowLog.countsum;
+            
+                  };
+                  window.base.flowLogCompute(postData,callback);
+                },
 
            
 

@@ -59,7 +59,7 @@ a{color:#fff;}
     </div>
   </div>
   <div style="height:2rem;background:#eee;align-items:center;width:100%;display:flex;">
-    <a class="sumIn font40" href="userPropertyInNow.html">我要充值</a>
+    <a class="sumIn font40" href="merchantPropertyInNow.html">我要充值</a>
   </div>
   <div class="p40">
     <div class="sum_txt">
@@ -120,7 +120,7 @@ a{color:#fff;}
             this.getMainData();
             this.getComputeData()
           };
-          window.base.getUserToken(callback);
+          window.base.getMerchantToken(callback);
             
         },
 
@@ -130,11 +130,11 @@ a{color:#fff;}
           const self = this;
           const postData = {};
           postData.paginate = self.paginate;
-          postData.token = localStorage.getItem('user_token');
+          postData.token = localStorage.getItem('merchant_token');
           postData.searchItem = {
             type:'2',
-            user_type:0,
-            count:['>',0]
+            count:['>',0],
+
           };
           postData.order = {
             create_time:'desc',
@@ -165,7 +165,7 @@ a{color:#fff;}
               },
               
               searchItem:{
-                user_no:'UA16809144600791',
+                user_no:localStorage.getItem('merchant_no'),
                 type:2,
                 count:['>',0]
               }

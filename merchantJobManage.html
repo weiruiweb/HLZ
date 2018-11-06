@@ -79,7 +79,7 @@ a{color:#fff;}
                   <div class="list_right">
                       <div class="payment">{{item.price}}</div>
                       <div class="hongbao">
-                          <div class="numner">¥2</div>
+                          <div class="numner">¥{{item.distributionOne}}</div>
                       </div>
                   </div>
               </a>
@@ -177,6 +177,15 @@ a{color:#fff;}
                           status:1
                       },
                       condition:'='
+                  },
+                  order:{
+                  	  tableName:'order',
+                      middleKey:'product_no',
+                      key:'user_no',
+                      searchItem:{
+                          status:1
+                      },
+                      condition:'='	
                   }
                 }
                 const callback = (res)=>{

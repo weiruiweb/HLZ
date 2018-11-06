@@ -13,6 +13,7 @@
 <script src="js/browser.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="js/base.js" type="application/javascript"></script>
+<script src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js" type="application/javascript"></script>
 </head>
 <body>
 <style>
@@ -121,16 +122,16 @@ a{
 </style>
 <div id="app">
     <div class="w750">
-        <div class="index_tab flexRowBetween" id="index_tab">
-            <div class="tab_item active font40">
+        <div class="index_tab flexRowBetween"  id="index_tab">
+            <div class="tab_item  font40" :data-id="0" @click="changeMeun" :style="id==0?'color:#ed7101':''">
                 最新岗位
             </div>
-            <div class="tab_item font40">
+            <div class="tab_item font40" :data-id="1" @click="changeMeun" :style="id==1?'color:#ed7101':''">
                 附近工作
             </div>
         </div>
         <div id="job">
-            <div class="sort">
+            <div class="sort" :style="id==0?'display:block':''">
                 <div id="tab" class="flexRowBetween font36">
                     <div class="sort_item" :data-num="3"  @click="selectMeun">
                         <div class="sort_in  flexRowCenter" style="height:100%;" :data-num="3"  @click="selectMeun">
@@ -229,7 +230,7 @@ a{
                                 <div class="company_name avoidOverflow" :data-id="item.id"  @click="intoDetail">{{item.user[0]?item.user[0].name:''}}</div>
                                 <div class="send_datail flexRowBetween font30">
                                     <div class="send_tiem">{{item.create_time}}</div>
-                                    <div class="send_need">陕西|普工</div>
+                                    <div class="send_need">{{item.address}}|{{item.description}}</div>
                                 </div>
                             </div>
                         </div>
@@ -297,7 +298,8 @@ a{
                 allPages:0,
                 linkPage:'',
                 num:'100000',
-                order:{}
+                order:{},
+                id:''
             }   
 
         },
@@ -308,10 +310,14 @@ a{
             }
         },
         created: function () {
-
-            this.productGet();
-            this.getLabelData();
-            this.getCityData();
+            var callback = (res)=>{
+                this.wxJsSdk()
+                
+                this.getLabelData();
+                this.getCityData();
+                
+            };
+            window.base.getUserToken(callback);
         },
 
         methods:{
@@ -340,9 +346,8 @@ a{
                         },
                         condition:'='
                     },
-                }
-             
-
+                };
+              
                 const callback = (res)=>{
                     if(res.info.data.length>0){
                         self.mainData.push.apply(self.mainData,res.info.data);
@@ -356,9 +361,56 @@ a{
                 window.base.productGet(postData,callback);
             },  
 
-            intoList(){
 
+            wxJsSdk(){
+                const self = this;
+                const postData = {
+                    thirdapp_id:2,
+                    url:window.location.href
+                };
+                const callback = (res)=>{
+                    
+                    wx.config({
+                        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                        appId:res.appId, // 必填，公众号的唯一标识
+                        timestamp:res.timestamp , // 必填，生成签名的时间戳
+                        nonceStr:res.nonceStr, // 必填，生成签名的随机串
+                        signature:res.signature,// 必填，签名
+                        jsApiList: ['getLocation'] // 必填，需要使用的JS接口列表
+                    });
+
+
+                    wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                        wx.getLocation({    
+                            success : function(res) {    
+                                latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90    
+                                longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。    
+                                /* speed = res.speed; // 速度，以米/每秒计     */
+                                accuracy = res.accuracy; // 位置精度    
+                                $("#latitude").val(latitude);
+                                $("#longitude").val(longitude);
+                               
+                                self.latitude = latitude;
+                                self.longitude = longitude;
+                            
+                                self.productGet(); 
+                            },    
+                            cancel : function(res) {    
+                                alert("未能获取地理位置");    
+                            }  
+                        }); 
+                        
+                    });
+
+
+                    wx.error(function(res){
+                        console.log('error',res)
+                    });
+                };
+                window.base.WxJssdk(postData,callback);
             },
+
+          
 
             getLabelData(){
                 const self = this;
@@ -445,6 +497,22 @@ a{
                 window.location.href = "./indexDetail.html?id=" + art_id;
             },   
 
+            changeMeun(e){
+                const self = this;
+                var lat = self.latitude;
+                var lon = self.longitude;
+                console.log(e)
+                self.id = e.target.dataset.id
+                if(self.id=='1'){
+                   var orderKey = 'ACOS(SIN(('+ lat +'* 3.1415) / 180 ) *SIN((lat * 3.1415) / 180 ) +COS(('+ lat +' * 3.1415) / 180 ) * COS((lat * 3.1415) / 180 ) *COS(('+ lon +' * 3.1415) / 180 - (lng * 3.1415) / 180 ) ) * 6379';
+                   self.order[orderKey]= orderKey;
+                };
+                 console.log('order',self.order);
+                 self.productGet(true)
+            },
+
+
+
             selectMeun(e){
                 var self = this;
                 console.log(e)
@@ -481,11 +549,13 @@ a{
                 self.searchItem.address = address;
                 self.num ='10000';
                 self.productGet(true);
-            }
+            },
 
-              
-        }
-    });            
+
+    } 
+
+});           
 </script>
+
 </body>
 </html>
