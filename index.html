@@ -216,18 +216,18 @@ a{
         </div>
         <div class="job" id="job_sort" >
             <div class="w710" v-for="item in mainData">
-                <div class="job_list flexRowBetween" :data-id="item.id"  @click="intoDetail">
-                    <div class="list_left" :data-id="item.id"  @click="intoDetail">
+                <div class="job_list flexRowBetween"   @click="intoDetail(item.id)">
+                    <div class="list_left" >
                         <div class="job_type avoidOverflow">{{item.title}}</div>
-                        <div class="treatment flex" :data-id="item.id"  @click="intoDetail">
+                        <div class="treatment flex" >
                             <div class="treatment_sort"  v-for="c_item in item.passage_array">{{c_item}}</div>
                         </div>
-                        <div class="job_company flexRowBetween" :data-id="item.id"  @click="intoDetail">
-                            <div class="company_img" :data-id="item.id"  @click="intoDetail">
+                        <div class="job_company flexRowBetween" >
+                            <div class="company_img" >
                                 <img src="images/navbar2-a.png" />
                             </div>
-                            <div class="company_introuce" :data-id="item.id"  @click="intoDetail">
-                                <div class="company_name avoidOverflow" :data-id="item.id"  @click="intoDetail">{{item.user[0]?item.user[0].name:''}}</div>
+                            <div class="company_introuce"  >
+                                <div class="company_name avoidOverflow" >{{item.user[0]?item.user[0].name:''}}</div>
                                 <div class="send_datail flexRowBetween font30">
                                     <div class="send_tiem">{{item.create_time}}</div>
                                     <div class="send_need">{{item.address}}|{{item.description}}</div>
@@ -491,9 +491,8 @@ a{
             
             },
 
-            intoDetail(e) {
+            intoDetail(art_id) {
                 var self = this;
-                var art_id = window.base.getDataSet(e).id;
                 window.location.href = "./indexDetail.html?id=" + art_id;
             },   
 
