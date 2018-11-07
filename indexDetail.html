@@ -460,6 +460,7 @@ div{
                 pageArray:[],
                 allPages:0,
                 linkPage:'',
+                isCollect:false,
 
             }
 
@@ -500,6 +501,10 @@ div{
                 const callback = (res)=>{
                     if(res.info.data.length>0){
                         self.mainData = res.info.data[0];
+                        if(window.base.getStorageArray('collectData','id',self.mainData.id)){
+                            self.isCollect = true;
+                        };
+                        console.log(self.isCollect);
                         self.getDistri();
                         this.theLocation()
                     }else{
@@ -660,8 +665,12 @@ div{
             collect(){
                 const self = this;  
                 const id = window.base.GetRequest().id;
-               	localStorage.setItem('collectData',JSON.stringify(self.mainData));
-             	
+                if(self.isCollect){
+                    self.isCollect = !window.base.delStorageArray('collectData',self.mainData,'id');
+                }else{
+                    self.isCollect = window.base.setStorageArray('collectData',self.mainData,'id',999,type='unshift');
+                };
+             	console.log('collect',self.isCollect);
             },
 
             checkOrder(){

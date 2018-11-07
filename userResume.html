@@ -231,7 +231,8 @@ a{color:#333;}
             deleteExperience(e){
                 const self = this;
                 var index = window.base.getDataSet(e,'index');
-                self.workExperience.splice(index, 1); 
+                console.log(index);
+                self.workExperience.splice(parseInt(index), 1); 
                 const postData ={
                     data:{
                         workExperience:self.workExperience

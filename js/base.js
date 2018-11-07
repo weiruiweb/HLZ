@@ -796,6 +796,83 @@ window.base={
         return result;
     },
 
+    getStorageArray(storageName,key,value){
+        const self = this;
+        var array = JSON.parse(localStorage.getItem(storageName));
+        if(key&&value&&array){
+            var index = self.findItemInArray(array,key,value)[0];
+            return array[index];
+        }else if(array){
+            return array
+        }else{
+            return false
+        };
+    },
+
+    setStorageArray(storageName,item,key,limit,type='unshift'){
+
+        const self = this;
+        if(localStorage.getItem(storageName)){
+            var array = JSON.parse(localStorage.getItem(storageName));
+            if(array.length<limit){
+                self.setItemInArray(array,item,key,type);
+            }else{
+                if(type=='unshift'){
+                    array.splice(array.length-1,1);
+                }else{
+                    array.splice(0,1);
+                };
+                self.setItemInArray(array,item,key,type);
+            };
+        }else{
+            var array = [];
+            array[type](item);
+        };
+        array = JSON.stringify(array);
+        localStorage.setItem(storageName,array);
+        return true;
+
+    },
+
+    delStorageArray(storageName,item,key){
+
+        const self = this;
+        var array = JSON.parse(localStorage.getItem(storageName));
+        var index = self.findItemInArray(array,key,item[key])[0];
+        array.splice(index,1);
+        array = JSON.stringify(array);
+        localStorage.setItem(storageName,array);
+        return true;
+
+    },
+
+
+    findItemInArray(array,fieldName,field){
+
+        for(var i=0;i<array.length;i++){
+            if(array[i][fieldName] == field){
+                return [i,array[i]];
+            }
+        };
+        return false;
+
+    },
+
+    setItemInArray(array,item,fieldName,type='push'){
+        var findI = -1;
+        for(var i=0;i<array.length;i++){
+            if(array[i][fieldName] == item[fieldName]){
+                findI = i;
+            };
+        };
+        if(findI>=0){
+            array[i] = item;
+        }else{
+            array[type](item);
+        };
+        return array;
+    },
+
 
 
 }

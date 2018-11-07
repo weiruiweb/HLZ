@@ -251,7 +251,7 @@ a{color:#fff;}
         
         created: function () {
             var callback = (res)=>{
-              this.getComputeData();
+              //this.getComputeData();
               this.userGet();
             };
             window.base.getUserToken(callback);
@@ -284,7 +284,7 @@ a{color:#fff;}
             const postData = {};
             postData.token =localStorage.getItem('user_token');
             postData.data = {};
-            console.log('workExperience',self.mainData);
+            console.log('workExperience',self.submitData);
             self.mainData.workExperience.push(self.submitData);
             postData.data.workExperience = self.mainData.workExperience;
             
