@@ -9,6 +9,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
 </head>
 <body>
 <style>
@@ -46,6 +50,7 @@
 }
 a{color:#fff;}
 </style>
+<div id="app">
 <div class="w750">
   <div class="job">
   <div class="w710">
@@ -110,6 +115,60 @@ a{color:#fff;}
   </div>
 </div>
 </div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+                distributionData:[],
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+
+          var callback = (res)=>{
+            
+            this.getMainData()
+            
+          };
+          window.base.getMerchantToken(callback);
+        },
+
+        methods:{
+
+        getMainData(){
+          const self = this;
+          self.data.mainData = window.base.getStorageArray('collectData')
+        }
+
+
+
+        
+           
+        }
+    });            
+</script>
 </body>
 </html>
 
