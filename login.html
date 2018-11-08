@@ -88,10 +88,13 @@
 			        <div class="input_img" style="display: inline;">
 			            <image src="images/login_pass.png"></image>
 			        </div>
-			        <div class="input_in" style="width:52%;">
+			        <div class="input_in">
+			            <input placeholder="请输入密码" v-model='submitData.password'></input>
+			        </div>
+			        <!-- <div class="input_in" style="width:52%;">
 			            <input placeholder="请输入验证码" style="width:90%" v-model='submitData.password'></input>
 			        </div>
-			        <div class="submit_info code_in" style="width:28.5%;height:0.6rem;line-height: 0.6rem;">获取验证码</div>
+			        <div class="submit_info code_in" style="width:28.5%;height:0.6rem;line-height: 0.6rem;">获取验证码</div> -->
 			    </div>
 			</div>
 			<div class="submit_info" style="width:93%;margin-top:1.6rem;height:0.8rem;line-height: 0.8rem;" v-on:click="submit">

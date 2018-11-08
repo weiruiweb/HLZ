@@ -137,7 +137,7 @@
   color:#fff;
 }
 .handle_in{
-  width:70%;
+  width:100%;
   margin:0 auto;
   color:#fff;
 }
@@ -177,7 +177,9 @@ a{color:#fff;}
           </div>
         </div>  
         <div class="list_right font34">
+          <view style="width:100%;height:33%;overflow: hidden;">
          {{item.create_time}}
+       </view>
         </div>
       </a>
     </div>
@@ -188,7 +190,7 @@ a{color:#fff;}
           <div style="color:#fff;">{{item.userInfo[0].phone}}</div>
         </div>
       </div>
-      <div class="handle2" style="margin:0. 1rem;"  @click="orderUpdate(index)">
+      <div class="handle2" style="margin:0. 1rem;width:32%;"  @click="orderUpdate(index)">
         <div class="handle_in flexRowaround">
           <img src="images/resume7.png">
 
@@ -199,7 +201,7 @@ a{color:#fff;}
 		      <div style="color:#fff;" v-if="item.order_step=='4'" >已入职</div>
         </div>
       </div>
-      <div class="handle2" @click="orderDelete" :data-id='item.id'>
+      <div class="handle2" style="width:18%;" @click="orderDelete" :data-id='item.id'>
         <div class="handle_in flexRowaround">
           <img src="images/resume8.png">
 	          <div style="color:#fff;">删除</div>
