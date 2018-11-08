@@ -58,17 +58,17 @@ a{color:#fff;}
   <div class="w750">
       <div class="job" v-for="item in mainData">
           <div class="w710">
-              <a class="job_list flexRowBetween" href="merchantJobModify.html">
-                  <div class="list_left">
+              <a class="job_list flexRowBetween" @click="intoDetailModify(item.id)">
+                  <div class="list_left" >
                       <div class="job_type avoidOverflow">{{item.title}}</div>
                       <div class="treatment flex">
                           <div class="treatment_sort"  v-for="c_item in item.passage_array">{{c_item}}</div>
                       </div>
-                      <div class="job_company flexRowBetween">
+                      <div class="job_company flexRowBetween" >
                           <div class="company_img">
                               <img src="images/navbar2-a.png">
                           </div>
-                          <div class="company_introuce">
+                          <div class="company_introuce" >
                               <div class="company_name avoidOverflow">{{item.user[0].name}}</div>
                               <div class="send_datail flexRowBetween">
                                   <div class="send_tiem font30">{{item.create_time}}</div>
@@ -88,7 +88,7 @@ a{color:#fff;}
               <a class="user_item flexRowBetween" :data-id="item.id"  @click="intoDetail">
                   <div style="width:98%;">
                       <div class="item_bottom" :data-id="item.id"  @click="intoDetail">收到报名
-                          <span class="color">(40)</span>
+                          <span class="color"></span>
                       </div>
                   </div>
                   <div class="vertical_line">
@@ -98,7 +98,7 @@ a{color:#fff;}
               <a class="user_item flexRowBetween" href="merchantJobNow.html">
                   <div style="width:98%;">
                       <div class="item_bottom">已入职
-                          <span class="color">(40)</span>
+                          <span class="color"></span>
                       </div>
                   </div>
                   <div class="vertical_line">
@@ -108,7 +108,7 @@ a{color:#fff;}
               <a class="user_item flexRowBetween" href="merchantReword.html">
                 <div style="width:98%;">
                   <div class="item_bottom">已发奖金
-                      <span class="color">(40)</span>
+                      <span class="color"></span>
                   </div>
                 </div>
               </a>
@@ -203,7 +203,14 @@ a{color:#fff;}
                 var self = this;
                 var art_id = window.base.getDataSet(e).id;
                 window.location.href = "./merchantResume.html?id=" + art_id;
-            },   
+            },  
+
+            intoDetailModify(id) {
+                var self = this;
+                console.log(id)
+               window.location.href = "./merchantJobModify.html?id=" + id;
+               
+            },    
 
            
         }

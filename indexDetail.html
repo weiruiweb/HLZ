@@ -673,6 +673,18 @@ div{
              	console.log('collect',self.isCollect);
             },
 
+            userGet(){
+	            const self = this;
+	            const postData = {};
+	            postData.token =localStorage.getItem('user_token');
+	            const callback = (res)=>{
+	              if(res.info.data.length>0){
+	                self.userData = res.info.data[0];
+	              }
+	            };
+	             window.base.userGet(postData,callback);
+	         },
+
             checkOrder(){
             	const self = this;
             	console.log(666)
@@ -688,14 +700,16 @@ div{
             		if(res.info.data.length>0){
             			self.checkOrderData.push.apply(self.checkOrderData,res.info.data);	
             		}
-            		console.log(self.checkOrderData)
+            		self.userGet();
             	};
             	window.base.orderItemGet(postData,callback);    
             },
 
             submit(){
             	const self = this;
-            	console.log(self.checkOrderData.length);
+            	if(self.userData.info.name==''||self.userData.info.address==''||self.userData.info.highEducation==''){
+            		alert('请至个人中心补全简历!')
+            	}
             	if(self.checkOrderData.length>0){
             		alert('请勿重复投递')
             	}else{

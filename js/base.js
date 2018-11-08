@@ -391,6 +391,19 @@ window.base={
         this.getData(allParams)
     },
 
+    productUpdate:function(param,callback) {
+  
+        var allParams = {
+            url:'Common/Product/update',
+            type:'post',
+            data:param,
+            sCallback: function(data){
+                callback&&callback(data);
+            }
+        };
+        this.getData(allParams)
+    },
+
     productGet:function(param,callback) {
   
         var allParams = {

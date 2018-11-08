@@ -154,7 +154,7 @@ a{color:#fff;}
 <div id="app">
   <div class="job" v-for="(item,index) in mainData">
     <div class="w710" >
-       <a class="job_list flexRowBetween" @click="intoDetail" :data-user_no="item.user_no">
+       <a class="job_list flexRowBetween" @click="intoDetail(item.user_no)">
         <div class="list_img">
           <div class="user_img">
               <img  class="user_img" :src="item.user[0].headImgUrl" />
@@ -349,9 +349,9 @@ a{color:#fff;}
           		alert('网络故障')
           	} 
           	
-          	/*self.userInfoUpdate();*/
+          	self.userInfoUpdate();
           };
-         /* window.base.orderUpdate(postData,callback);*/
+          window.base.orderUpdate(postData,callback);
         },
 
 

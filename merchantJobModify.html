@@ -9,6 +9,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
+<script src="js/browser.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+<script src="js/jquery1.8.3.js"></script>
 </head>
 <body>
 <style>
@@ -22,6 +27,7 @@
   letter-spacing: 0.28rem;
 }
 </style>
+<div id="app">
 <div class="w750">
   <div class="p40">
       <div class="sum_txt flexRowBetween">
@@ -35,7 +41,7 @@
               <div class="input_before">
                   岗&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位:
               </div>
-              <input value="华路卓"></input>
+              <input v-model="submitData.description"></input>
               <div class="pencil">
                   <img src="images/pencil.png">
               </div>
@@ -44,27 +50,19 @@
               <div class="input_before">
                   薪&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;资:
               </div>
-              <input value="华路卓"></input>
+              <input v-model="submitData.price"></input>
               <div class="pencil">
                   <img src="images/pencil.png">
               </div>
           </div>
-          <div class="bank_card flexRowBetween">
-              <div class="input_before">
-                  福&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;利:
-              </div>
-              <input value="1223233223"></input>
-              <div class="pencil">
-                  <img src="images/pencil.png">
-              </div>
-          </div>
+       
       </div>
       <div class="phone_infor">
           <div class="bank_card flexRowBetween">
               <div class="input_before">
                   工作地点:
               </div>
-              <input value="019-3233223"></input>
+              <input v-model="submitData.address"></input>
               <div class="pencil">
                   <img src="images/pencil.png">
               </div>
@@ -73,7 +71,7 @@
               <div class="input_before">
                   学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历:
               </div>
-              <input value="@3uiu415222525"></input>
+              <input v-model="submitData.qualifications"></input>
               <div class="pencil">
                   <img src="images/pencil.png">
               </div>
@@ -84,7 +82,7 @@
               <div class="input_before">
                   工作经验:
               </div>
-              <input value="019-3233223"></input>
+              <input v-model="submitData.experience"></input>
               <div class="pencil">
                   <img src="images/pencil.png">
               </div>
@@ -93,20 +91,28 @@
               <div class="input_before">
                   年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄:
               </div>
-              <input value="@3uiu415222525"></input>
+              <input v-model="submitData.age"></input>
               <div class="pencil">
                   <img src="images/pencil.png">
               </div>
           </div>
-          <div class="bank_card flexRowBetween">
-              <div class="input_before">
-                  性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:
-              </div>
-              <input value="@3uiu415222525"></input>
-              <div class="pencil">
-                  <img src="images/pencil.png">
-              </div>
-          </div>
+            <div class="bank_card flexRowBetween">
+		      <div class="input_before">
+		        性别:
+		      </div>
+		      ‍‍<select id="pid" data-key="gender" @change="selectChange" style="width:4.2rem;height:0.72rem;font-size:35px"> 
+		          <option >请选择</a> 
+		          <option >男女不限</a> 
+		          <option >男</a> 
+		          <option >女</a> 
+		      </select> 
+		    </div>
+            <div class="bank_card flexRowBetween">
+		      <div class="input_before">
+		        福利待遇:
+		      </div>
+		      <div class="choose_item" v-for="item in submitData.passage_array">{{item}}</div>
+		    </div>
       </div>
       <div class="sum_txt" style="border:none;">
           <div class="sumTxt">职位详情</div>
@@ -115,7 +121,7 @@
           <div class="intro_edit">
               <img src="images/pencil1.png">
           </div>
-          <textarea value="">华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司华路卓咨询管理有限责任公司</textarea>
+          <textarea v-model="submitData.content"></textarea>
       </div>
       <div class="sum_txt">
           <div class="sumTxt">分享设置</div>
@@ -125,7 +131,7 @@
               <div class="input_before">
                   分享金额:
               </div>
-              <input value="019-3233223"></input>
+              <input v-model="submitData.distributionOne"></input>
               <div class="pencil">
                   <img src="images/pencil.png">
               </div>
@@ -134,7 +140,7 @@
               <div class="input_before">
                   数量设置:
               </div>
-              <input value="019-3233223"></input>
+              <input v-model="submitData.stock"></input>
               <div class="pencil">
                   <img src="images/pencil.png">
               </div>
@@ -143,27 +149,7 @@
               <div class="input_before">
                   入职奖励:
               </div>
-              <input value="@3uiu415222525"></input>
-              <div class="pencil">
-                  <img src="images/pencil.png">
-              </div>
-          </div>
-      </div>
-      <div class="phone_infor">
-          <div class="bank_card flexRowBetween">
-              <div class="input_before">
-                  入职时间:
-              </div>
-              <input value="06月5日"></input>
-              <div class="pencil">
-                  <img src="images/pencil.png">
-              </div>
-          </div>
-          <div class="bank_card flexRowBetween">
-              <div class="input_before">
-                  转发金额:
-              </div>
-              <input value="2元"></input>
+              <input v-model="submitData.distributionEntry"></input>
               <div class="pencil">
                   <img src="images/pencil.png">
               </div>
@@ -172,8 +158,155 @@
   </div>
   <div style="height:0.70rem;width:100%;"></div>
   <div class="confirm_bind">
-      <a href="merchantJobManage.html">确认修改</a>
+      <div @click ="submit">确认修改</div>
   </div>
 </div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                proviceData:[],
+                cityData:[],
+                labelData:[],
+                labelDataTwo:[],
+                submitData:{
+                  category_id:33,
+                  title:'',
+                  description:'',
+                  gender:'',
+                  qualifications:'',
+                  experience:'',
+                  price:'',
+                  stock:'',
+                  age:'',
+                  content:'',
+                  passage_array:[],
+                  address:'',
+                  distributionOne:'',
+
+                  distributionEntry:'',
+          
+       
+              
+                },
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+                textArray:[],
+                detail:localStorage.getItem('detail'),
+                provice:''
+            }
+
+        },
+        
+        created: function () {
+            
+            var callback = (res)=>{
+              this.getMainData();
+             
+            };
+            window.base.getMerchantToken(callback);
+        },
+
+        methods:{
+
+
+
+            getMainData(){
+              const self = this;
+              console.log(window.base.GetRequest().id)
+              const postData = {};
+              
+              postData.searchItem = {
+                id:window.base.GetRequest().id	
+              };
+              const callback = (res)=>{
+                if(res.info.data.length>0){
+                   self.mainData = res.info.data[0]
+                   self.submitData.title = self.mainData.title;
+                   self.submitData.qualifications = self.mainData.qualifications;
+                   self.submitData.experience = self.mainData.experience;
+                   self.submitData.price = self.mainData.price;
+                   self.submitData.content = self.mainData.content;
+                   self.submitData.stock = self.mainData.stock;
+                   self.submitData.age = self.mainData.age;
+                   self.submitData.address = self.mainData.address;
+                   self.submitData.description = self.mainData.description;
+                   self.submitData.distributionOne = self.mainData.distributionOne;
+                   self.submitData.distributionEntry = self.mainData.distributionEntry;
+                   self.submitData.passage_array = self.mainData.passage_array;
+
+                }else{
+                  alert('数据错误');
+                };
+              };
+              window.base.productGet(postData,callback);
+            },
+
+
+
+
+            productUpdate(){
+              const self = this;
+              const postData = {
+                data:self.submitData,
+                token:localStorage.getItem('merchant_token')    
+              };
+              const callback = (res)=>{
+               if(res.solely_code==100000){       
+                  alert('修改成功');
+                  window.history.back()
+                }else{
+                  alert('网络故障')
+                }
+              }
+              window.base.productUpdate(postData,callback);
+            },
+
+
+
+
+
+            selectChange(e){ 
+              const self = this;
+              self.submitData[window.base.getDataSet(e).key] = window.base.getSelectValue(e);
+              console.log('selectChange',self.submitData);
+            },
+
+         
+
+    
+
+
+
+
+            submit(){
+                const self = this;
+                if(window.base.checkComplete(self.submitData)){
+                    self.productUpdate()
+                }else{
+                	console.log(self.submitData)
+                    alert('请补全信息')
+                }
+            },  
+        }
+    });
+            
+</script>
 </body>
 </html>
