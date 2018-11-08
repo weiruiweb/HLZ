@@ -26,10 +26,11 @@ a{
 }
 .choose{
 	position:absolute;
-	top:0.98rem;
+	top:0.92rem;
 	background:#FFF;
 	width:100%;
 	z-index:999;
+    box-shadow: 0 0 0.1rem #fdc593;
 	}
 .btn_submit{
 	height:0.70rem;
@@ -119,6 +120,15 @@ a{
 .job_type{
     height:20%;
 }
+.job_sort{
+    background:#fff;
+    margin-top:0;
+}
+.c_child{
+    width:100%;
+    height:0.6rem;
+    text-align: center;
+}
 </style>
 <div id="app">
     <div class="w750">
@@ -164,14 +174,14 @@ a{
                     </div>
                 </div>
                 <div class="choose">
-                        <div id="phone_menu" class="choose_item font32" v-for="(item, index) in cityData" :style="num==3?'display:block':''">
+                        <div id="phone_menu" class="choose_item font34" v-for="(item, index) in cityData" :style="num==3?'display:block':''">
                             <div class="choose_list" :data-show_id="item.id"  @click="toggleMenu"  :style="(show_id==item.id?'background:rgba(254,133,30,0.5)':'')">
                                 {{item.title}}
                                 
                             </div>
                             <div class="c_p_child">
                                 <div class="orgin"  :class="(show_id==item.id&&item.child?'after':'')" v-for="(c_item, c_index) in item.child" >
-                                    <div :data-show_child_id="c_item.id"   @click="citySearch" class="c_child">
+                                    <div :data-show_child_id="c_item.id"   @click="citySearch" class="c_child font32 color9">
                                         {{c_item.title}}
                                     </div>
                                 </div>
@@ -179,7 +189,7 @@ a{
                         </div> 
                 </div>
                 <div class="choose" id="choose" >
-                    <div class="choose_item font32" id="tab_cont" :style="num==0?'display:block':''">
+                    <div class="choose_item font34" id="tab_cont" :style="num==0?'display:block':''">
                         <div class="choose_list" :class="[stringifyOrder=='{}'?'choose_this':'']" data-order="none" @click="changeSearch">
                             不限
                         </div>
@@ -189,17 +199,15 @@ a{
                         <div class="choose_list" :class="[stringifyOrder=='{price:asc}'?'choose_this':'']" data-order="price:asc" @click="changeSearch">
                             由低到高
                         </div>
-                        <button class="btn_submit">确认</button>
                     </div>
-                    <div class="choose_item font32" id="tab_cont" :style="num==1?'display:block':''">
+                    <div class="choose_item font34" id="tab_cont" :style="num==1?'display:block':''">
                         <template v-for="item in labelData">
                             <div class="choose_list"  :class="[searchItem.experience=='(item.title)'?'choose_this':'']"  @click="experienceSearch" >
                                 {{item.title}}
                             </div>
                         </template >
-                        <button class="btn_submit">确认</button>
                     </div>
-                    <div class="choose_item font32" id="tab_cont" :style="num==2?'display:block':''">
+                    <div class="choose_item font34" id="tab_cont" :style="num==2?'display:block':''">
                          <div class="choose_list" :class="[stringifyOrder=='{}'?'choose_this':'']" data-order="none" @click="changeSearch">
                             不限
                             </div>
@@ -209,7 +217,6 @@ a{
                         <div class="choose_list" :class="[stringifyOrder=='{create_time:asc}'?'choose_this':'']" data-order="create_time:asc" @click="changeSearch">
                             由远到近
                         </div>
-                        <button class="btn_submit">确认</button>
                     </div>
                 </div>
             </div>

@@ -38,6 +38,7 @@ div{
   align-items:center;
   width:100%;
   display:flex;
+  border:none;
 }
 .gig{
   border:solid 1px #e0e0e0;
@@ -202,7 +203,7 @@ a{color:#fff;}
                     出生日期:
                 </div>
                 <div class="resume_info">
-                    <input placeholder="请输入身份证号" v-model='submitData.date'></input>
+                    <input placeholder="请输入出生日期" v-model='submitData.date'></input>
                 </div>
             </div>
             <div class="bank_card flexRowBetween">
@@ -227,7 +228,7 @@ a{color:#fff;}
                       学   历:
                   </div>
                   <div class="resume_info" style="width:74%;padding-left:2%;padding-right: 0;">
-                      <select data-key="highEducation" @change="selectChange" style="width:4.4rem;height:0.72rem;font-size:35px">
+                      <select data-key="highEducation" @change="selectChange" style="width:2rem;height:0.72rem;float: right;">
                         <option >请选择</a> 
                         <option >专科</option>
                         <option >本科</option>
@@ -243,7 +244,7 @@ a{color:#fff;}
                       工作年限:
                   </div>
                   <div class="resume_info flexRowBetween" style="width:74%;padding-left:2%;padding-right: 0;">
-                      ‍‍<select id="pid"  data-key="email" @change="selectChange" style="width:4.4rem;height:0.72rem;font-size:35px" > 
+                      ‍‍<select id="pid"  data-key="email" @change="selectChange" style="width:2rem;height:0.72rem;" > 
                           <option >请选择</a> 
                           <option v-for="item in labelData">{{item.title}}</option>   
                       </select> 

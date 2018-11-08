@@ -32,14 +32,11 @@
   <div class="p40">
       <div class="sum_txt flexRowBetween">
           <div class="sumTxt">基础信息</div>
-          <div class="pencil">
-              <img src="images/deteil.png" style=" margin-left:.10rem;width:.32rem;height:.32rem;">
-          </div>
       </div>
       <div class="phone_infor">
           <div class="bank_card flexRowBetween">
               <div class="input_before">
-                  岗&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位:
+                  岗 位:
               </div>
               <input v-model="submitData.description"></input>
               <div class="pencil">
@@ -48,7 +45,7 @@
           </div>
           <div class="bank_card flexRowBetween">
               <div class="input_before">
-                  薪&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;资:
+                  薪 资:
               </div>
               <input v-model="submitData.price"></input>
               <div class="pencil">
@@ -69,7 +66,7 @@
           </div>
           <div class="bank_card flexRowBetween">
               <div class="input_before">
-                  学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历:
+                  学 历:
               </div>
               <input v-model="submitData.qualifications"></input>
               <div class="pencil">
@@ -89,7 +86,7 @@
           </div>
           <div class="bank_card flexRowBetween">
               <div class="input_before">
-                  年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄:
+                  年 龄:
               </div>
               <input v-model="submitData.age"></input>
               <div class="pencil">
@@ -100,7 +97,7 @@
 		      <div class="input_before">
 		        性别:
 		      </div>
-		      ‍‍<select id="pid" data-key="gender" @change="selectChange" style="width:4.2rem;height:0.72rem;font-size:35px"> 
+		      ‍‍<select id="pid" data-key="gender" @change="selectChange" style="width:2rem;height:0.72rem;"> 
 		          <option >请选择</a> 
 		          <option >男女不限</a> 
 		          <option >男</a> 
@@ -158,7 +155,7 @@
   </div>
   <div style="height:0.70rem;width:100%;"></div>
   <div class="confirm_bind">
-      <div @click ="submit">确认修改</div>
+      <div @click ="submit" class="color1">确认修改</div>
   </div>
 </div>
 </div>

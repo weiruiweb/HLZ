@@ -145,7 +145,7 @@ a{color:#fff;}
         </div> -->
     </div>
     <div class="confirm_bind"> 
-      <div v-on:click="submit">确认修改</div> </div>
+      <div v-on:click="submit" class="color1">确认修改</div> </div>
 </div>
 </div>
 <script type="text/javascript">
@@ -206,11 +206,6 @@ a{color:#fff;}
              window.base.userGet(postData,callback);
           },
 
-
-
-
-
-
           userInfoUpdate(){
             const self = this;
             const postData = {};
@@ -229,10 +224,6 @@ a{color:#fff;}
             };
              window.base.userInfoUpdate(postData,callback);
           },
-          
-
-          
-
           submit(){
             const self = this;
             var phone = self.submitData.phone;

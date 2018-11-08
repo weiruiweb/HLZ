@@ -25,6 +25,10 @@ div{
   font-size:.32rem;
   color:#333;
 }
+.circle{
+    font-size:0.36rem;
+    color:#ed7101;
+}
 .w710{
   height:2.65rem;
   align-items:center;
@@ -37,12 +41,15 @@ div{
   height:.41rem;
   margin-right:.24rem;
 }
+.sum_txt{
+    border:none;
+}
 a{color:#333;}
 </style>
 <div id="app">
     <div class="w750">
         <div class="p40">
-            <div class="sum_txt flexRowBetween">
+            <div class="sum_txt flexRowBetween" style="border:none;">
                 <div class="sumTxt">基础信息</div>
                 <div class="pencil" bindtap="intoPath" data-path="/pages/userResumeBasce/userResumeBasce">
                     <a href="userResumeBasce.html"><img src="images/pencil.png" />编辑</a>
@@ -122,17 +129,18 @@ a{color:#333;}
             </div>
             <div class="gig">
                 <div class="education" v-for="(item, index) in workExperience">
-                    <div class="flexRowBetween">
-                        <div>
-                            <text>●</text>{{item.startDate}}-{{item.endDate}}</div>
+                    <div class="flexRowBetween" style="padding-left:0.1rem;">
+                        <div class="flex">
+                            <div class="circle">●</div>{{item.startDate}}-{{item.endDate}}
+                        </div>
                         <div class="add">
                             <img src="images/minus.png" style="margin-right: 0;" :data-index="index" v-on:click="deleteExperience"/>
                         </div>
                     </div>
                     <div class="expericence_list">
                         <div class="expericence">
-                            <div class="exper_company"><span>{{item.companyName}}-{{item.job}}</span></div>
-                            <div class="detail"><span>{{item.content}}</span></div>
+                            <div class="exper_company font34 color6"><span>{{item.companyName}}-{{item.job}}</span></div>
+                            <div class="detail font30 color9"><span>{{item.content}}</span></div>
                             
                         </div>
                     </div>
@@ -148,18 +156,18 @@ a{color:#333;}
             </div>
             <div class="gig">
                 <div class="education" v-for="(item, index) in education">
-                    <div class="flexRowBetween">
-                        <div>
-                            <text>●</text>{{item.startDate}}-{{item.endDate}}</div>
+                    <div class="flexRowBetween" style="padding-left:0.1rem;">
+                        <div class="flex">
+                            <div class="circle">●</div>{{item.startDate}}-{{item.endDate}}</div>
                         <div class="add">
                             <img src="images/minus.png" style="margin-right: 0;" :data-index="index" v-on:click="deleteExperienceEdu"/>
                         </div>
                     </div>
                     <div class="expericence_list">
                         <div class="expericence">
-                            <div class="exper_company"><span>学校：{{item.schoolName}}</span></div>
-                            <div class="exper_company"><span>专业：{{item.object}}</span></div>
-                            <div class="exper_company"><span>学历：{{item.highEdu}}</span></div>
+                            <div class="exper_company font34 color6"><span>学校：{{item.schoolName}}</span></div>
+                            <div class="exper_company font34 color6"><span>专业：{{item.object}}</span></div>
+                            <div class="exper_company font34 color6"><span>学历：{{item.highEdu}}</span></div>
                         </div>
                     </div>
                 </div>
