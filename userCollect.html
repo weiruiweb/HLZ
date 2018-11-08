@@ -53,62 +53,30 @@ a{color:#fff;}
 <div id="app">
 <div class="w750">
   <div class="job">
-  <div class="w710">
+  <div class="w710" v-for="item in mainData">
     <div class="job_list flexRowBetween">
       <div class="list_left">
-        <div class="job_type avoidOverflow">UI设计师</div>
+        <div class="job_type avoidOverflow">{{item.title}}</div>
         <div class="treatment flex">
-          <div class="treatment_sort">五险一金</div>
-          <div class="treatment_sort">加班补偿</div>
-          <div class="treatment_sort">交通方便</div>
+          <div class="treatment_sort" v-for="c_item in item.passage_array">{{c_item}}</div>
         </div>
         <div class="job_company flexRowBetween">
           <div class="company_img">
             <img src="images/navbar2-a.png"/>
           </div>
           <div class="company_introuce">
-             <div class="company_name avoidOverflow font38">华路卓咨询有限公司</div>
+             <div class="company_name avoidOverflow font38">{{item.merchant[0]?item.merchant[0].name:''}}</div>
              <div class="send_datail font28 flexRowBetween">
-                <div class="send_tiem">06年7月</div>
-                <div class="send_need">陕西|普工</div>
+                <div class="send_tiem">{{item.create_time}}</div>
+                <div class="send_need">{{item.address}}|{{item.description}}</div>
              </div>
           </div>
         </div>
       </div>
       <div class="list_right">
-        <div class="payment">2K-10K</div>
+        <div class="payment">{{item.price}}</div>
         <div class="hongbao">
-            <div class="numner">¥2</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="w710">
-    <div class="job_list flexRowBetween">
-      <div class="list_left">
-        <div class="job_type avoidOverflow">UI设计师</div>
-        <div class="treatment flex">
-          <div class="treatment_sort">五险一金</div>
-          <div class="treatment_sort">加班补偿</div>
-          <div class="treatment_sort">交通方便</div>
-        </div>
-        <div class="job_company flexRowBetween">
-          <div class="company_img">
-            <img src="images/navbar2-a.png"/>
-          </div>
-          <div class="company_introuce">
-             <div class="company_name avoidOverflow font38">华路卓咨询有限公司</div>
-             <div class="send_datail font28 flexRowBetween">
-                <div class="send_tiem">06年7月</div>
-                <div class="send_need">陕西|普工</div>
-             </div>
-          </div>
-        </div>
-      </div>
-      <div class="list_right">
-        <div class="payment">2K-10K</div>
-        <div class="hongbao">
-            <div class="numner">¥2</div>
+            <div class="numner">¥{{item.distributionOne}}</div>
         </div>
       </div>
     </div>
@@ -159,7 +127,8 @@ a{color:#fff;}
 
         getMainData(){
           const self = this;
-          self.data.mainData = window.base.getStorageArray('collectData')
+          self.mainData = window.base.getStorageArray('collectData')
+          console.log(self.mainData)
         }
 
 

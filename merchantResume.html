@@ -188,12 +188,13 @@ a{color:#fff;}
           <div style="color:#fff;">{{item.userInfo[0].phone}}</div>
         </div>
       </div>
-      <div class="handle2" style="margin:0. 1rem;"  @click="orderUpdate" :data-id='item.id' :data-index="index">
-        <div class="handle_in flexRowaround"  @click="orderUpdate" :data-id='item.id' :data-index="index">
-          <img src="images/resume7.png"  @click="orderUpdate" :data-id='item.id' :data-index="index">
-	          <div style="color:#fff;" v-if="item.order_step=='0'"  @click="orderUpdate" :data-id='item.id' :data-index="index">邀请面试</div>
-	          <div style="color:#fff;" v-if="item.order_step=='1'">已通知面试</div>
-		      <div style="color:#fff;" v-if="item.order_step=='2'"  @click="orderUpdate" :data-id='item.id' :data-index="index">邀请入职</div>
+      <div class="handle2" style="margin:0. 1rem;"  @click="orderUpdate(index)">
+        <div class="handle_in flexRowaround">
+          <img src="images/resume7.png">
+
+	        <div style="color:#fff;" v-if="item.order_step=='0'">邀请面试</div>
+	        <div style="color:#fff;" v-if="item.order_step=='1'">已通知面试</div>
+		      <div style="color:#fff;" v-if="item.order_step=='2'">邀请入职</div>
 		      <div style="color:#fff;" v-if="item.order_step=='3'" >已被拒绝</div>
 		      <div style="color:#fff;" v-if="item.order_step=='4'" >已入职</div>
         </div>
@@ -321,19 +322,15 @@ a{color:#fff;}
           window.location.href = "./merchentResumeDetail.html?id=" + user_no;
         },   
 
-        orderUpdate(e){
+        orderUpdate(index){
           const self = this;
-          console.log('orderUpdate',e);
-
-          var index = window.base.getDataSet(e).index;
-          console.log(window.base.getDataSet(e).id)
-          console.log(window.base.getDataSet(e).index)
+          console.log(index);
           const postData = {};
           postData.token = localStorage.getItem('merchant_token');
           
           postData.searchItem = {
             user_type:0,
-            id:window.base.getDataSet(e).id
+            id:self.mainData[index].id
           };
           if(self.mainData[index].order_step=='0'){
           	postData.data = {
@@ -344,6 +341,7 @@ a{color:#fff;}
           		order_step:4
           	}
           }
+          console.log('orderUpdate',postData)
           const callback  = (res)=>{
           	if(res.solely_code==100000){
           		alert('更新状态成功')
@@ -351,9 +349,9 @@ a{color:#fff;}
           		alert('网络故障')
           	} 
           	
-          	self.userInfoUpdate();
+          	/*self.userInfoUpdate();*/
           };
-          window.base.orderUpdate(postData,callback);
+         /* window.base.orderUpdate(postData,callback);*/
         },
 
 
